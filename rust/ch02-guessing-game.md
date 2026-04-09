@@ -1,0 +1,687 @@
+# Programming a Guessing Game
+
+Let's jump into Auto by working through a hands-on project together! This
+chapter introduces you to a few common Auto concepts by showing you how to use
+them in a real program. You'll learn about `let`, `var`, the `is` keyword,
+methods, external packages, and more! In the following chapters, we'll explore
+these ideas in more detail. In this chapter, you'll just practice the
+fundamentals.
+
+We'll implement a classic beginner programming problem: a guessing game. Here's
+how it works: The program will generate a random integer between 1 and 100. It
+will then prompt the player to enter a guess. After a guess is entered, the
+program will indicate whether the guess is too low or too high. If the guess is
+correct, the game will print a congratulatory message and exit.
+
+## Setting Up a New Project
+
+To set up a new project, go to the _projects_ directory that you created in
+Chapter 1 and make a new project using automan, like so:
+
+```console
+$ automan new guessing_game
+$ cd guessing_game
+```
+
+The first command, `automan new`, takes the name of the project
+(`guessing_game`) as the first argument. The second command changes to the new
+project's directory.
+
+Look at the generated _auto.toml_ file:
+
+<span class="filename">Filename: auto.toml</span>
+
+```toml
+[package]
+name = "guessing_game"
+version = "0.1.0"
+
+[dependencies]
+```
+
+As you saw in Chapter 1, `automan new` generates a "Hello, world!" program for
+you. Check out the _src/main.auto_ file:
+
+<span class="filename">Filename: src/main.auto</span>
+
+```auto
+fn main() ! {
+    print("Hello, world!")
+}
+```
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+Now let's compile this "Hello, world!" program and run it in the same step
+using the `automan run` command:
+
+```console
+$ automan run
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 2.85s
+     Running `target/debug/guessing_game`
+Hello, world!
+```
+
+Reopen the _src/main.auto_ file. You'll be writing all the code in this file.
+
+## Processing a Guess
+
+The first part of the guessing game program will ask for user input, process
+that input, and check that the input is in the expected form. To start, we'll
+allow the player to input a guess. Enter the code in Listing 2-1 into
+_src/main.auto_.
+
+<Listing number="2-1" file-name="src/main.auto" caption="Code that gets a guess from the user and prints it">
+
+```auto
+use io
+
+fn main() ! {
+    println("Guess the number!")
+    println("Please input your guess.")
+
+    var guess = ""
+    io.read_line(guess)
+        .expect("Failed to read line")
+
+    println("You guessed: " + guess)
+}
+```
+
+```rust
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}
+```
+
+</Listing>
+
+This code contains a lot of information, so let's go over it line by line. To
+obtain user input and then print the result as output, we need to bring the
+`io` input/output library into scope. The `io` library comes from the standard
+library:
+
+```auto
+use io
+```
+
+By default, Auto has a set of items defined in the standard library that it
+brings into the scope of every program. This set is called the _prelude_. If a
+type you want to use isn't in the prelude, you have to bring that type into
+scope explicitly with a `use` statement. Using the `io` library provides you
+with a number of useful features, including the ability to accept user input.
+
+As you saw in Chapter 1, the `main` function is the entry point into the
+program:
+
+```auto
+fn main() ! {
+```
+
+The `fn` syntax declares a new function; the parentheses, `()`, indicate there
+are no parameters; the `!` indicates error propagation; and the curly bracket,
+`{`, starts the body of the function.
+
+### Storing Values with Variables
+
+Next, we'll create a _variable_ to store the user input, like this:
+
+```auto
+var guess = ""
+```
+
+Now the program is getting interesting! We use `var` to create a mutable
+variable. In Auto, `let` creates an immutable binding, and `var` creates a
+mutable one. We need `var` here because the `read_line` function will modify
+`guess` by appending the user's input to it.
+
+We initialize `guess` as an empty string `""`. In Auto, string literals are
+UTF-8 encoded, and this gives the compiler enough information to infer that
+`guess` is of type `String`.
+
+### Receiving User Input
+
+Now we'll call the `read_line` function from the `io` module to handle user
+input:
+
+```auto
+io.read_line(guess)
+    .expect("Failed to read line")
+```
+
+We call `io.read_line`, passing `guess` as the argument to tell it what string
+to store the user input in. The full job of `read_line` is to take whatever the
+user types into standard input and append that into a string (without
+overwriting its contents).
+
+### Handling Potential Failure with `!T`
+
+We're still working on the line of code above. The `read_line` function returns
+a result that indicates whether the operation succeeded or failed. In Auto, we
+handle this with the `.expect()` method:
+
+```auto
+.expect("Failed to read line")
+```
+
+If `read_line` encounters an error, `expect` will cause the program to crash
+and display the message that you passed as an argument. If the operation is
+successful, `expect` will return the result value so that you can use it.
+
+> The full details of Auto's error handling with `!T` will be covered in
+> Chapter 9. For now, just know that `expect` is a way to say "crash if
+> something went wrong."
+
+### Printing Values
+
+Aside from the closing curly bracket, there's only one more line to discuss in
+the code so far:
+
+```auto
+println("You guessed: " + guess)
+```
+
+This line prints the string that now contains the user's input. Auto uses the
+`+` operator for string concatenation. You can also use string interpolation
+with `{}`:
+
+```auto
+let x = 5
+let y = 10
+println("x = {x} and y + 2 = {y + 2}")
+```
+
+This would print `x = 5 and y + 2 = 12`.
+
+### Testing the First Part
+
+Let's test the first part of the guessing game. Run it using `automan run`:
+
+```console
+$ automan run
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 6.44s
+     Running `target/debug/guessing_game`
+Guess the number!
+Please input your guess.
+6
+You guessed: 6
+```
+
+At this point, the first part of the game is done: We're getting input from the
+keyboard and then printing it.
+
+## Generating a Secret Number
+
+Next, we need to generate a secret number that the user will try to guess. The
+secret number should be different every time so that the game is fun to play
+more than once. We'll use a random number between 1 and 100 so that the game
+isn't too difficult.
+
+### Using an External Package
+
+Remember that a package is a collection of source code files. The project we've
+been building is a binary package (an executable). We'll use an external
+library package for random number generation.
+
+automan's coordination of external packages is where it really shines. Before
+we can write code that uses random numbers, we need to modify the _auto.toml_
+file to include the `random` package as a dependency. Open that file and add
+the following line to the bottom, beneath the `[dependencies]` section header:
+
+<span class="filename">Filename: auto.toml</span>
+
+```toml
+[dependencies]
+random = "0.8.5"
+```
+
+In the _auto.toml_ file, everything that follows a header is part of that
+section that continues until another section starts. In `[dependencies]`, you
+tell automan which external packages your project depends on and which versions
+of those packages you require.
+
+Now, without changing any of the code, let's build the project:
+
+```console
+$ automan build
+   Updating registry index
+    Adding random v0.8.5
+   Compiling random v0.8.5
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 2.48s
+```
+
+When we include an external dependency, automan fetches the latest versions of
+everything that dependency needs from the package registry.
+
+#### Ensuring Reproducible Builds
+
+automan has a mechanism that ensures you can rebuild the same artifact every
+time: the _auto.lock_ file. When you build a project for the first time,
+automan figures out all the versions of the dependencies that fit the criteria
+and then writes them to the _auto.lock_ file. When you build your project in
+the future, automan will see that the _auto.lock_ file exists and will use the
+versions specified there. This lets you have a reproducible build automatically.
+
+#### Updating a Package to Get a New Version
+
+When you do want to update a package, automan provides the command `update`,
+which will ignore the _auto.lock_ file and figure out all the latest versions
+that fit your specifications in _auto.toml_.
+
+```console
+$ automan update
+    Updating registry index
+    Updating random v0.8.5 -> v0.8.6
+```
+
+### Generating a Random Number
+
+Let's start using `random` to generate a number to guess. The next step is to
+update _src/main.auto_, as shown in Listing 2-3.
+
+<Listing number="2-3" file-name="src/main.auto" caption="Adding code to generate a random number">
+
+```auto
+use io
+use random
+
+fn main() ! {
+    println("Guess the number!")
+
+    let secret_number = random.int(1, 100)
+
+    println("The secret number is: " + secret_number.to_string())
+
+    println("Please input your guess.")
+
+    var guess = ""
+    io.read_line(guess)
+        .expect("Failed to read line")
+
+    println("You guessed: " + guess)
+}
+```
+
+```rust
+use std::io;
+use rand::Rng;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    println!("The secret number is: {secret_number}");
+
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}
+```
+
+</Listing>
+
+First, we add the line `use random`. Then we add two lines in the middle: we
+call `random.int(1, 100)` to generate a random integer between 1 and 100, and
+bind it to `secret_number` with `let` (since it won't change). The second new
+line prints the secret number for debugging—we'll delete it from the final
+version.
+
+Try running the program a few times:
+
+```console
+$ automan run
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 7
+Please input your guess.
+4
+You guessed: 4
+
+$ automan run
+    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 83
+Please input your guess.
+5
+You guessed: 5
+```
+
+You should get different random numbers, and they should all be numbers between
+1 and 100. Great job!
+
+## Comparing the Guess to the Secret Number
+
+Now that we have user input and a random number, we can compare them. That step
+is shown in Listing 2-4. Note that this code won't compile just yet, as we will
+explain.
+
+<Listing number="2-4" file-name="src/main.auto" caption="Handling the possible return values of comparing two numbers">
+
+```auto
+use io
+use random
+
+fn main() ! {
+    println("Guess the number!")
+    let secret_number = random.int(1, 100)
+    println("The secret number is: " + secret_number.to_string())
+    println("Please input your guess.")
+
+    var guess = ""
+    io.read_line(guess)
+        .expect("Failed to read line")
+
+    println("You guessed: " + guess)
+
+    guess is Ordering.Less -> println("Too small!")
+    guess is Ordering.Greater -> println("Too big!")
+    guess is Ordering.Equal -> println("You win!")
+}
+```
+
+```rust
+use std::cmp::Ordering;
+use std::io;
+use rand::Rng;
+
+fn main() {
+    // --snip--
+    println!("Guess the number!");
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+    println!("The secret number is: {secret_number}");
+    println!("Please input your guess.");
+
+    let mut guess = String::new();
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
+}
+```
+
+</Listing>
+
+Here we use the `is` keyword, which is Auto's pattern matching mechanism. The
+`is` keyword lets you compare a value against patterns and execute code based
+on which pattern matches. This is similar to Rust's `match` expression.
+
+However, the code in Listing 2-4 won't compile yet. The core of the error
+states that there are _mismatched types_. `guess` is a string, but
+`secret_number` is a number type. We need to convert the string input to a
+number first.
+
+### Converting String to Number
+
+We do so by adding this line:
+
+```auto
+let guess = guess.trim().to_int().expect("Please type a number!")
+```
+
+We create a new variable also named `guess`. Auto allows _shadowing_—reusing
+the same variable name with a new value. This is often used when converting a
+value from one type to another.
+
+We call `.trim()` to remove any whitespace (including the newline from pressing
+Enter), then `.to_int()` to convert the string to an integer. If the conversion
+fails (e.g., the user typed "hello"), `expect` will crash the program with our
+message.
+
+We also annotate the type explicitly to tell the compiler we want an integer:
+
+```auto
+let guess: int = guess.trim().to_int().expect("Please type a number!")
+```
+
+Let's run the program now:
+
+```console
+$ automan run
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.26s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 58
+Please input your guess.
+  76
+You guessed: 76
+Too big!
+```
+
+Nice! Even though spaces were added before the guess, the program still figured
+out that the user guessed 76.
+
+We have most of the game working now, but the user can make only one guess.
+Let's change that by adding a loop!
+
+## Allowing Multiple Guesses with Looping
+
+The `loop` keyword creates an infinite loop. We'll add a loop to give users
+more chances at guessing the number:
+
+<span class="filename">Filename: src/main.auto</span>
+
+```auto
+// --snip--
+    loop {
+        println("Please input your guess.")
+
+        var guess = ""
+        io.read_line(guess)
+            .expect("Failed to read line")
+
+        let guess: int = guess.trim().to_int().expect("Please type a number!")
+
+        println("You guessed: " + guess.to_string())
+
+        guess is Ordering.Less -> println("Too small!")
+        guess is Ordering.Greater -> println("Too big!")
+        guess is Ordering.Equal -> println("You win!")
+    }
+```
+
+As you can see, we've moved everything from the guess input prompt onward into
+a loop. The program will now ask for another guess forever. It doesn't seem
+like the user can quit!
+
+The user could always interrupt the program by using the keyboard shortcut
+<kbd>ctrl</kbd>-<kbd>c</kbd>. But there's another way: if the user enters a
+non-number answer, the program will crash via `expect`. We can take advantage
+of that to allow the user to quit—but it's not ideal. Let's fix both problems.
+
+### Quitting After a Correct Guess
+
+Let's program the game to quit when the user wins by adding a `break` statement:
+
+```auto
+        guess is Ordering.Equal -> {
+            println("You win!")
+            break
+        }
+```
+
+Adding `break` after "You win!" makes the program exit the loop when the user
+guesses correctly. Exiting the loop also means exiting the program, because the
+loop is the last part of `main`.
+
+### Handling Invalid Input
+
+To further refine the game's behavior, rather than crashing the program when
+the user inputs a non-number, let's make the game ignore a non-number so that
+the user can continue guessing. We can do that by altering the line where
+`guess` is converted from a string to an integer, as shown in Listing 2-5.
+
+<Listing number="2-5" file-name="src/main.auto" caption="Ignoring a non-number guess and asking for another guess instead of crashing the program">
+
+```auto
+let guess: int = guess.trim().to_int() is
+    Ok(num) -> num
+    Err(_) -> continue
+```
+
+```rust
+let guess: u32 = match guess.trim().parse() {
+    Ok(num) => num,
+    Err(_) => continue,
+};
+```
+
+</Listing>
+
+We switch from an `expect` call to an `is` expression to move from crashing on
+an error to handling the error gracefully. The `.to_int()` method returns a
+result indicating success or failure. We use `is` to match on the result:
+
+- If the conversion succeeds, it returns `Ok(num)`, and we extract the number.
+- If the conversion fails, it returns `Err(_)`, and we use `continue` to go to
+  the next iteration of the loop and ask for another guess.
+
+Now everything in the program should work as expected. Let's try it:
+
+```console
+$ automan run
+   Compiling guessing_game v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.13s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 61
+Please input your guess.
+10
+You guessed: 10
+Too small!
+Please input your guess.
+99
+You guessed: 99
+Too big!
+Please input your guess.
+foo
+Please input your guess.
+61
+You guessed: 61
+You win!
+```
+
+Awesome! With one tiny final tweak, we will finish the guessing game. Recall
+that the program is still printing the secret number. That worked well for
+testing, but it ruins the game. Let's delete the `println` that outputs the
+secret number. Listing 2-6 shows the final code.
+
+<Listing number="2-6" file-name="src/main.auto" caption="Complete guessing game code">
+
+```auto
+use io
+use random
+
+fn main() ! {
+    println("Guess the number!")
+    let secret_number = random.int(1, 100)
+
+    loop {
+        println("Please input your guess.")
+
+        var guess = ""
+        io.read_line(guess)
+            .expect("Failed to read line")
+
+        let guess: int = guess.trim().to_int() is
+            Ok(num) -> num
+            Err(_) -> continue
+
+        println("You guessed: " + guess.to_string())
+
+        guess.cmp(secret_number) is
+            Ordering.Less -> println("Too small!")
+            Ordering.Greater -> println("Too big!")
+            Ordering.Equal -> {
+                println("You win!")
+                break
+            }
+    }
+}
+```
+
+```rust
+use std::cmp::Ordering;
+use std::io;
+use rand::Rng;
+
+fn main() {
+    println!("Guess the number!");
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}
+```
+
+</Listing>
+
+At this point, you've successfully built the guessing game. Congratulations!
+
+## Summary
+
+This project was a hands-on way to introduce you to many new Auto concepts:
+`let`, `var`, `is`, functions, the use of external packages, and more. In the
+next few chapters, you'll learn about these concepts in more detail. Chapter 3
+covers concepts that most programming languages have, such as variables, data
+types, and functions, and shows how to use them in Auto. Chapter 4 explores
+Auto's memory model. Chapter 5 discusses the `type` keyword and method syntax,
+and Chapter 6 explains how enums work.
