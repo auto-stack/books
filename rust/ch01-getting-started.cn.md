@@ -1,0 +1,365 @@
+# 起步
+
+让我们开始你的 Auto 之旅！有很多东西要学，但每段旅程都从第一步开始。在本章中，我们将讨论：
+
+- 在 Linux、macOS 和 Windows 上安装 Auto
+- 编写一个打印 `Hello, world!` 的程序
+- 使用 `automan`——Auto 的包管理器和构建系统
+
+## 安装
+
+第一步是安装 Auto。你需要网络连接来下载。
+
+> ### 命令行表示法
+>
+> 在本章和整本书中，我们会展示一些在终端中使用的命令。你需要在终端中输入的行都以 `$` 开头。你不需要输入 `$` 字符——它只是命令行提示符，用来表示每条命令的开始。不以 `$` 开头的行通常显示前一条命令的输出。此外，PowerShell 特有的示例会使用 `>` 而不是 `$`。
+
+### 在 Linux 或 macOS 上安装
+
+如果你使用的是 Linux 或 macOS，打开终端并输入以下命令：
+
+```console
+$ curl --proto '=https' https://sh.auto.dev | sh
+```
+
+该命令会下载一个脚本并开始安装 Auto 工具链，其中包括 `autoc` 编译器和 `automan` 包管理器。系统可能会提示你输入密码。如果安装成功，会显示以下信息：
+
+```text
+Auto is installed now. Great!
+```
+
+你还需要一个 _链接器（linker）_，这是编译器用来将编译输出合并为一个文件的程序。你的系统上很可能已经有了。如果遇到链接器错误，你应该安装一个 C 编译器，它通常包含链接器。
+
+在 macOS 上，可以通过运行以下命令获取 C 编译器：
+
+```console
+$ xcode-select --install
+```
+
+Linux 用户通常应根据其发行版的文档安装 GCC 或 Clang。例如，如果你使用 Ubuntu，可以安装 `build-essential` 包。
+
+### 在 Windows 上安装
+
+在 Windows 上，访问 Auto 网站并按照安装说明操作。在安装过程中，你会被提示安装 Visual Studio。它提供了编译程序所需的链接器和原生库。
+
+本书的其余部分使用在 _cmd.exe_ 和 PowerShell 中都能工作的命令。如果有特定差异，我们会说明。
+
+### 故障排除
+
+要检查 Auto 是否安装正确，打开 shell 并输入：
+
+```console
+$ autoc --version
+```
+
+你应该会看到以下格式的版本号：
+
+```text
+autoc x.y.z (yyyy-mm-dd)
+```
+
+如果看到此信息，说明 Auto 已成功安装！如果没有，请检查 Auto 是否在你的 `%PATH%` 系统变量中。
+
+在 Windows CMD 中，使用：
+
+```console
+> echo %PATH%
+```
+
+在 PowerShell 中，使用：
+
+```powershell
+> echo $env:Path
+```
+
+在 Linux 和 macOS 中，使用：
+
+```console
+$ echo $PATH
+```
+
+如果以上都没问题但 Auto 仍然无法工作，可以查看 Auto 社区页面，与其他 Auto 开发者联系获取帮助。
+
+### 更新和卸载
+
+Auto 安装完成后，更新到新版本很简单。在 shell 中运行以下命令：
+
+```console
+$ autoc update
+```
+
+要卸载 Auto，运行以下命令：
+
+```console
+$ autoc self uninstall
+```
+
+### 本地文档
+
+Auto 安装时也包含了一份本地文档副本，你可以在离线状态下阅读。运行 `autoc doc` 在浏览器中打开本地文档。
+
+每当标准库提供了某个类型或函数，而你不确定它的用途或用法时，可以查阅 API 文档！
+
+### 使用文本编辑器和 IDE
+
+本书不假设你使用什么工具来编写 Auto 代码。几乎所有文本编辑器都可以！许多文本编辑器和 IDE 通过语言服务器插件内置了对 Auto 的支持。
+
+## Hello, World!
+
+既然你已经安装了 Auto，是时候编写第一个程序了。学习新语言时，通常会先写一个打印 `Hello, world!` 的小程序——我们也不例外！
+
+> 注意：本书假设你对命令行有基本的了解。Auto 对你的编辑器、工具或代码存放位置没有特定要求，所以如果你更喜欢使用 IDE 而不是命令行，请随意使用你喜欢的 IDE。
+
+### 项目目录设置
+
+首先创建一个目录来存放你的 Auto 代码。Auto 不关心你的代码在哪里，但对于本书的练习和项目，我们建议在你的主目录下创建一个 _projects_ 目录，并将所有项目放在那里。
+
+打开终端并输入以下命令来创建 _projects_ 目录和 "Hello, world!" 项目目录。
+
+在 Linux、macOS 和 Windows PowerShell 中，输入：
+
+```console
+$ mkdir ~/projects
+$ cd ~/projects
+$ mkdir hello_world
+$ cd hello_world
+```
+
+在 Windows CMD 中，输入：
+
+```cmd
+> mkdir "%USERPROFILE%\projects"
+> cd /d "%USERPROFILE%\projects"
+> mkdir hello_world
+> cd hello_world
+```
+
+### Auto 程序基础
+
+接下来，创建一个新的源文件，命名为 _main.auto_。Auto 文件总是以 _.auto_ 扩展名结尾。如果文件名使用了多个单词，约定使用下划线分隔。例如，使用 _hello_world.auto_ 而不是 _helloworld.auto_。
+
+现在打开刚创建的 _main.auto_ 文件，输入代码清单 1-1 中的代码。
+
+< Listing number="1-1" file-name="main.auto" caption="打印 `Hello, world!` 的程序">
+
+```auto
+fn main() ! {
+    print("Hello, world!")
+}
+```
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+</Listing>
+
+保存文件并回到终端窗口。在 Linux 或 macOS 上，输入以下命令来编译和运行文件：
+
+```console
+$ autoc main.auto
+$ ./main
+Hello, world!
+```
+
+在 Windows 上，使用 `.\main` 代替 `./main`：
+
+```powershell
+> autoc main.auto
+> .\main
+Hello, world!
+```
+
+无论你使用什么操作系统，都应该在终端上看到 `Hello, world!` 字符串。
+
+如果确实打印了 `Hello, world!`，恭喜！你已经正式编写了一个 Auto 程序。你现在是一名 Auto 程序员了——欢迎！
+
+### Auto 程序剖析
+
+让我们详细看看这个 "Hello, world!" 程序。首先是第一部分：
+
+```auto
+fn main() ! {
+
+}
+```
+
+这几行定义了一个名为 `main` 的函数。`main` 函数很特殊：它是每个可执行 Auto 程序中首先运行的代码。第一行声明了一个名为 `main` 的函数，它没有参数，也不返回任何值。如果有参数，它们会放在括号 `()` 中。
+
+`()` 后面的 `!` 表示这个函数使用了 Auto 的错误传播机制。我们将在第 9 章详细讨论这一点。
+
+函数体用 `{}` 包裹。Auto 要求所有函数体都使用花括号。良好的风格是将左花括号放在函数声明的同一行，中间加一个空格。
+
+`main` 函数体包含以下代码：
+
+```auto
+print("Hello, world!")
+```
+
+这一行完成了这个小程序的所有工作：将文本打印到屏幕上。注意与 Rust 的几个区别：
+
+- Auto 使用 `print()` 作为普通函数，而不是宏——不需要 `!`。
+- Auto 不要求在语句末尾加分号。编译器通过换行和上下文来确定语句的结束位置。
+- 如果需要换行输出，使用 `println()`。`print()` 输出时不带尾部换行。
+
+### 编译和执行
+
+在运行 Auto 程序之前，你必须先使用 Auto 编译器编译它。输入 `autoc` 命令并传入源文件名：
+
+```console
+$ autoc main.auto
+```
+
+编译成功后，Auto 会输出一个二进制可执行文件。然后你可以运行它：
+
+```console
+$ ./main  # Windows 上使用 .\main
+```
+
+如果你的 _main.auto_ 是 "Hello, world!" 程序，这行命令会在终端打印 `Hello, world!`。
+
+Auto 是一门 _提前编译（ahead-of-time compiled）_ 的语言，这意味着你可以编译一个程序，然后将可执行文件交给其他人，他们无需安装 Auto 就能运行。
+
+Auto 还通过 `autovm` 提供 VM 模式，允许你直接运行程序而无需单独的编译步骤——这对开发和快速迭代非常有用：
+
+```console
+$ autovm main.auto
+Hello, world!
+```
+
+仅使用 `autoc` 编译简单程序没问题，但随着项目规模增大，你会需要管理各种选项并方便地共享代码。接下来，我们将介绍 `automan` 工具，帮助你编写真实的 Auto 程序。
+
+## Hello, automan!
+
+automan 是 Auto 的构建系统和包管理器。大多数 Auto 开发者都使用这个工具来管理项目，因为 automan 为你处理了很多任务，比如构建代码、下载代码依赖的库、以及构建这些库。（我们将代码需要的库称为 _依赖_。）
+
+最简单的 Auto 程序（比如我们目前写的这个）没有任何依赖。随着你编写更复杂的 Auto 程序，你会添加依赖，而如果一开始就使用 automan 创建项目，添加依赖会容易得多。
+
+因为绝大多数 Auto 项目都使用 automan，本书的其余部分也假定你使用 automan。如果你使用了"安装"部分讨论的官方安装程序，automan 已经随 Auto 一起安装了。
+
+### 使用 automan 创建项目
+
+让我们用 automan 创建一个新项目。回到你的 _projects_ 目录（或你存放代码的任何地方）。然后，在任何操作系统上运行：
+
+```console
+$ automan new hello_auto
+$ cd hello_auto
+```
+
+第一条命令创建了一个名为 _hello_auto_ 的新目录和项目。
+
+进入 _hello_auto_ 目录并列出文件。你会看到 automan 生成了两个文件和一个目录：一个 _auto.toml_ 配置文件和一个包含 _main.auto_ 文件的 _src_ 目录。
+
+它还会初始化一个新的 Git 仓库以及一个 _.gitignore_ 文件。
+
+用文本编辑器打开 _auto.toml_，它看起来应该类似代码清单 1-2 中的内容。
+
+<Listing number="1-2" file-name="auto.toml" caption="`automan new` 生成的 *auto.toml* 内容">
+
+```toml
+[package]
+name = "hello_auto"
+version = "0.1.0"
+
+[dependencies]
+```
+
+</Listing>
+
+这个文件采用 _TOML_ 格式，是 automan 的配置格式。
+
+第一行 `[package]` 是一个节标题，表示下面的语句在配置一个包。
+
+接下来两行设置了 automan 编译你的程序所需的配置信息：名称和版本。
+
+最后一行 `[dependencies]` 是一个节的开始，用于列出项目的所有依赖。在 Auto 中，代码包被称为 _模块_。这个项目不需要其他模块，但在第 2 章的第一个项目中我们会用到。
+
+现在打开 _src/main.auto_ 看看：
+
+<span class="filename">文件名：src/main.auto</span>
+
+```auto
+fn main() ! {
+    print("Hello, world!")
+}
+```
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+automan 为你生成了一个 "Hello, world!" 程序，就像我们在代码清单 1-1 中写的一样！我们手写的项目和 automan 生成的项目之间的区别在于，automan 将代码放在了 _src_ 目录中，并在顶层目录放了一个 _auto.toml_ 配置文件。
+
+automan 期望你的源文件放在 _src_ 目录中。顶层项目目录用于存放 README 文件、许可证信息、配置文件以及与代码无关的其他内容。使用 automan 可以帮助你组织项目——各归其位，井然有序。
+
+### 构建和运行 automan 项目
+
+现在让我们看看用 automan 构建和运行 "Hello, world!" 程序有什么不同。从你的 _hello_auto_ 目录，输入以下命令构建项目：
+
+```console
+$ automan build
+   Compiling hello_auto v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 2.85s
+```
+
+该命令在 _target/debug/hello_auto_（Windows 上是 _target\debug\hello_auto.exe_）创建一个可执行文件。你可以运行它：
+
+```console
+$ ./target/debug/hello_auto  # Windows 上使用 .\target\debug\hello_auto.exe
+Hello, world!
+```
+
+第一次运行 `automan build` 时，automan 还会在顶层创建一个新文件：_auto.lock_。这个文件跟踪项目中依赖的确切版本。你不需要手动修改这个文件——automan 会为你管理其内容。
+
+我们也可以使用 `automan run` 一步完成编译和运行：
+
+```console
+$ automan run
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/hello_auto`
+Hello, world!
+```
+
+使用 `automan run` 比先运行 `automan build` 再输入完整的二进制文件路径更方便，所以大多数开发者使用 `automan run`。
+
+automan 还提供了一个名为 `automan check` 的命令。这个命令快速检查你的代码是否能编译，但不生成可执行文件：
+
+```console
+$ automan check
+    Checking hello_auto v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.32s
+```
+
+`automan check` 比 `automan build` 快得多，因为它跳过了生成可执行文件的步骤。如果你在写代码时经常检查，使用 `automan check` 能加速你的开发循环。
+
+让我们回顾一下关于 automan 目前学到的内容：
+
+- 可以使用 `automan new` 创建项目。
+- 可以使用 `automan build` 构建项目。
+- 可以使用 `automan run` 一步完成构建和运行。
+- 可以使用 `automan check` 在不生成二进制文件的情况下检查错误。
+- 构建结果不与代码放在同一目录，automan 将其存储在 _target/debug_ 目录中。
+
+### 发布构建
+
+当你的项目准备好发布时，可以使用 `automan build --release` 进行优化编译。该命令会在 _target/release_ 而不是 _target/debug_ 中创建可执行文件。优化会让你的 Auto 代码运行得更快，但也会增加编译时间。这就是为什么有两种不同的配置：一种用于开发——需要频繁快速地重建；另一种用于构建最终交付给用户的程序——运行越快越好。
+
+### 利用 automan 的约定
+
+对于简单项目，automan 相比直接使用 `autoc` 没有太大优势，但随着程序变得越来越复杂，它的价值就会体现出来。一旦程序扩展到多个文件或需要依赖，让 automan 协调构建会轻松得多。
+
+## 总结
+
+你的 Auto 之旅已经有了一个很好的开始！在本章中，你学会了：
+
+- 使用官方安装程序安装 Auto。
+- 更新到新版本的 Auto。
+- 打开本地安装的文档。
+- 直接使用 `autoc` 编写和运行 "Hello, world!" 程序。
+- 使用 automan 的约定创建和运行新项目。
+
+现在是时候构建一个更有实质性的程序，来熟悉 Auto 代码的读写。所以，在第 2 章中，我们将构建一个猜数字游戏。如果你想先了解 Auto 中常见编程概念的工作方式，可以先看第 3 章，然后再回到第 2 章。
