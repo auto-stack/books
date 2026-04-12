@@ -1,0 +1,373 @@
+# Packages, Modules, and Code Organization
+
+As you write large programs, organizing your code will become increasingly
+important. By grouping related functionality and separating code with distinct
+features, you'll clarify where to find code that implements a particular
+feature and where to go to change how a feature works.
+
+The programs we've written so far have been in one module in one file. As a
+project grows, you should organize code by splitting it into multiple modules
+and then multiple files. A package can contain multiple binary executables and
+optionally one library. As a package grows, you can extract parts into
+separate packages that become external dependencies. This chapter covers all
+these techniques.
+
+We'll also discuss encapsulating implementation details, which lets you reuse
+code at a higher level: Once you've implemented an operation, other code can
+call your code via its public interface without having to know how the
+implementation works.
+
+Auto's module system, sometimes collectively referred to as the _module
+system_, includes:
+
+* **Packages**: An `automan` feature that lets you build, test, and share
+  modules
+* **Modules**: A tree of code that produces a library or executable
+* **Imports**: The `use` keyword lets you control the organization and scope
+  of paths
+* **Extensions**: The `ext` keyword lets you add methods to types across module
+  boundaries
+
+In this chapter, we'll cover how these features work in Auto and how they
+compare to Rust's module system.
+
+## Packages and Modules
+
+The first parts of the module system we'll cover are packages and modules.
+
+A _module_ is the smallest amount of code that the Auto compiler considers at a
+time. Modules can come in one of two forms: a binary module (with a `main`
+function) or a library module (without `main`, intended to be shared).
+
+A _package_ is a bundle of one or more modules that provides a set of
+functionality. A package contains an _auto.toml_ file that describes how to
+build those modules.
+
+Key differences between Auto and Rust's package system:
+
+| Concept | Auto | Rust |
+|---------|------|------|
+| Package manager | `automan` | `cargo` |
+| Config file | `auto.toml` | `Cargo.toml` |
+| Lock file | `auto.lock` | `Cargo.lock` |
+| Compiler | `autoc` | `rustc` |
+| Package registry | (TBD) | crates.io |
+| Code unit name | `modules` | `crates` |
+
+### Creating a Package with `automan`
+
+To create a new Auto package, use the `automan` command:
+
+```console
+$ automan new my-project
+     Created binary (application) `my-project` package
+$ ls my-project
+auto.toml
+src
+$ ls my-project/src
+main.at
+```
+
+This creates a package with the following structure:
+
+```text
+my-project
+├── auto.toml
+└── src
+    └── main.at
+```
+
+Auto's package structure follows similar conventions to Rust, but uses `.at`
+file extensions instead of `.rs`.
+
+### Auto's Code Organization Levels
+
+Auto organizes code at three levels:
+
+1. **Module (mod)**: A file or folder, similar to Rust modules. Each file is a
+   module. Each folder is also a module, with an entry file named after the
+   folder.
+2. **Library (lib)**: Multiple modules organized into a library that implements
+   a complete set of functionality.
+3. **Package (pac)**: One or more libraries organized into a package for
+   dependency management.
+
+## Organizing Code with Types and Extensions
+
+In Auto, the primary way to organize related functionality is through types
+and extensions. While Auto's full module system (with `mod`, `pub`, and `use`
+for native Auto modules) is still being developed, the `type` and `ext`
+keywords provide a powerful way to group related code.
+
+### Grouping Related Functions
+
+You can use types to group related functions together, similar to how modules
+group related items:
+
+<Listing number="7-3" file-name="main.auto" caption="Organizing related functions with a type and `ext`">
+
+```auto
+type Config {
+    verbose bool
+    level int
+}
+
+ext Config {
+    fn new(verbose bool, level int) Config {
+        Config(verbose, level)
+    }
+
+    fn describe() String {
+        if .verbose {
+            f"Config(level=${.level})"
+        } else {
+            "Config"
+        }
+    }
+}
+
+fn main() {
+    let config = Config.new(true, 3)
+    print(config.describe())
+}
+```
+
+```rust
+struct Config {
+    verbose: bool,
+    level: i32,
+}
+
+impl Config {
+    fn new(verbose: bool, level: i32) -> Config {
+        Config { verbose, level }
+    }
+
+    fn describe(&self) -> String {
+        if self.verbose {
+            format!("Config(level={})", self.level)
+        } else {
+            String::from("Config")
+        }
+    }
+}
+
+fn main() {
+    let config = Config::new(true, 3);
+    println!("{}", config.describe());
+}
+```
+
+</Listing>
+
+This approach gives you many of the same benefits as modules:
+
+- **Grouping**: Related functions are grouped under a type name
+- **Namespacing**: Functions are accessed via the type name (`Config.new()`)
+- **Encapsulation**: The type's fields and methods are clearly associated
+
+### Building Complex Organizations
+
+For more complex organization, you can chain methods to create fluent APIs:
+
+<Listing number="7-4" file-name="main.auto" caption="Organizing math operations with a builder pattern">
+
+```auto
+type Math {
+    value int
+}
+
+ext Math {
+    fn new(value int) Math {
+        Math(value)
+    }
+
+    fn add(other int) Math {
+        Math(.value + other)
+    }
+
+    fn double() Math {
+        .add(.value)
+    }
+
+    fn result() int {
+        .value
+    }
+}
+
+fn main() {
+    let m = Math.new(5)
+    let doubled = m.double()
+    print(f"Result: ${doubled.result()}")
+}
+```
+
+```rust
+struct Math {
+    value: i32,
+}
+
+impl Math {
+    fn new(value: i32) -> Math {
+        Math { value }
+    }
+
+    fn add(&self, other: i32) -> Math {
+        Math { value: self.value + other }
+    }
+
+    fn double(&self) -> Math {
+        self.add(self.value)
+    }
+
+    fn result(&self) -> i32 {
+        self.value
+    }
+}
+
+fn main() {
+    let m = Math::new(5);
+    let doubled = m.double();
+    println!("Result: {}", doubled.result());
+}
+```
+
+</Listing>
+
+## Using External Rust Crates
+
+Auto can leverage Rust's extensive ecosystem through the `use.rust` directive.
+This allows you to import types and functions from Rust's standard library and
+external crates:
+
+<Listing number="7-1" file-name="main.auto" caption="Using `use.rust` to import from Rust's standard library">
+
+```auto
+use.rust std::collections::HashMap
+
+fn main() {
+    var scores = HashMap.new()
+    scores.insert("Blue", 10)
+    scores.insert("Red", 50)
+    print(f"Scores: ${scores}")
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut scores = HashMap::new();
+    scores.insert("Blue", 10);
+    scores.insert("Red", 50);
+    println!("Scores: {:?}", scores);
+}
+```
+
+</Listing>
+
+The `use.rust` directive passes the import statement directly to the Rust
+compiler during transpilation. This gives Auto access to Rust's full standard
+library and crate ecosystem while the native Auto module system is being
+developed.
+
+### Multiple Imports
+
+You can use multiple `use.rust` statements to bring in different types:
+
+<Listing number="7-2" file-name="main.auto" caption="Multiple `use.rust` imports">
+
+```auto
+use.rust std::collections::HashMap
+
+fn main() {
+    var map = HashMap.new()
+    map.insert("key", "value")
+    print(f"Map: ${map}")
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut map = HashMap::new();
+    map.insert("key", "value");
+    println!("Map: {:?}", map);
+}
+```
+
+</Listing>
+
+<Listing number="7-5" file-name="main.auto" caption="Importing file system functions">
+
+```auto
+use.rust std::fs::read_to_string
+
+fn main() {
+    print("File reading example")
+}
+```
+
+```rust
+use std::fs::read_to_string;
+
+fn main() {
+    println!("File reading example");
+}
+```
+
+</Listing>
+
+## Auto's Module Vision
+
+Auto's module system is designed with these goals:
+
+- **Simplified imports**: Native Auto imports will use `use` without the `.rust`
+  suffix once the module system is fully implemented
+- **Cross-platform organization**: The `ext` keyword allows platform-specific
+  implementations to fill in methods across module boundaries
+- **Visibility defaults**: Auto plans to use `#[pub]` annotations for
+  controlling visibility, similar to Rust's `pub` keyword
+
+The planned module structure follows this pattern:
+
+```text
+my-package/
+├── auto.toml
+└── src/
+    ├── main.at          # Binary entry point
+    ├── lib.at           # Library entry point (optional)
+    ├── config.at        # Config module
+    └── utils/           # Utils module (directory)
+        ├── utils.at     # Module entry file
+        └── http.at      # Submodule
+```
+
+Each file is a module. Each directory is also a module, with an entry file
+named after the directory. This mirrors Rust's module conventions but uses
+`.at` file extensions.
+
+## Summary
+
+Auto's code organization system provides the same goals as Rust's, with some
+differences in implementation:
+
+| Concept | Auto | Rust |
+|---------|------|------|
+| Package manager | `automan` | `cargo` |
+| Config file | `auto.toml` | `Cargo.toml` |
+| Code unit | `module` | `crate` |
+| Define type | `type Name { }` | `struct Name { }` |
+| Extend type | `ext Name { }` | `impl Name { }` |
+| Import (Rust) | `use.rust path::item` | `use path::item;` |
+| Visibility | `#[pub]` (planned) | `pub` |
+| File extension | `.at` | `.rs` |
+
+While Auto's native module system is still being developed, the combination of
+`type`, `ext`, and `use.rust` provides effective code organization. The `type`
+keyword groups related data, `ext` adds methods across file boundaries, and
+`use.rust` gives access to Rust's ecosystem.
+
+In the next chapter, we'll look at some collection data structures in the
+standard library that you can use in your neatly organized code.

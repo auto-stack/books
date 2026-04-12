@@ -1,0 +1,28 @@
+// Listing 7-4: Organizing related functions with types
+type Math {
+    value int
+}
+
+ext Math {
+    fn new(value int) Math {
+        Math(value)
+    }
+
+    fn add(other int) Math {
+        Math(.value + other)
+    }
+
+    fn double() Math {
+        .add(.value)
+    }
+
+    fn result() int {
+        .value
+    }
+}
+
+fn main() {
+    let m = Math.new(5)
+    let doubled = m.double()
+    print(f"Result: ${doubled.result()}")
+}

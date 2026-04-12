@@ -1,0 +1,6 @@
+// Listing 7-5: Bringing paths into scope with use.rust
+use.rust std::fs::read_to_string
+
+fn main() {
+    print("File reading example")
+}

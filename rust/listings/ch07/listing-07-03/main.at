@@ -1,0 +1,24 @@
+// Listing 7-3: Simple module-like organization with type and ext
+type Config {
+    verbose bool
+    level int
+}
+
+ext Config {
+    fn new(verbose bool, level int) Config {
+        Config(verbose, level)
+    }
+
+    fn describe() String {
+        if .verbose {
+            f"Config(level=${.level})"
+        } else {
+            "Config"
+        }
+    }
+}
+
+fn main() {
+    let config = Config.new(true, 3)
+    print(config.describe())
+}

@@ -1,0 +1,9 @@
+// Listing 7-1: Using use.rust to import from Rust std
+use.rust std::collections::HashMap
+
+fn main() {
+    var scores = HashMap.new()
+    scores.insert("Blue", 10)
+    scores.insert("Red", 50)
+    print(f"Scores: ${scores}")
+}
