@@ -1,0 +1,12 @@
+// Listing 5-1: A User type definition
+type User {
+    active bool
+    username String
+    email String
+    sign_in_count int
+}
+
+fn main() {
+    let user1 = User(true, "someusername123", "someone@example.com", 1)
+    print(f"email: ${user1.email}")
+}

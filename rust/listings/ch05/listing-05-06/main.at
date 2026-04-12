@@ -1,0 +1,20 @@
+// Listing 5-6: Associated function (constructor) using ext
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+ext Rectangle {
+    fn square(size int) Rectangle {
+        Rectangle(size, size)
+    }
+}
+
+fn main() {
+    let sq = Rectangle.square(3)
+    print(f"Square area: ${sq.area()}")
+}

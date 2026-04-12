@@ -1,0 +1,14 @@
+// Listing 5-4: Rectangle with area method (inline in type)
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"The area of the rectangle is ${rect1.area()} square pixels.")
+}

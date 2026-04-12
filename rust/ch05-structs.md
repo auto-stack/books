@@ -1,0 +1,592 @@
+# Using Structs to Structure Related Data
+
+A _struct_, or _structure_, is a custom data type that lets you package together
+and name multiple related values that make up a meaningful group. In Auto,
+structs are defined using the `type` keyword instead of Rust's `struct` keyword,
+but the concept is the same. If you're familiar with an object-oriented language,
+a struct is like an object's data attributes.
+
+In this chapter, we'll compare and contrast tuples with structs, demonstrate how
+to define and instantiate structs, and discuss how to define associated functions
+and methods using both inline definitions within `type` blocks and the `ext`
+keyword for method extensions.
+
+## Defining and Instantiating Structs
+
+Structs are similar to tuples in that both hold multiple related values. Like
+tuples, the pieces of a struct can be different types. Unlike with tuples, in a
+struct you'll name each piece of data so it's clear what the values mean.
+
+To define a struct in Auto, we use the `type` keyword and name the type. Then,
+inside curly brackets, we define the names and types of the fields. Note that
+Auto uses space-separated type annotations (`name Type`) instead of Rust's
+colon syntax (`name: Type`).
+
+<Listing number="5-1" file-name="main.auto" caption="A `User` type definition">
+
+```auto
+type User {
+    active bool
+    username String
+    email String
+    sign_in_count int
+}
+
+fn main() {
+    let user1 = User(true, "someusername123", "someone@example.com", 1)
+    print(f"email: ${user1.email}")
+}
+```
+
+```rust
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn main() {
+    let user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+    println!("email: {}", user1.email);
+}
+```
+
+</Listing>
+
+Key differences from Rust:
+
+| Feature | Auto | Rust |
+|---------|------|------|
+| Define struct | `type Name { }` | `struct Name { }` |
+| Field type syntax | `name Type` | `name: Type` |
+| Create instance | `Name(val1, val2)` | `Name { field: val }` |
+| Mutable instance | `var user = Name(...)` | `let mut user = Name { ... }` |
+
+Auto uses positional constructor syntax (`User(true, "name", ...)`) instead of
+Rust's named field syntax (`User { active: true, ... }`). The arguments are
+matched to fields in the order they are declared.
+
+### Mutable Instances
+
+To modify a field, use `var` to create a mutable instance:
+
+<Listing number="5-2" file-name="main.auto" caption="Changing the value in the `email` field of a mutable `User` instance">
+
+```auto
+type User {
+    active bool
+    username String
+    email String
+    sign_in_count int
+}
+
+fn main() {
+    var user1 = User(true, "someusername123", "someone@example.com", 1)
+    user1.email = "another@example.com"
+    print(f"email: ${user1.email}")
+}
+```
+
+```rust
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn main() {
+    let mut user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+    user1.email = String::from("another@example.com");
+    println!("email: {}", user1.email);
+}
+```
+
+</Listing>
+
+Note that the entire instance must be mutable; Auto doesn't allow us to mark
+only certain fields as mutable, just like Rust.
+
+## An Example Program Using Structs
+
+Let's write a program that calculates the area of a rectangle, starting with
+simple variables and refactoring toward structs.
+
+### Using Separate Variables
+
+<Listing number="5-3" file-name="main.auto" caption="Calculating the area of a rectangle specified by separate width and height variables">
+
+```auto
+fn area(width int, height int) int {
+    width * height
+}
+
+fn main() {
+    let width1 = 30
+    let height1 = 50
+    print(f"The area of the rectangle is ${area(width1, height1)} square pixels.")
+}
+```
+
+```rust
+fn area(width: u32, height: u32) -> u32 {
+    width * height
+}
+
+fn main() {
+    let width1 = 30;
+    let height1 = 50;
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(width1, height1)
+    );
+}
+```
+
+</Listing>
+
+The issue with this code is that `width` and `height` are related, but the
+function signature doesn't convey that relationship. Let's refactor using a
+type.
+
+### Refactoring with Types
+
+<Listing number="5-4" file-name="main.auto" caption="Defining a `Rectangle` type and calculating its area">
+
+```auto
+type Rectangle {
+    width int
+    height int
+}
+
+fn area(rect Rectangle) int {
+    rect.width * rect.height
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"The area of the rectangle is ${area(rect1)} square pixels.")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn area(rect: &Rectangle) -> u32 {
+    rect.width * rect.height
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&rect1)
+    );
+}
+```
+
+</Listing>
+
+Now the function signature clearly states that it calculates the area of a
+`Rectangle`, and the fields `width` and `height` are named and related.
+
+### Borrowing with `.view`
+
+As discussed in Chapter 4, we can use `.view` to borrow a value without taking
+ownership:
+
+<Listing number="5-5" file-name="main.auto" caption="Using `.view` to borrow a Rectangle">
+
+```auto
+type Rectangle {
+    width int
+    height int
+}
+
+fn area(rect Rectangle) int {
+    rect.width * rect.height
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"The area of the rectangle is ${area(rect1.view)} square pixels.")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn area(rect: &Rectangle) -> u32 {
+    rect.width * rect.height
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&rect1)
+    );
+}
+```
+
+</Listing>
+
+## Methods
+
+Methods are functions defined within the context of a type. In Auto, methods
+can be defined in two ways:
+
+1. **Inline methods** — defined directly inside a `type { }` block
+2. **Extension methods** — defined in an `ext` block outside the type definition
+
+Both approaches generate Rust `impl` blocks.
+
+### Defining Methods Inline
+
+In Auto, you can define methods directly inside the `type` block. The `self`
+parameter is implicit — inside method bodies, use `.field` to access the
+instance's fields:
+
+<Listing number="5-6" file-name="main.auto" caption="Defining an `area` method on the `Rectangle` type">
+
+```auto
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"The area of the rectangle is ${rect1.area()} square pixels.")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+}
+```
+
+</Listing>
+
+Key differences:
+
+| Feature | Auto | Rust |
+|---------|------|------|
+| Define methods | Inside `type { }` block | In separate `impl` block |
+| Self parameter | Implicit (not written) | Explicit `&self` |
+| Access own fields | `.field` | `self.field` |
+
+The `.field` syntax is shorthand for `self.field`. Auto automatically injects
+`&self` as the first parameter and converts `.field` to `self.field` in the
+transpiled Rust code.
+
+### Methods with Multiple Parameters
+
+You can add additional parameters to methods after the implicit `self`:
+
+<Listing number="5-7" file-name="main.auto" caption="A `Rectangle` type with multiple methods">
+
+```auto
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+
+    fn is_square() bool {
+        .width == .height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    let rect2 = Rectangle(40, 40)
+
+    print(f"rect1 area: ${rect1.area()}")
+    print(f"rect1 is square: ${rect1.is_square()}")
+    print(f"rect2 is square: ${rect2.is_square()}")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn is_square(&self) -> bool {
+        self.width == self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect2 = Rectangle { width: 40, height: 40 };
+
+    println!("rect1 area: {}", rect1.area());
+    println!("rect1 is square: {}", rect1.is_square());
+    println!("rect2 is square: {}", rect2.is_square());
+}
+```
+
+</Listing>
+
+### Associated Functions with `ext`
+
+In Rust, associated functions (like `String::from`) are defined in `impl` blocks
+without `self` as the first parameter. In Auto, you use the `ext` keyword to
+add associated functions and methods to a type after its initial definition:
+
+<Listing number="5-8" file-name="main.auto" caption="Using `ext` to add an associated function">
+
+```auto
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+ext Rectangle {
+    fn square(size int) Rectangle {
+        Rectangle(size, size)
+    }
+}
+
+fn main() {
+    let sq = Rectangle.square(3)
+    print(f"Square area: ${sq.area()}")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+impl Rectangle {
+    fn square(size: u32) -> Rectangle {
+        Rectangle { width: size, height: size }
+    }
+}
+
+fn main() {
+    let sq = Rectangle::square(3);
+    println!("Square area: {}", sq.area());
+}
+```
+
+</Listing>
+
+Key mapping differences for associated functions:
+
+| Feature | Auto | Rust |
+|---------|------|------|
+| Define extension | `ext TypeName { }` | `impl TypeName { }` |
+| Call associated fn | `TypeName.method()` | `TypeName::method()` |
+| Constructor call | `TypeName(args)` | `TypeName { field: val }` |
+
+The `ext` keyword is Auto's equivalent of Rust's `impl` for adding methods and
+associated functions to types. Unlike `impl`, `ext` can be used anywhere in the
+codebase, not just after the type definition.
+
+### Multiple `ext` Blocks
+
+Each type can have multiple `ext` blocks. This is useful for organizing methods
+by functionality:
+
+<Listing number="5-9" file-name="main.auto" caption="Using multiple `ext` blocks">
+
+```auto
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+ext Rectangle {
+    fn double_width() int {
+        .width * 2
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"Area: ${rect1.area()}")
+    print(f"Double width: ${rect1.double_width()}")
+}
+```
+
+```rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+impl Rectangle {
+    fn double_width(&self) -> u32 {
+        self.width * 2
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle { width: 30, height: 50 };
+    println!("Area: {}", rect1.area());
+    println!("Double width: {}", rect1.double_width());
+}
+```
+
+</Listing>
+
+## Tuple-Like Types
+
+Auto doesn't have Rust's "tuple structs" (unnamed fields). Instead, use regular
+types with named fields, which provide better readability:
+
+<Listing number="5-10" file-name="main.auto" caption="Named types instead of tuple structs">
+
+```auto
+type Color {
+    red int
+    green int
+    blue int
+}
+
+type Point {
+    x int
+    y int
+    z int
+}
+
+fn main() {
+    let black = Color(0, 0, 0)
+    let origin = Point(0, 0, 0)
+    print(f"black: ${black.red}, ${black.green}, ${black.blue}")
+    print(f"origin: ${origin.x}, ${origin.y}, ${origin.z}")
+}
+```
+
+```rust
+struct Color {
+    red: i32,
+    green: i32,
+    blue: i32,
+}
+
+struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
+}
+
+fn main() {
+    let black = Color { red: 0, green: 0, blue: 0 };
+    let origin = Point { x: 0, y: 0, z: 0 };
+    println!("black: {}, {}, {}", black.red, black.green, black.blue);
+    println!("origin: {}, {}, {}", origin.x, origin.y, origin.z);
+}
+```
+
+</Listing>
+
+> ### Ownership of Type Data
+>
+> In Auto, just like in Rust, types can own their data (using `String`) or
+> borrow it (using `.view`). When a type owns its data, the data is valid for
+> as long as the entire type instance is valid. Auto's compiler automatically
+> handles lifetime checking without requiring explicit annotations.
+
+## Summary
+
+Auto's `type` keyword provides the same functionality as Rust's `struct`, with
+a more streamlined syntax:
+
+| Concept | Auto | Rust |
+|---------|------|------|
+| Define type | `type Name { fields }` | `struct Name { fields }` |
+| Field syntax | `name Type` | `name: Type` |
+| Create instance | `Name(val1, val2)` | `Name { field: val }` |
+| Mutable instance | `var x = Name(...)` | `let mut x = Name { ... }` |
+| Inline method | Inside `type { }` block | In `impl` block |
+| Extension method | `ext Name { }` | `impl Name { }` |
+| Self access | `.field` | `self.field` |
+| Associated function | `ext Name { fn new() }` | `impl Name { fn new() }` |
+| Call associated fn | `Name.fn()` | `Name::fn()` |
+
+Types and enums (discussed in Chapter 6) are the building blocks for creating
+new types in your program's domain to take full advantage of Auto's compile-time
+type checking.
+
+Let's move on to Chapter 6 and look at enums and pattern matching with the
+`is` keyword.

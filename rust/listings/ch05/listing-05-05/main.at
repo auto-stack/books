@@ -1,0 +1,22 @@
+// Listing 5-5: Rectangle with multiple methods
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+
+    fn is_square() bool {
+        .width == .height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    let rect2 = Rectangle(40, 40)
+
+    print(f"rect1 area: ${rect1.area()}")
+    print(f"rect1 is square: ${rect1.is_square()}")
+    print(f"rect2 is square: ${rect2.is_square()}")
+}

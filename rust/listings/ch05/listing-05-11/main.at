@@ -1,0 +1,10 @@
+// Listing 5-11: Debug printing of a type
+type Rectangle {
+    width int
+    height int
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"rect1 is {rect1.width}x{rect1.height}")
+}

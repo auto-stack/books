@@ -1,0 +1,10 @@
+// Listing 5-8: Rectangle area with separate variables (before refactoring)
+fn area(width int, height int) int {
+    width * height
+}
+
+fn main() {
+    let width1 = 30
+    let height1 = 50
+    print(f"The area of the rectangle is ${area(width1, height1)} square pixels.")
+}

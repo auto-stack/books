@@ -1,0 +1,19 @@
+// Listing 5-7: Tuple struct-like types in Auto
+type Color {
+    red int
+    green int
+    blue int
+}
+
+type Point {
+    x int
+    y int
+    z int
+}
+
+fn main() {
+    let black = Color(0, 0, 0)
+    let origin = Point(0, 0, 0)
+    print(f"black: ${black.red}, ${black.green}, ${black.blue}")
+    print(f"origin: ${origin.x}, ${origin.y}, ${origin.z}")
+}

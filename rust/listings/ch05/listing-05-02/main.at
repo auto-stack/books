@@ -1,0 +1,13 @@
+// Listing 5-2: Creating a mutable User instance
+type User {
+    active bool
+    username String
+    email String
+    sign_in_count int
+}
+
+fn main() {
+    var user1 = User(true, "someusername123", "someone@example.com", 1)
+    user1.email = "another@example.com"
+    print(f"email: ${user1.email}")
+}

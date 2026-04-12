@@ -1,0 +1,21 @@
+// Listing 5-12: Multiple ext blocks
+type Rectangle {
+    width int
+    height int
+
+    fn area() int {
+        .width * .height
+    }
+}
+
+ext Rectangle {
+    fn double_width() int {
+        .width * 2
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle(30, 50)
+    print(f"Area: ${rect1.area()}")
+    print(f"Double width: ${rect1.double_width()}")
+}

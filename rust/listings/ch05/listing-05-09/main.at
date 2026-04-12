@@ -1,0 +1,10 @@
+// Listing 5-9: Rectangle area with tuple (simplified)
+fn area(width int, height int) int {
+    width * height
+}
+
+fn main() {
+    let rect1_width = 30
+    let rect1_height = 50
+    print(f"The area of the rectangle is ${area(rect1_width, rect1_height)} square pixels.")
+}
