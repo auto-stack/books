@@ -1,0 +1,18 @@
+// Listing 2-4: Comparing guess with secret number (simplified for a2r)
+// Note: Ordering/cmp not yet supported by a2r; using if/else instead
+fn main() {
+    print("Guess the number!")
+    let secret_number = 7
+    print(f"The secret number is: $secret_number")
+    print("Please input your guess.")
+
+    let guess = 4
+
+    if guess < secret_number {
+        print("Too small!")
+    } else if guess > secret_number {
+        print("Too big!")
+    } else {
+        print("You win!")
+    }
+}

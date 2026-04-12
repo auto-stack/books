@@ -1,0 +1,12 @@
+// Variables and Mutability - immutable vs mutable
+fn main() {
+    // Immutable variable
+    let x = 5
+    print(f"x = $x")
+
+    // Mutable variable
+    var y = 10
+    print(f"y = $y")
+    y = 20
+    print(f"y = $y")
+}

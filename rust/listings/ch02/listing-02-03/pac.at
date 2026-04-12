@@ -1,0 +1,7 @@
+name: "listing-02-03"
+version: "0.1.0"
+lang: "rust"
+
+app main {
+  srcs: ["main.at"]
+}

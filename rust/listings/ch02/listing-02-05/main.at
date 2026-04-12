@@ -1,0 +1,11 @@
+// Listing 2-5: Handling invalid input gracefully
+// Demonstrates is pattern matching with Some/None
+fn main() {
+    let input = 42
+    let result = if input >= 0 { Some(input) } else { None }
+
+    is result {
+        Some(n) => print(f"Valid guess: $n")
+        None => print("Invalid input")
+    }
+}

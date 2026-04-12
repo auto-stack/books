@@ -1,0 +1,27 @@
+// Loops - loop and for
+fn main() {
+    // Loop with break (counter)
+    var counter = 0
+    loop {
+        if counter == 10 {
+            break
+        }
+        counter = counter + 1
+    }
+    print(f"counter reached $counter")
+
+    // Countdown using loop
+    var number = 3
+    loop {
+        print(number)
+        number = number - 1
+        if number == 0 { break }
+    }
+    print("LIFTOFF!")
+
+    // For loop over array
+    let a = [10, 20, 30]
+    for element in a {
+        print(element)
+    }
+}

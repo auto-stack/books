@@ -1,0 +1,11 @@
+// Listing 2-3: Adding random number generation (simplified for a2r)
+// Note: random module not yet supported by a2r transpiler
+fn main() {
+    print("Guess the number!")
+    let secret_number = 7
+    print(f"The secret number is: $secret_number")
+    print("Please input your guess.")
+
+    var guess = "4"
+    print(f"You guessed: $guess")
+}

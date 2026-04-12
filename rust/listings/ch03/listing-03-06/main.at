@@ -1,0 +1,15 @@
+// Control Flow - if expressions
+fn main() {
+    let number = 3
+
+    if number < 5 {
+        print("condition was true")
+    } else {
+        print("condition was false")
+    }
+
+    // if as expression
+    let condition = true
+    let x = if condition { 5 } else { 6 }
+    print(f"x = $x")
+}

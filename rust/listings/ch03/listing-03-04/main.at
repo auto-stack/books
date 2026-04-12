@@ -1,0 +1,12 @@
+// Compound Types - arrays
+fn main() {
+    // Array with fixed values
+    let a = [1, 2, 3, 4, 5]
+    let first = a[0]
+    let second = a[1]
+    print(f"first = $first, second = $second")
+
+    // Array with repeated values
+    let b = [3, 3, 3, 3, 3]
+    print(f"b[0] = ${b[0]}")
+}

@@ -1,0 +1,7 @@
+# Build artifacts in listings
+rust/listings/**/.am/
+rust/listings/**/rust/
+rust/listings/**/*.wrong.rs
+
+# Claude Code
+.claude/settings.local.json

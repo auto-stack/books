@@ -1,0 +1,13 @@
+// Shadowing - reusing variable names with different types
+fn main() {
+    let x = 5
+    let x = x + 1
+    print(f"x = $x")
+
+    // Shadowing with type change
+    let spaces = "   "
+    print(f"spaces string len = ${spaces.len()}")
+
+    let spaces = spaces.length()
+    print(f"spaces count = $spaces")
+}

@@ -1,0 +1,20 @@
+// Scalar Types - numeric operations
+fn main() {
+    // Integer operations
+    let sum = 5 + 10
+    let difference = 95 - 4
+    let product = 4 * 30
+    let quotient = 56 / 32
+    let remainder = 43 % 5
+
+    print(f"sum = $sum")
+    print(f"difference = $difference")
+    print(f"product = $product")
+    print(f"quotient = $quotient")
+    print(f"remainder = $remainder")
+
+    // Boolean
+    let t = true
+    let f = false
+    print(f"t = $t, f = $f")
+}

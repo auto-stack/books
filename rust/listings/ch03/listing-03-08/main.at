@@ -1,0 +1,10 @@
+// Pattern matching with is
+fn main() {
+    let x = 10
+
+    is x {
+        0 => print("zero")
+        1 => print("one")
+        else => print("other")
+    }
+}

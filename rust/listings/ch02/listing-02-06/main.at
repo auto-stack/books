@@ -1,0 +1,22 @@
+// Listing 2-6: Complete guessing game (simplified for a2r)
+// Note: io, random, Ordering not yet supported by a2r
+fn main() {
+    print("Guess the number!")
+    let secret_number = 7
+
+    loop {
+        print("Please input your guess.")
+        let guess = 7   // Placeholder: would be user input
+
+        if guess < secret_number {
+            print("Too small!")
+        }
+        if guess > secret_number {
+            print("Too big!")
+        }
+        if guess == secret_number {
+            print("You win!")
+            break
+        }
+    }
+}

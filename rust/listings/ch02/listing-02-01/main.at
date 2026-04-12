@@ -1,0 +1,9 @@
+// Listing 2-1: Getting user input (simplified for a2r)
+// Note: io.read_line() not yet supported by a2r transpiler
+fn main() {
+    print("Guess the number!")
+    print("Please input your guess.")
+
+    var guess = "42"
+    print(f"You guessed: $guess")
+}

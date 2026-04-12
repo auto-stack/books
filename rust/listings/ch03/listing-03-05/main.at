@@ -1,0 +1,16 @@
+// Functions with parameters and return values
+fn add(a int, b int) int {
+    a + b
+}
+
+fn five() int {
+    5
+}
+
+fn main() {
+    let result = add(5, 3)
+    print(f"5 + 3 = $result")
+
+    let x = five()
+    print(f"five() = $x")
+}
