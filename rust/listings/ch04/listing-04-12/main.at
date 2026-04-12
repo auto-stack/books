@@ -1,0 +1,18 @@
+// Listing 4-12: String slice — safe reference
+fn first_word_slice(s String) String {
+    let bytes = s.bytes()
+    var i = 0
+    for b in bytes {
+        if b == 32 {
+            return s[0..i]
+        }
+        i = i + 1
+    }
+    return s[0..s.length()]
+}
+
+fn main() {
+    let s String = String.from("hello world")
+    let word = first_word_slice(s.view)
+    print(f"first word: $word")
+}

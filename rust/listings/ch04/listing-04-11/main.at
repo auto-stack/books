@@ -1,0 +1,22 @@
+// Listing 4-11: Finding the first word (index approach — problem demo)
+fn first_word(s String) int {
+    let bytes = s.bytes()
+    var i = 0
+    for b in bytes {
+        if b == 32 {   // 32 is the ASCII code for space
+            return i
+        }
+        i = i + 1
+    }
+    return s.length()
+}
+
+fn main() {
+    var s String = String.from("hello world")
+    let word = first_word(s.view)
+    print(f"first word ends at index $word")
+
+    s.clear()
+    // word is now a stale index — the string has changed!
+    print(f"stale index = $word")
+}

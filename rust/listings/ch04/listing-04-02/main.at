@@ -1,0 +1,5 @@
+// Listing 4-2: Creating a String from a string literal
+fn main() {
+    let s String = String.from("hello")
+    print(s)
+}

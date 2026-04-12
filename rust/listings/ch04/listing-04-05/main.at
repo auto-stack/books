@@ -1,0 +1,6 @@
+// Listing 4-5: Stack-only data is copied (not moved)
+fn main() {
+    let x = 5
+    let y = x
+    print(f"x = $x, y = $y")
+}

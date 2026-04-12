@@ -1,0 +1,9 @@
+// Listing 4-10: Multiple .view borrows are OK
+fn main() {
+    let s String = String.from("hello")
+
+    let r1 = s.view
+    let r2 = s.view
+    print(f"r1 = $r1, r2 = $r2")
+    // Multiple immutable borrows are allowed
+}

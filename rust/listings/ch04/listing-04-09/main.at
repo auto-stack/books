@@ -1,0 +1,10 @@
+// Listing 4-9: Mutable borrow with .mut (like &mut T)
+fn append_world(s String) {
+    s.append(" world")
+}
+
+fn main() {
+    var s1 String = String.from("hello")
+    append_world(s1.mut)
+    print(s1)
+}

@@ -1,0 +1,10 @@
+// Listing 4-8: Immutable borrow with .view (like &T)
+fn calculate_length(s String) int {
+    s.length()
+}
+
+fn main() {
+    let s1 String = String.from("hello")
+    let len = calculate_length(s1.view)
+    print(f"The length of '$s1' is $len.")
+}

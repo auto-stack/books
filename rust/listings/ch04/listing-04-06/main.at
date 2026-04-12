@@ -1,0 +1,18 @@
+// Listing 4-6: Ownership and functions — move into function
+fn take_ownership(s String) {
+    print(f"took ownership of: $s")
+}
+
+fn main() {
+    let s String = String.from("hello")
+    take_ownership(s)
+    // s is no longer valid here — ownership moved into function
+
+    let x = 5
+    make_copy(x)
+    // x is still valid — integers are Copy types
+}
+
+fn make_copy(i int) {
+    print(f"made copy of: $i")
+}

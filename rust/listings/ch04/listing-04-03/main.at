@@ -1,0 +1,7 @@
+// Listing 4-3: Move semantics — s1 is invalidated
+fn main() {
+    let s1 String = String.from("hello")
+    let s2 = s1.move
+    print(s2)
+    // s1 is no longer valid here
+}

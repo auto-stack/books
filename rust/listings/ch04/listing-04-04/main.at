@@ -1,0 +1,6 @@
+// Listing 4-4: Clone for deep copy
+fn main() {
+    let s1 String = String.from("hello")
+    let s2 = s1.clone()
+    print(f"s1 = $s1, s2 = $s2")
+}

@@ -1,0 +1,699 @@
+# Understanding Ownership
+
+_Ownership_ is a set of rules that govern how an Auto program manages memory.
+All programs have to manage the way they use a computer's memory while running.
+Some languages have garbage collection that regularly looks for no-longer-used
+memory as the program runs; in other languages, the programmer must explicitly
+allocate and free the memory. Auto uses a third approach: Memory is managed
+through a system of ownership with a set of rules that the compiler checks. If
+any of the rules are violated, the program won't compile. None of the features
+of ownership will slow down your program while it's running.
+
+Auto's ownership model is inspired by Rust and shares the same fundamental
+principles. The key difference is that Auto reduces the need for explicit
+annotations: where Rust requires lifetime markers and explicit `&`/`&mut`
+syntax, Auto uses property-based keywords like `.view` and `.mut` to express
+borrowing intent more clearly.
+
+When you understand ownership, you'll have a solid foundation for understanding
+the features that make Auto unique. In this chapter, you'll learn ownership by
+working through some examples that focus on a very common data structure:
+strings.
+
+> ### The Stack and the Heap
+>
+> Many programming languages don't require you to think about the stack and the
+> heap very often. But in a systems programming language like Auto, whether a
+> value is on the stack or the heap affects how the language behaves and why
+> you have to make certain decisions.
+>
+> Both the stack and the heap are parts of memory available to your code to use
+> at runtime, but they are structured in different ways. The stack stores
+> values in the order it gets them and removes the values in the opposite
+> order. This is referred to as _last in, first out (LIFO)_. All data stored
+> on the stack must have a known, fixed size. Data with an unknown size at
+> compile time or a size that might change must be stored on the heap instead.
+>
+> The heap is less organized: When you put data on the heap, you request a
+> certain amount of space. The memory allocator finds an empty spot in the heap
+> that is big enough, marks it as being in use, and returns a _pointer_, which
+> is the address of that location.
+>
+> Pushing to the stack is faster than allocating on the heap because the
+> allocator never has to search for a place to store new data; that location is
+> always at the top of the stack. Accessing data in the heap is generally
+> slower than accessing data on the stack because you have to follow a pointer
+> to get there.
+>
+> Keeping track of what parts of code are using what data on the heap,
+> minimizing the amount of duplicate data on the heap, and cleaning up unused
+> data on the heap so that you don't run out of space are all problems that
+> ownership addresses.
+
+## What Is Ownership?
+
+### Ownership Rules
+
+First, let's take a look at the ownership rules. Keep these rules in mind as we
+work through the examples that illustrate them:
+
+- Each value in Auto has an _owner_.
+- There can only be one owner at a time.
+- When the owner goes out of scope, the value will be dropped.
+
+These rules are identical to Rust's ownership rules. Auto's borrow checker
+enforces them at compile time, ensuring memory safety without garbage collection.
+
+### Variable Scope
+
+As a first example of ownership, we'll look at the scope of some variables. A
+_scope_ is the range within a program for which an item is valid.
+
+<Listing number="4-1" file-name="main.auto" caption="A variable and the scope in which it is valid">
+
+```auto
+fn main() {
+    // s is not valid here, it's not yet declared
+    let s = "hello"   // s is valid from this point forward
+    // do stuff with s
+    print(s)
+    // this scope is now over, and s is no longer valid
+}
+```
+
+```rust
+fn main() {
+    // s is not valid here, it's not yet declared
+    let s = "hello";   // s is valid from this point forward
+    // do stuff with s
+    println!("{}", s);
+    // this scope is now over, and s is no longer valid
+}
+```
+
+</Listing>
+
+In other words, there are two important points in time here:
+
+- When `s` comes _into_ scope, it is valid.
+- It remains valid until it goes _out of_ scope.
+
+### The `String` Type
+
+To illustrate the rules of ownership, we need a data type that is more complex
+than those we covered in Chapter 3. We want to look at data that is stored on
+the heap and explore how Auto knows when to clean up that data.
+
+We've already seen string literals, where a string value is hardcoded into our
+program. String literals are convenient, but they aren't suitable for every
+situation because they're immutable. Auto has the `String` type to manage data
+allocated on the heap. You can create a `String` from a string literal like so:
+
+```auto
+let s String = String.from("hello")
+```
+
+```rust
+let s = String::from("hello");
+```
+
+In Auto, we use `String.from()` (dot syntax) instead of Rust's `String::from()`
+(double colon syntax). Both create a heap-allocated string.
+
+This kind of string _can_ be mutated:
+
+```auto
+var s String = String.from("hello")
+s.append(", world!")   // append a string
+print(s)               // prints "hello, world!"
+```
+
+```rust
+let mut s = String::from("hello");
+s.push_str(", world!"); // push a string
+println!("{}", s);      // prints "hello, world!"
+```
+
+### Memory and Allocation
+
+In the case of a string literal, the text is hardcoded directly into the final
+executable. But with the `String` type, to support a mutable, growable piece of
+text, we need to allocate memory on the heap at runtime. This means:
+
+- The memory must be requested from the memory allocator at runtime.
+- We need a way of returning this memory to the allocator when we're done.
+
+The first part is done when we call `String.from()`. The second part is where
+ownership shines: in Auto, the memory is automatically returned once the
+variable that owns it goes out of scope. Auto calls a cleanup function
+(like Rust's `drop`) automatically at the closing curly bracket.
+
+<Listing number="4-2" file-name="main.auto" caption="Creating a `String` and its automatic cleanup">
+
+```auto
+fn main() {
+    let s String = String.from("hello")
+    print(s)
+}
+```
+
+```rust
+fn main() {
+    let s: String = String::from("hello");
+    println!("{}", s);
+}
+```
+
+</Listing>
+
+When `s` goes out of scope, Auto automatically frees the heap memory. No manual
+deallocation needed.
+
+### Variables and Data Interacting with Move
+
+Multiple variables can interact with the same data in different ways. Let's
+look at what happens with `String` values:
+
+<Listing number="4-3" file-name="main.auto" caption="Move semantics — `s1` is invalidated after assignment to `s2`">
+
+```auto
+fn main() {
+    let s1 String = String.from("hello")
+    let s2 = s1.move
+    print(s2)
+    // s1 is no longer valid here
+}
+```
+
+```rust
+fn main() {
+    let s1: String = String::from("hello");
+    let s2 = s1;  // s1 is moved to s2
+    println!("{}", s2);
+    // s1 is no longer valid here
+}
+```
+
+</Listing>
+
+In Auto, the `.move` property explicitly signals that ownership is being
+transferred. The original variable (`s1`) is invalidated after the move. This
+prevents _double free_ errors where both variables would try to free the same
+heap memory.
+
+> Note: In many cases, Auto can infer when a move is intended and you can write
+> `let s2 = s1` without the explicit `.move`. However, using `.move` makes the
+> ownership transfer clear and intentional.
+
+### Variables and Data Interacting with Clone
+
+If we _do_ want to deeply copy the heap data of a `String`, we can use the
+`.clone()` method:
+
+<Listing number="4-4" file-name="main.auto" caption="Using `clone` for deep copy">
+
+```auto
+fn main() {
+    let s1 String = String.from("hello")
+    let s2 = s1.clone()
+    print(f"s1 = $s1, s2 = $s2")
+}
+```
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+    println!("s1 = {}, s2 = {}", s1, s2);
+}
+```
+
+</Listing>
+
+When you see a call to `.clone()`, you know that some code is being executed
+that may be expensive — it creates a full copy of the heap data.
+
+### Stack-Only Data: Copy
+
+Types with a known size at compile time are stored entirely on the stack, so
+copies of the actual values are quick to make. There's no reason to prevent the
+original variable from being valid after assignment:
+
+<Listing number="4-5" file-name="main.auto" caption="Stack-only data is copied, not moved">
+
+```auto
+fn main() {
+    let x = 5
+    let y = x
+    print(f"x = $x, y = $y")
+}
+```
+
+```rust
+fn main() {
+    let x = 5;
+    let y = x;
+    println!("x = {}, y = {}", x, y);
+}
+```
+
+</Listing>
+
+Both `x` and `y` are valid because integers implement the `Copy` trait. The
+same applies to:
+
+- All integer types
+- The Boolean type (`bool`)
+- All floating-point types
+- The character type (`char`)
+- Tuples, if they only contain types that also implement `Copy`
+
+### Ownership and Functions
+
+Passing a variable to a function will move or copy it, just like assignment:
+
+<Listing number="4-6" file-name="main.auto" caption="Functions with ownership and scope">
+
+```auto
+fn take_ownership(s String) {
+    print(f"took ownership of: $s")
+}
+
+fn make_copy(i int) {
+    print(f"made copy of: $i")
+}
+
+fn main() {
+    let s String = String.from("hello")
+    take_ownership(s)
+    // s is no longer valid here — ownership moved into function
+
+    let x = 5
+    make_copy(x)
+    // x is still valid — integers are Copy types
+}
+```
+
+```rust
+fn take_ownership(s: String) {
+    println!("took ownership of: {}", s);
+}
+
+fn make_copy(i: i32) {
+    println!("made copy of: {}", i);
+}
+
+fn main() {
+    let s: String = String::from("hello");
+    take_ownership(s);
+    // s is no longer valid here — ownership moved into function
+
+    let x: i32 = 5;
+    make_copy(x);
+    // x is still valid — integers are Copy types
+}
+```
+
+</Listing>
+
+### Return Values and Scope
+
+Returning values can also transfer ownership:
+
+<Listing number="4-7" file-name="main.auto" caption="Transferring ownership of return values">
+
+```auto
+fn give_ownership() String {
+    let s String = String.from("yours")
+    s.move
+}
+
+fn take_and_give_back(s String) String {
+    s.move
+}
+
+fn main() {
+    let s1 = give_ownership()
+    print(f"s1 = $s1")
+
+    let s2 String = String.from("hello")
+    let s3 = take_and_give_back(s2)
+    print(f"s3 = $s3")
+}
+```
+
+```rust
+fn give_ownership() -> String {
+    let s = String::from("yours");
+    s
+}
+
+fn take_and_give_back(s: String) -> String {
+    s
+}
+
+fn main() {
+    let s1 = give_ownership();
+    println!("s1 = {}", s1);
+
+    let s2 = String::from("hello");
+    let s3 = take_and_give_back(s2);
+    println!("s3 = {}", s3);
+}
+```
+
+</Listing>
+
+Taking ownership and then returning ownership with every function is tedious.
+What if we want to let a function use a value but not take ownership? This is
+where _references_ come in.
+
+## References and Borrowing
+
+The issue with the code above is that we have to return the `String` to the
+calling function so that we can still use it after the call. Instead, we can
+provide a _reference_ to the `String` value. A reference is like a pointer in
+that it's an address we can follow to access the data stored at that address;
+that data is owned by some other variable. Unlike a pointer, a reference is
+guaranteed to point to a valid value of a particular type.
+
+In Auto, you create a reference using the `.view` property (for immutable
+borrows) or the `.mut` property (for mutable borrows):
+
+| Auto | Rust | Meaning |
+|------|------|---------|
+| `s.view` | `&s` | Immutable reference (borrow) |
+| `s.mut` | `&mut s` | Mutable reference (borrow) |
+| `s.move` | `s` | Ownership transfer (move) |
+
+### Immutable Borrows with `.view`
+
+Here is how you would define and use a `calculate_length` function that borrows
+a `String` instead of taking ownership:
+
+<Listing number="4-8" file-name="main.auto" caption="Using `.view` to borrow a value without taking ownership">
+
+```auto
+fn calculate_length(s String) int {
+    s.length()
+}
+
+fn main() {
+    let s1 String = String.from("hello")
+    let len = calculate_length(s1.view)
+    print(f"The length of '$s1' is $len.")
+}
+```
+
+```rust
+fn calculate_length(s: &str) -> usize {
+    s.len()
+}
+
+fn main() {
+    let s1 = String::from("hello");
+    let len = calculate_length(&s1);
+    println!("The length of '{}' is {}.", s1, len);
+}
+```
+
+</Listing>
+
+The `.view` property creates an immutable reference. Because the reference does
+not own the data, `s1` is still valid after the function call. The action of
+creating a reference is called _borrowing_ — just like in real life, if a
+person owns something, you can borrow it from them. When you're done, you give
+it back. You don't own it.
+
+### Mutable Borrows with `.mut`
+
+We can also borrow a value _mutably_ using the `.mut` property:
+
+<Listing number="4-9" file-name="main.auto" caption="Using `.mut` to borrow and modify a value">
+
+```auto
+fn append_world(s String) {
+    s.append(" world")
+}
+
+fn main() {
+    var s1 String = String.from("hello")
+    append_world(s1.mut)
+    print(s1)
+}
+```
+
+```rust
+fn append_world(s: &mut String) {
+    s.push_str(" world");
+}
+
+fn main() {
+    let mut s1 = String::from("hello");
+    append_world(&mut s1);
+    println!("{}", s1);
+}
+```
+
+</Listing>
+
+Mutable references have one big restriction: if you have a mutable reference to
+a value, you can have no other references to that value. This prevents _data
+races_ at compile time.
+
+### Borrowing Rules
+
+Auto enforces the same borrowing rules as Rust:
+
+1. At any given time, you can have _either_ one mutable reference _or_ any
+   number of immutable references.
+2. References must always be valid.
+
+<Listing number="4-10" file-name="main.auto" caption="Multiple immutable borrows are allowed">
+
+```auto
+fn main() {
+    let s String = String.from("hello")
+
+    let r1 = s.view
+    let r2 = s.view
+    print(f"r1 = $r1, r2 = $r2")
+    // Multiple immutable borrows are allowed
+}
+```
+
+```rust
+fn main() {
+    let s = String::from("hello");
+
+    let r1 = &s;
+    let r2 = &s;
+    println!("r1 = {}, r2 = {}", r1, r2);
+    // Multiple immutable borrows are allowed
+}
+```
+
+</Listing>
+
+This is fine because multiple immutable references don't affect each other — no
+one who is just reading the data has the ability to affect anyone else's
+reading of the data.
+
+But the following would not compile:
+
+```auto,ignore,does_not_compile
+fn main() {
+    var s String = String.from("hello")
+    let r1 = s.mut
+    let r2 = s.mut   // ERROR: cannot borrow `s` as mutable more than once
+    print(f"r1 = $r1, r2 = $r2")
+}
+```
+
+```rust,ignore,does_not_compile
+fn main() {
+    let mut s = String::from("hello");
+    let r1 = &mut s;
+    let r2 = &mut s; // ERROR: cannot borrow `s` as mutable more than once
+    println!("r1 = {}, r2 = {}", r1, r2);
+}
+```
+
+### Dangling References
+
+Auto's compiler guarantees that references will never be _dangling_ — that is,
+a reference will never point to memory that has been freed. If you try to
+create a dangling reference, the compiler will catch it at compile time.
+
+### Auto vs Rust: Explicit Lifetime Annotations
+
+One key difference between Auto and Rust is that Auto does not require explicit
+_lifetime annotations_. In Rust, functions that return references sometimes need
+lifetime parameters (e.g., `fn first_word<'a>(s: &'a str) -> &'a str`). Auto's
+compiler performs _lifetime inference_ automatically, similar to how it infers
+types. This eliminates a significant source of complexity while maintaining the
+same safety guarantees.
+
+## The Slice Type
+
+_Slices_ let you reference a contiguous sequence of elements in a collection.
+A slice is a kind of reference, so it does not have ownership.
+
+### String Slices
+
+A _string slice_ is a reference to a portion of a `String`:
+
+<Listing number="4-11" file-name="main.auto" caption="Finding the first word using an index (problematic)">
+
+```auto
+fn first_word(s String) int {
+    let bytes = s.bytes()
+    var i = 0
+    for b in bytes {
+        if b == 32 {
+            return i
+        }
+        i = i + 1
+    }
+    return s.length()
+}
+
+fn main() {
+    var s String = String.from("hello world")
+    let word = first_word(s.view)
+    print(f"first word ends at index $word")
+
+    s.clear()
+    // word is now a stale index — the string has changed!
+    print(f"stale index = $word")
+}
+```
+
+```rust
+fn first_word(s: &str) -> usize {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+    s.len()
+}
+
+fn main() {
+    let mut s = String::from("hello world");
+    let word = first_word(&s);
+    println!("first word ends at index {}", word);
+
+    s.clear();
+    // word is now a stale index — the string has changed!
+    println!("stale index = {}", word);
+}
+```
+
+</Listing>
+
+The problem with returning an index is that the index becomes stale if the
+string changes. Slices solve this problem by tying the reference to the
+original data.
+
+<Listing number="4-12" file-name="main.auto" caption="Finding the first word using a string slice">
+
+```auto
+fn first_word_slice(s String) String {
+    let bytes = s.bytes()
+    var i = 0
+    for b in bytes {
+        if b == 32 {
+            return s[0..i]
+        }
+        i = i + 1
+    }
+    return s[0..s.length()]
+}
+
+fn main() {
+    let s String = String.from("hello world")
+    let word = first_word_slice(s.view)
+    print(f"first word: $word")
+}
+```
+
+```rust
+fn first_word_slice(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
+}
+
+fn main() {
+    let s = String::from("hello world");
+    let word = first_word_slice(&s);
+    println!("first word: {}", word);
+}
+```
+
+</Listing>
+
+Auto uses the same range syntax as Rust for slices: `s[0..5]`, `s[3..]`,
+`s[..5]`, `s[..]`.
+
+### String Literals as Slices
+
+String literals are stored inside the binary. Their type is effectively a
+string slice — they're immutable references to pre-allocated data.
+
+### Array Slices
+
+Slices work for arrays too, not just strings:
+
+<Listing number="4-13" file-name="main.auto" caption="Array slices">
+
+```auto
+fn main() {
+    let a = [1, 2, 3, 4, 5]
+    let slice = a[1..3]
+    print(f"slice = $slice")
+}
+```
+
+```rust
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[1..3];
+    println!("slice = {:?}", slice);
+}
+```
+
+</Listing>
+
+This slice has the type `[]int` in Auto (equivalent to `&[i32]` in Rust). It
+works the same way as string slices, by storing a reference to the first
+element and a length.
+
+## Summary
+
+The concepts of ownership, borrowing, and slices ensure memory safety in Auto
+programs at compile time. Auto gives you the same control over memory as Rust,
+but with a more streamlined syntax:
+
+| Concept | Auto | Rust |
+|---------|------|------|
+| Immutable borrow | `s.view` | `&s` |
+| Mutable borrow | `s.mut` | `&mut s` |
+| Move ownership | `s.move` | `s` |
+| Deep copy | `s.clone()` | `s.clone()` |
+| Lifetime annotations | (inferred) | `'a`, `'b` |
+| String slice | `s[0..5]` | `&s[0..5]` |
+
+The owner of data automatically cleans up that data when it goes out of scope,
+so you don't have to write and debug extra code to get memory safety. Ownership
+affects how lots of other parts of Auto work, so we'll talk about these
+concepts further throughout the rest of the book.
+
+Let's move on to Chapter 5 and look at grouping pieces of data together using
+Auto's `type` keyword.
