@@ -1,0 +1,21 @@
+// Listing 6-5: Pattern matching with `is`
+enum Coin {
+    Penny int
+    Nickel int
+    Dime int
+    Quarter int
+}
+
+fn value_in_cents(coin Coin) int {
+    is coin {
+        Coin.Penny(v) => v
+        Coin.Nickel(v) => v
+        Coin.Dime(v) => v
+        Coin.Quarter(v) => v
+    }
+}
+
+fn main() {
+    let c = Coin.Penny(1)
+    print(f"Value: ${value_in_cents(c)}")
+}

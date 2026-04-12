@@ -1,0 +1,14 @@
+// Listing 6-9: Catch-all with `else` in `is`
+fn dice_roll(value int) {
+    is value {
+        3 => print("Lucky number 3!")
+        7 => print("Got a 7!")
+        else => print(f"Rolled: ${value}")
+    }
+}
+
+fn main() {
+    dice_roll(3)
+    dice_roll(7)
+    dice_roll(5)
+}

@@ -1,0 +1,10 @@
+// Listing 6-4: A Message enum with different data types
+enum Message {
+    Quit
+    Write String
+}
+
+fn main() {
+    let msg = Message.Write("hello")
+    print("Message created")
+}

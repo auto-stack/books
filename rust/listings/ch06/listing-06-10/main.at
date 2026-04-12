@@ -1,0 +1,16 @@
+// Listing 6-10: Enum methods with `ext`
+enum Message {
+    Quit
+    Write String
+}
+
+ext Message {
+    fn call() {
+        print("Message called")
+    }
+}
+
+fn main() {
+    let msg = Message.Write("hello")
+    msg.call()
+}

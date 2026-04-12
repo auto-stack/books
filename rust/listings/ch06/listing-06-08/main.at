@@ -1,0 +1,14 @@
+// Listing 6-8: Option matching with `is`
+fn plus_one(x ?int) ?int {
+    is x {
+        None => None
+        Some(i) => Some(i + 1)
+    }
+}
+
+fn main() {
+    let five = Some(5)
+    let six = plus_one(five)
+    let none = plus_one(None)
+    print("Done")
+}

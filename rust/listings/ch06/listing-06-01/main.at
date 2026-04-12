@@ -1,0 +1,12 @@
+// Listing 6-1: Defining an enum
+enum Direction {
+    North
+    South
+    East
+    West
+}
+
+fn main() {
+    let heading = Direction.North
+    print(f"Heading: ${heading}")
+}

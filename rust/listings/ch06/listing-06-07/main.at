@@ -1,0 +1,13 @@
+// Listing 6-7: Option type (?T) with Some and None
+fn maybe_value(x int) ?int {
+    if x > 0 {
+        return Some(x)
+    }
+    return None
+}
+
+fn main() {
+    let result1 = maybe_value(10)
+    let result2 = maybe_value(-5)
+    print("Done")
+}

@@ -1,0 +1,16 @@
+// Listing 6-2: Enum values as function parameters
+enum Direction {
+    North
+    South
+    East
+    West
+}
+
+fn print_direction(dir Direction) {
+    print(f"Direction: ${dir}")
+}
+
+fn main() {
+    let heading = Direction.North
+    print_direction(heading)
+}
