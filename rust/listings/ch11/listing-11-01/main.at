@@ -1,0 +1,10 @@
+// Listing 11-1: Basic test with assert_eq!
+fn add(a int, b int) -> int {
+    a + b
+}
+
+#[test]
+fn it_adds_two() {
+    let result = add(2, 2)
+    assert_eq(result, 4)
+}
