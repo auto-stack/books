@@ -1,4 +1,4 @@
-app listing-18-01 {
-    lang: "rust"
-    auto: "lib.at"
-}
+name: "listing-18-01"
+version: "0.1.0"
+
+lib("listing-18-01") {}

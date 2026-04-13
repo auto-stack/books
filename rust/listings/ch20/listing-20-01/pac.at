@@ -1,4 +1,4 @@
-app listing-20-01 {
-    lang: "rust"
-    auto: "main.at"
-}
+name: "listing-20-01"
+version: "0.1.0"
+
+app("listing-20-01") {}

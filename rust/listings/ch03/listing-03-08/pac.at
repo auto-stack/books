@@ -1,7 +1,4 @@
 name: "listing-03-08"
 version: "0.1.0"
-lang: "rust"
 
-app main {
-  srcs: ["main.at"]
-}
+app("listing-03-08") {}
