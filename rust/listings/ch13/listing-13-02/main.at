@@ -1,0 +1,6 @@
+// Listing 13-2: Closure type inference
+fn main() {
+    let example_closure = (x) => x
+    let s = example_closure(String.from("hello"))
+    print(s)
+}

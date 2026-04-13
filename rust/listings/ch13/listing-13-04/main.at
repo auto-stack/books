@@ -1,0 +1,11 @@
+// Listing 13-4: Closure capturing an immutable reference
+fn main() {
+    let list = [1, 2, 3]
+    print(f"Before defining closure: ${list}")
+
+    let only_borrows = () => print(f"From closure: ${list}")
+
+    print(f"Before calling closure: ${list}")
+    only_borrows()
+    print(f"After calling closure: ${list}")
+}

@@ -1,0 +1,38 @@
+// Listing 13-1: Closures capturing their environment
+enum ShirtColor { Red, Blue }
+
+type Inventory {
+    shirts []ShirtColor
+}
+
+ext Inventory {
+    fn giveaway(self, user_preference ?ShirtColor) ShirtColor {
+        user_preference.unwrap_or_else((self) => self.most_stocked())
+    }
+
+    fn most_stocked(self) ShirtColor {
+        var num_red = 0
+        var num_blue = 0
+        for color in self.shirts {
+            color is
+                ShirtColor.Red -> num_red += 1
+                ShirtColor.Blue -> num_blue += 1
+        }
+        if num_red > num_blue {
+            ShirtColor.Red
+        } else {
+            ShirtColor.Blue
+        }
+    }
+}
+
+fn main() {
+    let store = Inventory(shirts: [ShirtColor.Blue, ShirtColor.Red, ShirtColor.Blue])
+    let user_pref1 = ShirtColor.Red
+    let giveaway1 = store.giveaway(user_pref1)
+    print("The user with preference ${user_pref1} gets ${giveaway1}")
+
+    let user_pref2 = None
+    let giveaway2 = store.giveaway(user_pref2)
+    print("The user with preference ${user_pref2} gets ${giveaway2}")
+}

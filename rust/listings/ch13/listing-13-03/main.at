@@ -1,0 +1,9 @@
+// Listing 13-3: Closure with type annotations
+fn main() {
+    let expensive_closure = (num int) -> int {
+        print("calculating slowly...")
+        num
+    }
+    let result = expensive_closure(10)
+    print(result)
+}

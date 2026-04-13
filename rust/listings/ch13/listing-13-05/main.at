@@ -1,0 +1,10 @@
+// Listing 13-5: Closure capturing a mutable reference
+fn main() {
+    var list = [1, 2, 3]
+    print(f"Before defining closure: ${list}")
+
+    var borrows_mutably = () => list.push(7)
+
+    borrows_mutably()
+    print(f"After calling closure: ${list}")
+}
