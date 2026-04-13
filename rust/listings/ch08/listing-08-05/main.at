@@ -1,0 +1,11 @@
+// Listing 8-5: Creating and updating Strings
+fn main() {
+    let s1 = "hello".to_string()
+    let s2 = String.from("world")
+    print(f"s1: ${s1}")
+    print(f"s2: ${s2}")
+
+    var s3 = String.from("foo")
+    s3.push_str("bar")
+    print(f"s3: ${s3}")
+}

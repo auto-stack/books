@@ -1,0 +1,10 @@
+// Listing 8-1: Creating and updating a List
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    let len = v.len()
+    print(f"Length: ${len}")
+}

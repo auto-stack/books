@@ -1,0 +1,7 @@
+// Listing 8-6: String concatenation with f-strings
+fn main() {
+    let s1 = "Hello"
+    let s2 = "world"
+    let s3 = f"${s1}, ${s2}!"
+    print(s3)
+}

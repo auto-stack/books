@@ -1,0 +1,11 @@
+// Listing 8-3: Iterating over a List
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    for item in v {
+        print(f"Item: ${item}")
+    }
+}

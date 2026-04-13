@@ -1,0 +1,12 @@
+// Listing 8-2: Reading List elements with index and ?? operator
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    let third = v[2] ?? 0
+    let missing = v[100] ?? 0
+    print(f"Third: ${third}")
+    print(f"Missing: ${missing}")
+}

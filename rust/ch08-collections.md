@@ -1,0 +1,352 @@
+# Common Collections
+
+Auto's standard library includes a number of very useful data structures called
+_collections_. Most other data types represent one specific value, but collections
+can contain multiple values. Unlike the built-in array and tuple types, the data
+that these collections point to is stored on the heap, which means the amount
+of data does not need to be known at compile time and can grow or shrink as the
+program runs.
+
+In this chapter, we'll discuss three collections that are used very often:
+
+- A _list_ (`List<T>`) allows you to store a variable number of values next to
+  each other.
+- A _string_ (`String`) is a collection of characters. We've mentioned the
+  `String` type previously, but in this chapter, we'll talk about it in depth.
+- A _hash map_ (`Map<K, V>`) allows you to associate a value with a specific key.
+
+We'll discuss how to create and update lists, strings, and hash maps, as well as
+what makes each special.
+
+## Storing Lists of Values with `List<T>`
+
+The first collection type we'll look at is `List<T>`, also known as a list (equivalent
+to Rust's `Vec<T>`). Lists allow you to store more than one value in a single
+data structure that puts all the values next to each other in memory. Lists can
+only store values of the same type.
+
+### Creating a New List
+
+To create a new, empty list, we call `List.new()`:
+
+<Listing number="8-1" file-name="main.auto" caption="Creating a new list and adding elements with `push`">
+
+```auto
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    let len = v.len()
+    print(f"Length: ${len}")
+}
+```
+
+```rust
+fn main() {
+    let mut v = Vec::new();
+    v.push(10);
+    v.push(20);
+    v.push(30);
+
+    let len = v.len();
+    println!("Length: {}", len);
+}
+```
+
+</Listing>
+
+Note that we use `var` to make the list mutable so we can add elements with
+`push`. The type of elements is inferred from the first `push` call — since we
+push `10` (an `int`), the list is `List<int>`.
+
+### Reading Elements of Lists
+
+There are two ways to reference a value stored in a list: via indexing or by
+using the `??` (null coalescing) operator for safe access.
+
+<Listing number="8-2" file-name="main.auto" caption="Reading list elements with indexing and the `??` operator">
+
+```auto
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    let third = v[2] ?? 0
+    let missing = v[100] ?? 0
+    print(f"Third: ${third}")
+    print(f"Missing: ${missing}")
+}
+```
+
+```rust
+fn main() {
+    let mut v = vec![10, 20, 30];
+
+    let third = v.get(2).copied().unwrap_or(0);
+    let missing = v.get(100).copied().unwrap_or(0);
+    println!("Third: {}", third);
+    println!("Missing: {}", missing);
+}
+```
+
+</Listing>
+
+In Auto, `list[i]` returns `?T` (Option) — it's `Some(value)` if the index is
+valid, or `None` if out of bounds. The `??` operator provides a default value,
+replacing Rust's verbose `.get(i).copied().unwrap_or(default)` pattern.
+
+This is a key safety improvement over Rust: Auto's list indexing never panics.
+You must explicitly handle the case where the index might be out of bounds.
+
+### Iterating Over Lists
+
+To access each element in a list, we iterate through all the elements:
+
+<Listing number="8-3" file-name="main.auto" caption="Iterating over a list with a `for` loop">
+
+```auto
+fn main() {
+    var v = List.new()
+    v.push(10)
+    v.push(20)
+    v.push(30)
+
+    for item in v {
+        print(f"Item: ${item}")
+    }
+}
+```
+
+```rust
+fn main() {
+    let v = vec![10, 20, 30];
+
+    for item in v {
+        println!("Item: {}", item);
+    }
+}
+```
+
+</Listing>
+
+### Using an Enum to Store Multiple Types
+
+Lists can only store values of the same type. When you need to store different
+types, define an enum whose variants hold the different value types:
+
+<Listing number="8-4" file-name="main.auto" caption="Defining an enum to store values of different types in a list">
+
+```auto
+enum CellValue {
+    Int int
+    Text String
+    Float float
+}
+
+fn main() {
+    var row = List.new()
+    row.push(CellValue.Int(1))
+    row.push(CellValue.Text("hello"))
+    row.push(CellValue.Float(3.14))
+    print(f"Row length: ${row.len()}")
+}
+```
+
+```rust
+enum CellValue {
+    Int(i32),
+    Text(String),
+    Float(f64),
+}
+
+fn main() {
+    let mut row = Vec::new();
+    row.push(CellValue::Int(1));
+    row.push(CellValue::Text(String::from("hello")));
+    row.push(CellValue::Float(3.14));
+    println!("Row length: {}", row.len());
+}
+```
+
+</Listing>
+
+## Storing UTF-8 Encoded Text with Strings
+
+We've used `String` extensively in previous chapters. A `String` is a growable,
+mutable, owned, UTF-8 encoded string type. Let's look at some common operations.
+
+### Creating and Updating Strings
+
+<Listing number="8-5" file-name="main.auto" caption="Creating and updating strings">
+
+```auto
+fn main() {
+    let s1 = "hello".to_string()
+    let s2 = String.from("world")
+    print(f"s1: ${s1}")
+    print(f"s2: ${s2}")
+
+    var s3 = String.from("foo")
+    s3.push_str("bar")
+    print(f"s3: ${s3}")
+}
+```
+
+```rust
+fn main() {
+    let s1 = "hello".to_string();
+    let s2 = String::from("world");
+    println!("s1: {}", s1);
+    println!("s2: {}", s2);
+
+    let mut s3 = String::from("foo");
+    s3.push_str("bar");
+    println!("s3: {}", s3);
+}
+```
+
+</Listing>
+
+Key differences:
+
+| Feature | Auto | Rust |
+|---------|------|------|
+| From literal | `"hello".to_string()` | `"hello".to_string()` |
+| From literal | `String.from("world")` | `String::from("world")` |
+| Append string | `s.push_str("bar")` | `s.push_str("bar")` |
+
+### Concatenation with f-strings
+
+Instead of Rust's `+` operator or `format!` macro, Auto uses f-string interpolation
+for string concatenation:
+
+<Listing number="8-6" file-name="main.auto" caption="String concatenation with f-strings">
+
+```auto
+fn main() {
+    let s1 = "Hello"
+    let s2 = "world"
+    let s3 = f"${s1}, ${s2}!"
+    print(s3)
+}
+```
+
+```rust
+fn main() {
+    let s1 = String::from("Hello");
+    let s2 = String::from("world");
+    let s3 = format!("{}, {}!", s1, s2);
+    println!("{}", s3);
+}
+```
+
+</Listing>
+
+F-strings are Auto's preferred way to build strings. They're more readable than
+`+` concatenation and don't take ownership of any variables (unlike `format!` in
+Rust which borrows).
+
+### Indexing into Strings
+
+Like Rust, Auto doesn't support direct byte indexing into strings (e.g.,
+`"hello"[0]`). This is because strings are UTF-8 encoded, and a byte index might
+not correspond to a valid character boundary.
+
+To iterate over characters, use the `chars` method:
+
+```auto
+for c in "hello".chars() {
+    print(c.to_string())
+}
+```
+
+## Storing Keys with Associated Values in Hash Maps
+
+The last of our common collections is the hash map. The type `Map<K, V>` stores a
+mapping of keys of type `K` to values of type `V`. In Auto, `Map` is available
+through Rust's standard library using the `use.rust` directive.
+
+### Creating a New Hash Map
+
+<Listing number="8-7" file-name="main.auto" caption="Creating a new hash map and inserting keys and values">
+
+```auto
+use.rust std::collections::HashMap
+
+fn main() {
+    var scores = HashMap.new()
+    scores.insert("Blue", 10)
+    scores.insert("Yellow", 50)
+    print("Scores inserted")
+}
+```
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+    println!("Scores inserted");
+}
+```
+
+</Listing>
+
+Key differences:
+
+| Feature | Auto | Rust |
+|---------|------|------|
+| Import | `use.rust std::collections::HashMap` | `use std::collections::HashMap;` |
+| Create empty | `HashMap.new()` | `HashMap::new()` |
+| Insert | `map.insert(key, val)` | `map.insert(key, val)` |
+
+### Accessing Values
+
+To get a value from a hash map, use the `get` method which returns `?V`:
+
+```auto
+use.rust std::collections::HashMap
+
+fn main() {
+    var scores = HashMap.new()
+    scores.insert("Blue", 10)
+    let score = scores.get("Blue") ?? 0
+    print(f"Score: ${score}")
+}
+```
+
+### Updating a Hash Map
+
+Overwriting a value is done with another `insert` call using the same key:
+
+```auto
+scores.insert("Blue", 25)  // Overwrites the previous value of 10
+```
+
+## Summary
+
+Auto's collection types provide the same functionality as Rust's, with a more
+streamlined and safer API:
+
+| Concept | Auto | Rust |
+|---------|------|------|
+| Dynamic array | `List<T>` | `Vec<T>` |
+| Create list | `List.new()` | `Vec::new()` / `vec![]` |
+| Add element | `v.push(val)` | `v.push(val)` |
+| Safe access | `v[i] ?? default` | `v.get(i).copied().unwrap_or(default)` |
+| Iterate | `for item in v` | `for item in v` |
+| Hash map | `Map<K, V>` / `HashMap` | `HashMap<K, V>` |
+| String concatenation | `f"${a}, ${b}"` | `format!("{}, {}", a, b)` |
+| String append | `s.push_str("text")` | `s.push_str("text")` |
+
+The most notable improvement is Auto's safe list indexing — `v[i]` returns `?T`
+instead of panicking, and the `??` operator provides a clean way to handle
+missing values. This eliminates an entire class of runtime errors.
+
+In the next chapter, we'll discuss error handling in more depth.

@@ -1,0 +1,14 @@
+// Listing 8-4: Using an enum to store multiple types in a List
+enum CellValue {
+    Int int
+    Text String
+    Float float
+}
+
+fn main() {
+    var row = List.new()
+    row.push(CellValue.Int(1))
+    row.push(CellValue.Text("hello"))
+    row.push(CellValue.Float(3.14))
+    print(f"Row length: ${row.len()}")
+}

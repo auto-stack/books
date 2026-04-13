@@ -1,0 +1,9 @@
+// Listing 8-7: Creating and accessing a HashMap
+use.rust std::collections::HashMap
+
+fn main() {
+    var scores = HashMap.new()
+    scores.insert("Blue", 10)
+    scores.insert("Yellow", 50)
+    print("Scores inserted")
+}
