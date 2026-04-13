@@ -1,0 +1,17 @@
+// Listing 20-5: Reading from or writing to a mutable static variable
+static mut COUNTER int = 0
+
+/// SAFETY: Calling this from more than a single thread at a time is
+/// undefined behavior.
+sys fn add_to_count(inc int) {
+    sys {
+        COUNTER += inc
+    }
+}
+
+fn main() {
+    sys {
+        add_to_count(3)
+        print(f"COUNTER: {COUNTER}")
+    }
+}

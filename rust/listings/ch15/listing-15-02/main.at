@@ -1,0 +1,7 @@
+// This won't compile — recursive type has infinite size
+enum List {
+    Cons(int, List)
+    Nil
+}
+
+fn main() {}

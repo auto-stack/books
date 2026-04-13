@@ -1,0 +1,8 @@
+fn hello(name String) {
+    print(f"Hello, ${name}!")
+}
+
+fn main() {
+    let m = MyBox.new(String.from("Auto"))
+    hello(&m)  // deref coercion converts &MyBox<String> to &String
+}

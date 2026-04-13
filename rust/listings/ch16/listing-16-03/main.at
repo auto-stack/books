@@ -1,0 +1,25 @@
+actor Worker {
+    let id int
+
+    fn init(id int) Worker {
+        Worker(id)
+    }
+
+    on Process(data String) {
+        print(f"Worker ${.id} processing: ${data}")
+    }
+}
+
+fn main() {
+    let workers = [
+        Worker.init(1),
+        Worker.init(2),
+        Worker.init(3),
+    ]
+
+    // Send work to each worker
+    let data = ["task-a", "task-b", "task-c"]
+    for i in 0..3 {
+        workers[i].send(Process(data[i]))
+    }
+}

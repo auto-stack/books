@@ -1,0 +1,13 @@
+// Listing 19-4: Using `while let` to process messages
+fn main() {
+    let (tx, rx) = channel()
+    spawn(() => {
+        for val in [1, 2, 3] {
+            tx.send(val)
+        }
+    })
+
+    while let Ok(value) = rx.recv() {
+        print(value)
+    }
+}

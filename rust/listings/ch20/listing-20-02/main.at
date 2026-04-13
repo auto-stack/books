@@ -1,0 +1,8 @@
+// Listing 20-2: Calling a sys function
+sys fn dangerous() {}
+
+fn main() {
+    sys {
+        dangerous()
+    }
+}

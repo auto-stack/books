@@ -1,0 +1,27 @@
+actor Validator {
+    on Validate(input String) ?String {
+        if input.len() > 0 {
+            Some(input)
+        } else {
+            None
+        }
+    }
+}
+
+actor Uppercaser {
+    on Uppercase(input String) String {
+        input.to_uppercase()
+    }
+}
+
+fn main() {
+    let validator = Validator.init()
+    let uppercaser = Uppercaser.init()
+
+    let input = "hello"
+    let validated = validator.ask(Validate(input))
+    if let Some(data) = validated {
+        let result = uppercaser.ask(Uppercase(data))
+        print(f"Result: ${result}")  // Result: HELLO
+    }
+}

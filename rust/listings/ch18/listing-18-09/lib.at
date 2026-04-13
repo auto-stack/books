@@ -1,0 +1,70 @@
+// Listing 18-9: Blog post workflow using the state pattern
+type Post {
+    state Box<dyn State>
+    content String
+}
+
+spec State {
+    fn request_review() Box<dyn State>
+    fn approve() Box<dyn State>
+    fn content() String {
+        ""  // Default: no content
+    }
+}
+
+type Draft {}
+
+spec State for Draft {
+    fn request_review() Box<dyn State> {
+        Box.new(PendingReview())
+    }
+
+    fn approve() Box<dyn State> {
+        Box.new(Draft())  // Can't approve a draft
+    }
+}
+
+type PendingReview {}
+
+spec State for PendingReview {
+    fn request_review() Box<dyn State> {
+        Box.new(PendingReview())  // Stay in review
+    }
+
+    fn approve() Box<dyn State> {
+        Box.new(Published())
+    }
+}
+
+type Published {}
+
+spec State for Published {
+    fn content() String {
+        .content  // Return actual content
+    }
+}
+
+ext Post {
+    fn new() Post {
+        Post(
+            state: Box.new(Draft()),
+            content: ""
+        )
+    }
+
+    fn add_text(mut, text String) {
+        .content += text
+    }
+
+    fn request_review(mut) {
+        .state = .state.request_review()
+    }
+
+    fn approve(mut) {
+        .state = .state.approve()
+    }
+
+    fn content() String {
+        .state.content()
+    }
+}

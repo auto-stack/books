@@ -1,0 +1,31 @@
+// Listing 18-8: Using heterogeneous types with spec objects
+use gui::{Button, Screen, Draw}
+
+type SelectBox {
+    width int
+    height int
+    options List<String>
+}
+
+spec Draw for SelectBox {
+    fn draw() {
+        // Code to actually draw a select box
+    }
+}
+
+fn main() {
+    let screen = Screen(components: [
+        Box.new(SelectBox(
+            width: 75,
+            height: 10,
+            options: ["Yes", "Maybe", "No"]
+        )),
+        Box.new(Button(
+            width: 50,
+            height: 10,
+            label: "OK"
+        )),
+    ])
+
+    screen.run()
+}

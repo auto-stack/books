@@ -1,0 +1,27 @@
+fn main() {
+    async.block(async {
+        let (tx, rx) = async.channel(int)
+
+        let tx_task = async {
+            let vals = [
+                "hello",
+                "from",
+                "the",
+                "async",
+                "channel",
+            ]
+            for val in vals {
+                tx.send(val).await
+            }
+            // tx is dropped here, closing the channel
+        }
+
+        let rx_task = async {
+            while let Some(received) = rx.recv().await {
+                print(f"Got: ${received}")
+            }
+        }
+
+        async.join(tx_task, rx_task).await
+    })
+}

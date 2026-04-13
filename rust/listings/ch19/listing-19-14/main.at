@@ -1,0 +1,26 @@
+// Listing 19-14: Destructuring enum variants
+enum Message {
+    Quit
+    Move(x int, y int)
+    Write(text String)
+    ChangeColor(r int, g int, b int)
+}
+
+fn main() {
+    let msg = Message.ChangeColor(0, 160, 255)
+
+    msg is {
+        Message.Quit -> {
+            print("The Quit variant has no data to destructure.")
+        }
+        Message.Move(x, y) -> {
+            print(f"Move in the x direction ${x} and in the y direction ${y}")
+        }
+        Message.Write(text) -> {
+            print(f"Text message: ${text}")
+        }
+        Message.ChangeColor(r, g, b) -> {
+            print(f"Change color to red ${r}, green ${g}, and blue ${b}")
+        }
+    }
+}

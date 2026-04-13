@@ -1,0 +1,19 @@
+use net.http
+
+async fn page_title(url String) ~?String {
+    let response = http.get(url).await
+    let text = response.text().await
+    Html.parse(text).select_first("title")
+        .map((title) => title.inner_html())
+}
+
+fn main() {
+    async.block(async {
+        let url = "https://example.com"
+        let title = page_title(url).await
+        match title {
+            Some(t) => print(t),
+            None => print("No title found"),
+        }
+    })
+}

@@ -1,0 +1,6 @@
+use.rust std::boxed::Box
+
+fn main() {
+    let b = Box.new(5)
+    print(f"b = ${b}")
+}

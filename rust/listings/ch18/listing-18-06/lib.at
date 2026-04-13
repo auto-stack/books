@@ -1,0 +1,16 @@
+// Listing 18-6: Using spec objects for a GUI library
+pub spec Draw {
+    fn draw()
+}
+
+pub type Screen {
+    components List<Box<dyn Draw>>
+}
+
+ext Screen {
+    pub fn run() {
+        for component in .components {
+            component.draw()
+        }
+    }
+}

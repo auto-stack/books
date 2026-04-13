@@ -1,0 +1,18 @@
+actor Logger {
+    var prefix String
+
+    fn init(prefix String) Logger {
+        Logger(prefix)
+    }
+
+    on Log(msg String) {
+        print(f"[${.prefix}] ${msg}")
+    }
+}
+
+fn main() {
+    let logger = Logger.init("app")
+    logger.send(Log("Server started"))
+    logger.send(Log("Processing request"))
+    logger.send(Log("Server stopped"))
+}

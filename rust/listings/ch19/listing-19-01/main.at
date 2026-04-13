@@ -1,0 +1,5 @@
+// Listing 19-1: Matching on an optional value with `is`
+x is {
+    None -> None
+    Some(i) -> Some(i + 1)
+}

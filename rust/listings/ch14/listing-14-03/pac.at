@@ -1,0 +1,4 @@
+app listing-14-03 {
+    lang: "rust"
+    auto: "lib.at"
+}

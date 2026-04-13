@@ -1,0 +1,10 @@
+// Listing 19-10: Matching multiple patterns with `|`
+fn main() {
+    let x = 1
+
+    x is {
+        1 | 2 -> print("one or two")
+        3 -> print("three")
+        _ -> print("anything")
+    }
+}

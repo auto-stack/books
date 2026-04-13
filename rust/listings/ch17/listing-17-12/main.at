@@ -1,0 +1,13 @@
+fn main() {
+    async.block(async {
+        let vals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        let results = async.stream_from(vals)
+            .filter((x) => x % 2 == 0)       // keep even numbers
+            .map((x) => x * 3)               // triple them
+            .take(3)                           // first 3 results
+
+        while let Some(value) = results.next().await {
+            print(value)  // 6, 12, 18
+        }
+    })
+}

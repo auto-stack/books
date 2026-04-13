@@ -1,0 +1,21 @@
+use net.http
+
+async fn page_title(url String) ~?String {
+    let response = http.get(url).await
+    let text = response.text().await
+    Html.parse(text).select_first("title")
+        .map((title) => title.inner_html())
+}
+
+fn main() {
+    async.block(async {
+        let title_fut_1 = page_title("https://example.com")
+        let title_fut_2 = page_title("https://example.org")
+
+        let (url, maybe_title) = async.race(title_fut_1, title_fut_2).await
+        match maybe_title {
+            Some(title) => print(f"${url}: ${title}"),
+            None => print(f"${url}: no title found"),
+        }
+    })
+}

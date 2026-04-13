@@ -1,0 +1,11 @@
+// Listing 21-1: Listening for incoming streams and printing a message
+use.net TcpListener
+
+fn main() {
+    let listener = TcpListener.bind("127.0.0.1:7878")!
+
+    for stream in listener.incoming() {
+        let stream = stream!
+        print("Connection established!")
+    }
+}

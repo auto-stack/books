@@ -1,0 +1,14 @@
+// Listing C-1: Using #derive[] on a type
+#derive[Debug, Eq, Clone]
+type Point {
+    x int
+    y int
+}
+
+fn main() {
+    let p = Point(x: 1, y: 2)
+    print(f"{p:?}")
+
+    let q = p.clone()
+    assert_eq(p, q)
+}

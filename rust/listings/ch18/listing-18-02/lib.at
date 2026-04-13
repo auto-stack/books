@@ -1,0 +1,6 @@
+// Listing 18-2: Defining a spec with a default implementation
+pub spec Summary {
+    fn summarize() String {
+        "(Read more...)"
+    }
+}

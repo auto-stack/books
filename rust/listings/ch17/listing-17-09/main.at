@@ -1,0 +1,20 @@
+async fn timeout(blueprint ~T, max_ms int) ~!T {
+    match async.race(blueprint, async.sleep(max_ms)).await {
+        Result.Ok(value) => value,
+        Result.Err(ms) => !throw(f"Timed out after ${ms}ms"),
+    }
+}
+
+fn main() {
+    async.block(async {
+        let slow_task = async {
+            async.sleep(5000).await  // takes 5 seconds
+            "finally done"
+        }
+
+        match timeout(slow_task, 1000).await {  // 1 second limit
+            Ok(value) => print(f"Got: ${value}"),
+            Err(msg) => print(f"Failed: ${msg}"),  // This prints
+        }
+    })
+}

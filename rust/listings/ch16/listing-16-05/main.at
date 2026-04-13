@@ -1,0 +1,29 @@
+actor Accumulator {
+    var total int
+
+    fn init() Accumulator {
+        Accumulator(total: 0)
+    }
+
+    on Add(value int) {
+        .total += value
+    }
+
+    on GetTotal -> int {
+        .total
+    }
+
+    on Reset {
+        .total = 0
+    }
+}
+
+fn main() {
+    let acc = Accumulator.init()
+    acc.send(Add(10))
+    acc.send(Add(20))
+    acc.send(Add(5))
+    print(f"Total: ${acc.ask(GetTotal)}")  // Total: 35
+    acc.send(Reset)
+    print(f"After reset: ${acc.ask(GetTotal)}")  // After reset: 0
+}

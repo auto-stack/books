@@ -1,0 +1,22 @@
+use net.http
+
+actor PageFetcher {
+    on FetchTitle(url String) ~?String {
+        let response = http.get(url).await
+        let text = response.text().await
+        Html.parse(text).select_first("title")
+            .map((t) => t.inner_html())
+    }
+}
+
+fn main() {
+    let fetcher = PageFetcher.init()
+
+    async.block(async {
+        let title = fetcher.ask(FetchTitle("https://example.com")).await
+        match title {
+            Some(t) => print(f"Title: ${t}"),
+            None => print("No title found"),
+        }
+    })
+}

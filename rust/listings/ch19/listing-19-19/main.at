@@ -1,0 +1,10 @@
+// Listing 19-19: Adding a match guard to a pattern
+fn main() {
+    let num = Some(4)
+
+    num is {
+        Some(x) if x % 2 == 0 -> print(f"The number ${x} is even")
+        Some(x) -> print(f"The number ${x} is odd")
+        None -> {}
+    }
+}

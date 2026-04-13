@@ -1,0 +1,33 @@
+actor KVStore {
+    var data Map<String, String>
+
+    fn init() KVStore {
+        KVStore(data: Map.new())
+    }
+
+    on Set(key String, value String) {
+        .data.insert(key, value)
+    }
+
+    on Get(key String) ?String {
+        .data.get(key)
+    }
+
+    on Delete(key String) {
+        .data.remove(key)
+    }
+
+    on Count -> int {
+        .data.len()
+    }
+}
+
+fn main() {
+    let store = KVStore.init()
+    store.send(Set("name", "Auto"))
+    store.send(Set("version", "0.1"))
+    print(f"name = ${store.ask(Get("name"))}")   // name = Some("Auto")
+    print(f"count = ${store.ask(Count)}")          // count = 2
+    store.send(Delete("version"))
+    print(f"count = ${store.ask(Count)}")          // count = 1
+}

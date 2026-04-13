@@ -1,0 +1,16 @@
+// Listing 18-4: Using `is` for type composition
+type Animal {
+    name String
+    age int
+}
+
+type Dog {
+    is Animal          // Dog has all fields of Animal
+    breed String
+}
+
+fn main() {
+    let dog = Dog(name: "Rex", age: 3, breed: "German Shepherd")
+    print(f"${dog.name} is ${dog.age} years old")  // Accesses Animal fields
+    print(f"Breed: ${dog.breed}")
+}

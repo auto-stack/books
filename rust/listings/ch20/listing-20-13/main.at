@@ -1,0 +1,18 @@
+// Listing 20-13: Inline comptime expressions
+fn main() {
+    // Compute a constant at compile time
+    const MAX_SIZE = comptime {
+        let base = 1024
+        let scale = 4
+        base * scale
+    }
+
+    // Generate a type at compile time
+    comptime {
+        for field in config.fields {
+            print(f"Field: {field.name}")
+        }
+    }
+
+    print(f"Max size: {MAX_SIZE}")
+}

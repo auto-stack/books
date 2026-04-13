@@ -1,0 +1,16 @@
+fn slow(name String) {
+    // Simulates heavy CPU work — NO await points!
+    var count = 0
+    for i in 0..1000000 {
+        count += i
+    }
+    print(f"${name}: count = ${count}")
+}
+
+fn main() {
+    async.block(async {
+        let a = async { slow("A") }
+        let b = async { slow("B") }
+        async.join(a, b).await
+    })
+}

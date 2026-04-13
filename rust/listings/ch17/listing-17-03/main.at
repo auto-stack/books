@@ -1,0 +1,17 @@
+fn main() {
+    async.block(async {
+        let handle = async.spawn(async {
+            for i in 1..10 {
+                print(f"hi number ${i} from the spawned task!")
+                async.sleep(500).await  // 500ms
+            }
+        })
+
+        for i in 1..5 {
+            print(f"hi number ${i} from the main task!")
+            async.sleep(750).await  // 750ms
+        }
+
+        handle.await  // wait for spawned task to finish
+    })
+}

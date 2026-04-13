@@ -1,0 +1,10 @@
+// Listing 18-10: Using the blog post state machine
+fn main() {
+    let post = Post.new()
+    post.add_text("I ate a salad for lunch today")
+
+    post.request_review()
+    post.approve()
+
+    print(post.content())  // I ate a salad for lunch today
+}

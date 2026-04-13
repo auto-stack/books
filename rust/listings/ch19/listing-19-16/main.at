@@ -1,0 +1,8 @@
+// Listing 19-16: Using `_` to ignore a value
+fn foo(_ int, y int) {
+    print(f"This code only uses the y parameter: ${y}")
+}
+
+fn main() {
+    foo(3, 4)
+}

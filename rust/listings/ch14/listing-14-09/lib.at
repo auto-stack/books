@@ -1,0 +1,8 @@
+pub fn add_one(x int) int {
+    x + 1
+}
+
+#[test]
+fn it_works() {
+    assert_eq(3, add_one(2))
+}

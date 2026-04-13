@@ -1,0 +1,12 @@
+// Listing 18-7: Implementing `Draw` for `Button`
+pub type Button {
+    width int
+    height int
+    label String
+}
+
+spec Draw for Button {
+    fn draw() {
+        // Code to actually draw a button
+    }
+}

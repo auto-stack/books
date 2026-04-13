@@ -1,0 +1,21 @@
+fn main() {
+    async.block(async {
+        let (tx, rx) = async.channel(String)
+
+        let tx1 = async {
+            tx.send("from task 1").await
+        }
+
+        let tx2 = async {
+            tx.send("from task 2").await
+        }
+
+        let rx_task = async {
+            while let Some(msg) = rx.recv().await {
+                print(f"Received: ${msg}")
+            }
+        }
+
+        async.join_all([tx1, tx2, rx_task]).await
+    })
+}

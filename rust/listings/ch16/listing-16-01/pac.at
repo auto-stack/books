@@ -1,0 +1,4 @@
+app listing-16-01 {
+    lang: "rust"
+    auto: "main.at"
+}

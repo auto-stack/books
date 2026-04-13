@@ -1,0 +1,18 @@
+// Listing 20-11: Custom attribute-like comptime
+// Define a custom attribute for route handlers
+#attr[route]
+comptime fn route_handler(attr String, item String) String {
+    // Parse the route from attr, wrap the function
+    // with routing registration code
+    f"""
+// Register route: {attr}
+{item}
+routes.register("{attr}", handler)
+"""
+}
+
+// Use the attribute
+#route[GET, "/"]
+fn index() {
+    "Hello, World!"
+}

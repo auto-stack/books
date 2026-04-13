@@ -1,0 +1,23 @@
+type MyBox<T>(T)
+
+ext MyBox {
+    fn new(x T) MyBox<T> {
+        MyBox(x)
+    }
+}
+
+spec Deref for MyBox<T> {
+    type Target = T
+
+    fn deref() &T {
+        &.0
+    }
+}
+
+fn main() {
+    let x = 5
+    let y = MyBox.new(x)
+
+    assert_eq(5, x)
+    assert_eq(5, *y)
+}

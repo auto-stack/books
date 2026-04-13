@@ -1,0 +1,10 @@
+// Listing 20-6: Defining and implementing a sys spec
+sys spec Foo {
+    // methods go here
+}
+
+sys spec Foo for int {
+    // method implementations go here
+}
+
+fn main() {}

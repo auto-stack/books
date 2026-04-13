@@ -1,0 +1,15 @@
+// Listing 19-13: Destructuring and matching literal values
+type Point {
+    x int
+    y int
+}
+
+fn main() {
+    let p = Point(x: 0, y: 7)
+
+    p is {
+        Point(x, y: 0) -> print(f"On the x axis at ${x}")
+        Point(x: 0, y) -> print(f"On the y axis at ${y}")
+        Point(x, y) -> print(f"On neither axis: (${x}, ${y})")
+    }
+}

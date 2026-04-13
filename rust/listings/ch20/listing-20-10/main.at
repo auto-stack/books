@@ -1,0 +1,6 @@
+// Listing 20-10: Comptime list creation vs vec! macro
+// Auto doesn't need a vec! macro — List literals work directly
+fn main() {
+    let v = [1, 2, 3]  // List<int>
+    print(f"{v}")
+}

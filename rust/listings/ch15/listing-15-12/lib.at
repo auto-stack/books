@@ -1,0 +1,56 @@
+use.rust std::cell::RefCell
+
+spec Messenger {
+    fn send(msg String)
+}
+
+type LimitTracker<T Messenger> {
+    messenger &T
+    value int
+    max int
+}
+
+ext LimitTracker {
+    fn new(messenger &T, max int) LimitTracker<T> {
+        LimitTracker(messenger, value: 0, max)
+    }
+
+    fn set_value(mut, value int) {
+        .value = value
+        let percentage = .value as f64 / .max as f64
+
+        if percentage >= 1.0 {
+            .messenger.send("Error: You are over your quota!")
+        } else if percentage >= 0.9 {
+            .messenger.send("Urgent warning: You've used up over 90% of your quota!")
+        } else if percentage >= 0.75 {
+            .messenger.send("Warning: You've used up over 75% of your quota!")
+        }
+    }
+}
+
+#[test]
+fn it_sends_an_over_75_percent_warning_message() {
+    type MockMessenger {
+        sent_messages RefCell<List<String>>
+    }
+
+    ext MockMessenger {
+        fn new() MockMessenger {
+            MockMessenger(sent_messages: RefCell.new(List.new()))
+        }
+    }
+
+    spec Messenger for MockMessenger {
+        fn send(msg String) {
+            .sent_messages.borrow_mut().push(msg)
+        }
+    }
+
+    let mock_messenger = MockMessenger.new()
+    var limit_tracker = LimitTracker.new(&mock_messenger, 100)
+
+    limit_tracker.set_value(80)
+
+    assert_eq(1, mock_messenger.sent_messages.borrow().len())
+}

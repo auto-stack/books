@@ -1,0 +1,7 @@
+// Listing 19-7: Using `let else` with a refutable pattern
+fn main() {
+    let some_option_value ?int = None
+    let Some(x) = some_option_value else {
+        return
+    }
+}

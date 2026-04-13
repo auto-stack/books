@@ -1,0 +1,9 @@
+// Listing 19-11: Matching a range of values
+fn main() {
+    let x = 5
+
+    x is {
+        1..=5 -> print("one through five")
+        _ -> print("something else")
+    }
+}

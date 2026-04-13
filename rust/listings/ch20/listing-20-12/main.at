@@ -1,0 +1,14 @@
+// Listing 20-12: Conditional compilation
+#if[debug]
+fn log(msg String) {
+    print(f"[DEBUG] {msg}")
+}
+
+#if[release]
+fn log(msg String) {
+    // No-op in release builds
+}
+
+fn main() {
+    log("Starting application")
+}

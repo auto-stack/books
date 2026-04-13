@@ -1,0 +1,18 @@
+// Listing 19-21: Using `@` to bind while testing
+enum Message {
+    Hello(id int)
+}
+
+fn main() {
+    let msg = Message.Hello(id: 5)
+
+    msg is {
+        Message.Hello(id @ 3..=7) -> {
+            print(f"Found an id in range: ${id}")
+        }
+        Message.Hello(id @ 10..=12) -> {
+            print("Found an id in another range")
+        }
+        Message.Hello(id) -> print(f"Found some other id: ${id}")
+    }
+}

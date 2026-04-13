@@ -1,0 +1,10 @@
+fn main() {
+    async.block(async {
+        let vals = [1, 2, 3, 4, 5]
+        let mut stream = async.stream_from(vals)
+
+        while let Some(value) = stream.next().await {
+            print(f"The value was: ${value}")
+        }
+    })
+}

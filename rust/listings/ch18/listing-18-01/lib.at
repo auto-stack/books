@@ -1,0 +1,33 @@
+// Listing 18-1: A type that packages data and behavior
+pub type AveragedCollection {
+    list List<int>
+    average f64
+}
+
+ext AveragedCollection {
+    pub fn new() AveragedCollection {
+        AveragedCollection(list: List.new(), average: 0.0)
+    }
+
+    pub fn add(mut, value int) {
+        .list.push(value)
+        .update_average()
+    }
+
+    pub fn remove(mut) ?int {
+        let result = .list.pop()
+        if let Some(value) = result {
+            .update_average()
+        }
+        result
+    }
+
+    pub fn average() f64 {
+        .average
+    }
+
+    fn update_average(mut) {
+        let total = .list.fold(0, (acc, x) => acc + x)
+        .average = total as f64 / .list.len() as f64
+    }
+}

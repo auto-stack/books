@@ -1,0 +1,82 @@
+// Listing 21-10: Complete web server with Actor model
+use.net {TcpListener, TcpStream}
+use.io {BufReader, BufRead, Write}
+use.fs
+use.thread
+use.time Duration
+
+// -- Connection Handler --
+
+fn handle_connection(stream TcpStream) {
+    let buf_reader = BufReader.new(&stream)
+    let request_line = buf_reader.lines().next()!!
+
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "hello.html")
+    } else if request_line == "GET /sleep HTTP/1.1" {
+        thread.sleep(Duration.from_secs(5))
+        ("HTTP/1.1 200 OK", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    }
+
+    let contents = fs.read_to_string(filename)!
+    let length = contents.len()
+
+    let response = f"{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
+    stream.write_all(response.as_bytes())!
+}
+
+// -- Worker Actor --
+
+actor Worker {
+    on Handle(stream TcpStream) {
+        handle_connection(stream)
+    }
+}
+
+// -- Worker Pool Actor --
+
+actor WorkerPool {
+    workers List<Worker>
+
+    on Init(size int) {
+        var workers = List<Worker>()
+        for i in 0..size {
+            workers.push(Worker.init())
+        }
+        .workers = workers
+    }
+
+    on Handle(stream TcpStream) {
+        let worker = .workers.pop()
+        worker.tell(Handle(stream))
+        .workers.unshift(worker)
+    }
+
+    on Stop() {
+        print("Pool shutting down")
+    }
+}
+
+// -- Server Actor --
+
+actor Server {
+    on Start() {
+        let listener = TcpListener.bind("127.0.0.1:7878")!
+        let pool = WorkerPool.init()
+        pool.tell(Init(4))
+
+        for stream in listener.incoming() {
+            let stream = stream!
+            pool.tell(Handle(stream))
+        }
+    }
+}
+
+// -- Entry Point --
+
+fn main() {
+    let server = Server.init()
+    server.tell(Start())
+}

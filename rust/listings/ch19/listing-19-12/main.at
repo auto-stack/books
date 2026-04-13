@@ -1,0 +1,13 @@
+// Listing 19-12: Destructuring a type's fields
+type Point {
+    x int
+    y int
+}
+
+fn main() {
+    let p = Point(x: 0, y: 7)
+
+    let Point(x, y) = p
+    assert_eq(0, x)
+    assert_eq(7, y)
+}

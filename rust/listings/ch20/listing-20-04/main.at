@@ -1,0 +1,10 @@
+// Listing 20-4: Declaring and calling an extern C function
+sys extern "C" {
+    fn abs(input int) int
+}
+
+fn main() {
+    sys {
+        print(f"Absolute value of -3 according to C: {abs(-3)}")
+    }
+}

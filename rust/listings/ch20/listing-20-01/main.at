@@ -1,0 +1,12 @@
+// Listing 20-1: Creating and dereferencing raw pointers
+fn main() {
+    var num = 5
+
+    let r1 = &raw num        // *int (immutable raw pointer)
+    let r2 = &raw mut num    // *mut int (mutable raw pointer)
+
+    sys {
+        print(f"r1 is: {*r1}")
+        print(f"r2 is: {*r2}")
+    }
+}

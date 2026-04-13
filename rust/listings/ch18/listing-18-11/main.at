@@ -1,0 +1,38 @@
+// Listing 18-11: Encoding state in the type system
+type DraftPost {
+    content String
+}
+
+ext DraftPost {
+    fn add_text(mut, text String) {
+        .content += text
+    }
+
+    fn request_review() ReviewPost {
+        ReviewPost(content: .content)
+    }
+}
+
+type ReviewPost {
+    content String
+}
+
+ext ReviewPost {
+    fn approve() PublishedPost {
+        PublishedPost(content: .content)
+    }
+
+    fn reject() DraftPost {
+        DraftPost(content: .content)
+    }
+}
+
+type PublishedPost {
+    content String
+}
+
+ext PublishedPost {
+    fn content() String {
+        .content
+    }
+}

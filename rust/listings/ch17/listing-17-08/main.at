@@ -1,0 +1,18 @@
+fn slow(name String) {
+    var count = 0
+    for i in 0..1000000 {
+        count += i
+        if i % 100000 == 0 {
+            async.yield_now()  // let other tasks run
+        }
+    }
+    print(f"${name}: count = ${count}")
+}
+
+fn main() {
+    async.block(async {
+        let a = async { slow("A") }
+        let b = async { slow("B") }
+        async.join(a, b).await
+    })
+}

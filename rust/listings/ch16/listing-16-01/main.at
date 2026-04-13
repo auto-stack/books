@@ -1,0 +1,23 @@
+actor Counter {
+    var count int
+
+    fn init() Counter {
+        Counter(count: 0)
+    }
+
+    on Increment {
+        .count += 1
+    }
+
+    on GetCount -> int {
+        .count
+    }
+}
+
+fn main() {
+    let counter = Counter.init()
+    counter.send(Increment)
+    counter.send(Increment)
+    let result = counter.ask(GetCount)
+    print(f"Count is ${result}")  // Count is 2
+}

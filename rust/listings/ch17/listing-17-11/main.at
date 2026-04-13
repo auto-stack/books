@@ -1,0 +1,19 @@
+fn main() {
+    async.block(async {
+        let (tx, rx) = async.channel(int)
+
+        // Spawn a task that produces values
+        async.spawn(async {
+            for i in 1..6 {
+                tx.send(i).await
+                async.sleep(1000).await  // one per second
+            }
+        })
+
+        // Consume as a stream
+        let mut stream = rx.stream()
+        while let Some(value) = stream.next().await {
+            print(f"Received: ${value}")
+        }
+    })
+}

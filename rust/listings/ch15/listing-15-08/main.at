@@ -1,0 +1,21 @@
+type CustomSmartPointer {
+    data String
+}
+
+ext CustomSmartPointer {
+    fn new(data String) CustomSmartPointer {
+        CustomSmartPointer(data)
+    }
+}
+
+spec Drop for CustomSmartPointer {
+    fn drop() {
+        print(f"Dropping CustomSmartPointer with data `${.data}`!")
+    }
+}
+
+fn main() {
+    let c = CustomSmartPointer.new(String.from("my stuff"))
+    let d = CustomSmartPointer.new(String.from("other stuff"))
+    print("CustomSmartPointers created")
+}

@@ -1,0 +1,12 @@
+// Listing 18-3: Implementing a spec for a type
+type Article {
+    title String
+    author String
+    content String
+}
+
+spec Summary for Article {
+    fn summarize() String {
+        f"${.title} by ${.author}"
+    }
+}

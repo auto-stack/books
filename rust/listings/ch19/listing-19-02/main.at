@@ -1,0 +1,4 @@
+// Listing 19-2: Using a pattern to destructure a tuple
+fn main() {
+    let (x, y, z) = (1, 2, 3)
+}

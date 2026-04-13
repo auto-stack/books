@@ -1,0 +1,26 @@
+// Listing 19-15: Matching on nested enums
+enum Color {
+    Rgb(int, int, int)
+    Hsv(int, int, int)
+}
+
+enum Message {
+    Quit
+    Move(x int, y int)
+    Write(text String)
+    ChangeColor(Color)
+}
+
+fn main() {
+    let msg = Message.ChangeColor(Color.Hsv(0, 160, 255))
+
+    msg is {
+        Message.ChangeColor(Color.Rgb(r, g, b)) -> {
+            print(f"Change color to red ${r}, green ${g}, and blue ${b}")
+        }
+        Message.ChangeColor(Color.Hsv(h, s, v)) -> {
+            print(f"Change color to hue ${h}, saturation ${s}, value ${v}")
+        }
+        _ -> {}
+    }
+}

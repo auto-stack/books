@@ -1,0 +1,37 @@
+use.rust std::cell::RefCell
+use.rust std::rc::Rc
+
+enum List {
+    Cons(int, RefCell<Rc<List>>)
+    Nil
+}
+
+ext List {
+    fn tail() ?&RefCell<Rc<List>> {
+        self is
+            List.Cons(_, item) -> Some(item)
+            List.Nil -> None
+    }
+}
+
+fn main() {
+    let a = Rc.new(List.Cons(5, RefCell.new(Rc.new(List.Nil))))
+
+    print(f"a initial rc count = ${Rc.strong_count(&a)}")
+
+    let b = Rc.new(List.Cons(10, RefCell.new(Rc.clone(&a))))
+
+    print(f"a rc count after b creation = ${Rc.strong_count(&a)}")
+    print(f"b initial rc count = ${Rc.strong_count(&b)}")
+
+    // Create a cycle: a points to b
+    if let Some(link) = a.tail() {
+        *link.borrow_mut() = Rc.clone(&b)
+    }
+
+    print(f"b rc count after changing a = ${Rc.strong_count(&b)}")
+    print(f"a rc count after changing a = ${Rc.strong_count(&a)}")
+
+    // Uncommenting the next line will overflow the stack:
+    // print(f"a next item = ${a.tail()}")
+}

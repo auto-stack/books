@@ -1,0 +1,11 @@
+// Listing 20-8: Using built-in derive attributes
+#derive[Debug, Eq]
+type Point {
+    x int
+    y int
+}
+
+fn main() {
+    let p = Point(x: 1, y: 2)
+    print(f"{p:?}")  // Uses Debug impl
+}

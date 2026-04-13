@@ -1,0 +1,20 @@
+fn main() {
+    async.block(async {
+        let fut1 = async {
+            print("Task 1 starting...")
+            async.sleep(1000).await
+            print("Task 1 done!")
+            42
+        }
+
+        let fut2 = async {
+            print("Task 2 starting...")
+            async.sleep(500).await
+            print("Task 2 done!")
+            "hello"
+        }
+
+        let (result1, result2) = async.join(fut1, fut2).await
+        print(f"Results: ${result1}, ${result2}")
+    })
+}

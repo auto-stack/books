@@ -1,0 +1,30 @@
+// Listing 18-5: Using `has` for delegation
+type Engine {
+    horsepower int
+}
+
+ext Engine {
+    fn start() {
+        print("Engine started!")
+    }
+
+    fn stop() {
+        print("Engine stopped!")
+    }
+}
+
+type Car {
+    has Engine            // Car delegates Engine methods
+    make String
+    model String
+}
+
+fn main() {
+    let car = Car(
+        horsepower: 200,
+        make: "Toyota",
+        model: "Camry"
+    )
+    car.start()           // Delegated to Engine.start()
+    car.stop()            // Delegated to Engine.stop()
+}

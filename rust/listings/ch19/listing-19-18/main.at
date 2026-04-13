@@ -1,0 +1,14 @@
+// Listing 19-18: Ignoring remaining fields with `..`
+type Point {
+    x int
+    y int
+    z int
+}
+
+fn main() {
+    let origin = Point(x: 0, y: 0, z: 0)
+
+    origin is {
+        Point(x, ..) -> print(f"x is ${x}")
+    }
+}

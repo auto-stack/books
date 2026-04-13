@@ -1,0 +1,26 @@
+// Listing 21-7: A Worker actor for handling connections
+use.net {TcpListener, TcpStream}
+use.io {BufReader, BufRead, Write}
+
+actor Worker {
+    on Handle(stream TcpStream) {
+        handle_connection(stream)
+    }
+}
+
+actor Server {
+    on Start() {
+        let listener = TcpListener.bind("127.0.0.1:7878")!
+
+        for stream in listener.incoming() {
+            let stream = stream!
+            let worker = Worker.init()
+            worker.tell(Handle(stream))
+        }
+    }
+}
+
+fn main() {
+    let server = Server.init()
+    server.tell(Start())
+}

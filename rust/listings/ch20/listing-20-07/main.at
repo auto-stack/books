@@ -1,0 +1,9 @@
+// Listing 20-7: Creating a type alias
+type Kilometers = int
+
+fn main() {
+    let x int = 5
+    let y Kilometers = 5
+
+    print(f"x + y = {x + y}")
+}

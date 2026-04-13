@@ -1,0 +1,13 @@
+// Listing 19-20: Using a match guard to compare with an outer variable
+fn main() {
+    let x = Some(5)
+    let y = 10
+
+    x is {
+        Some(50) -> print("Got 50")
+        Some(n) if n == y -> print(f"Matched, n = ${n}")
+        _ -> print(f"Default case, x = ${x}")
+    }
+
+    print(f"at the end: x = ${x}, y = ${y}")
+}

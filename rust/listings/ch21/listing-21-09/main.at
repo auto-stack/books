@@ -1,0 +1,49 @@
+// Listing 21-9: Graceful shutdown with actors
+actor Worker {
+    running bool
+
+    on Init() {
+        .running = true
+    }
+
+    on Handle(stream TcpStream) {
+        if .running {
+            handle_connection(stream)
+        }
+    }
+
+    on Stop() {
+        .running = false
+        print("Worker shutting down")
+    }
+}
+
+actor Server {
+    pool WorkerPool
+
+    on Start() {
+        let listener = TcpListener.bind("127.0.0.1:7878")!
+        .pool = WorkerPool.init()
+        .pool.tell(Init(4))
+
+        // Accept connections for a limited time (demo purposes)
+        var count = 0
+        for stream in listener.incoming() {
+            let stream = stream!
+            .pool.tell(Handle(stream))
+            count += 1
+            if count >= 2 {
+                break
+            }
+        }
+
+        // Graceful shutdown
+        .pool.tell(Stop())
+        print("Server shutting down")
+    }
+}
+
+fn main() {
+    let server = Server.init()
+    server.tell(Start())
+}

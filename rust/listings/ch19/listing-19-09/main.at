@@ -1,0 +1,13 @@
+// Listing 19-9: Variable shadowing in `is` arms
+fn main() {
+    let x = Some(5)
+    let y = 10
+
+    x is {
+        Some(50) -> print("Got 50")
+        Some(y) -> print(f"Matched, y = ${y}")
+        _ -> print(f"Default case, x = ${x}")
+    }
+
+    print(f"at the end: x = ${x}, y = ${y}")
+}

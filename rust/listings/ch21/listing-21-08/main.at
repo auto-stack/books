@@ -1,0 +1,37 @@
+// Listing 21-8: A worker pool actor managing multiple workers
+actor WorkerPool {
+    workers List<Worker>
+
+    on Init(size int) {
+        var workers = List<Worker>()
+        for i in 0..size {
+            workers.push(Worker.init())
+        }
+        .workers = workers
+    }
+
+    on Handle(stream TcpStream) {
+        // Pick the next available worker (round-robin)
+        let worker = .workers.pop()
+        worker.tell(Handle(stream))
+        .workers.unshift(worker)
+    }
+}
+
+actor Server {
+    on Start() {
+        let listener = TcpListener.bind("127.0.0.1:7878")!
+        let pool = WorkerPool.init()
+        pool.tell(Init(4))
+
+        for stream in listener.incoming() {
+            let stream = stream!
+            pool.tell(Handle(stream))
+        }
+    }
+}
+
+fn main() {
+    let server = Server.init()
+    server.tell(Start())
+}
