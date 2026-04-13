@@ -451,11 +451,9 @@ fn main() {
     let input: i32 = 42;
     let result = if input >= 0 {
         Some(input)
-    }
-else {
+    } else {
         None
-    }
-;
+    };
 
     match result {
         Some(n) => println!("Valid guess: {}", n),
@@ -517,8 +515,6 @@ fn main() {
         }
         if guess == secret_number {
             print("You win!")
-        }
-        if guess == secret_number {
             break
         }
     }
@@ -541,8 +537,7 @@ fn main() {
         let guess: i32 = 7;
                 if guess < secret_number { println!("Too small!"); }
         if guess > secret_number { println!("Too big!"); }
-        if guess == secret_number { println!("You win!"); }
-        if guess == secret_number { break; }
+        if guess == secret_number { println!("You win!"); break; }
     }
 }
 ```
