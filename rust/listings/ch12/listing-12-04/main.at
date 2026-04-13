@@ -1,0 +1,33 @@
+// Listing 12-4: Environment variable and case-insensitive search
+fn search_case_insensitive(query String, contents String) []String {
+    var results = List.new()
+    let query_lower = query.to_lowercase()
+    for line in contents.lines() {
+        if line.to_lowercase().contains(query_lower) {
+            results.push(line)
+        }
+    }
+    results
+}
+
+fn main() ! {
+    let args = env.args()
+    let query = args[1]
+    let file_path = args[2]
+    let ignore_case = env.var("IGNORE_CASE").is_ok()
+
+    let contents = fs.read_to_string(file_path).!
+
+    if ignore_case {
+        for line in search_case_insensitive(query, contents) {
+            print(line)
+        }
+    } else {
+        for line in search(query, contents) {
+            print(line)
+        }
+    }
+}
+
+use env
+use.rust std::fs

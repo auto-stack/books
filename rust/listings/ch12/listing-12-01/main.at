@@ -1,0 +1,7 @@
+// Listing 12-1: Accepting command line arguments
+use env
+
+fn main() {
+    let args = env.args()
+    print(f"Args: ${args}")
+}

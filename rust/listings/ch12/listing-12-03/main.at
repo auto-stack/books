@@ -1,0 +1,39 @@
+// Listing 12-3: Modular minigrep with Config type and search function
+type Config {
+    query String
+    file_path String
+}
+
+ext Config {
+    fn build(args []String) !Config {
+        if args.len() < 3 {
+            throw "not enough arguments"
+        }
+        Config(query: args[1], file_path: args[2])
+    }
+}
+
+fn search(query String, contents String) []String {
+    var results = List.new()
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line)
+        }
+    }
+    results
+}
+
+fn run(config Config) ! {
+    let contents = fs.read_to_string(config.file_path).!
+    for line in search(config.query, contents) {
+        print(line)
+    }
+}
+
+use env
+use.rust std::fs
+
+fn main() ! {
+    let config = Config.build(env.args())
+    run(config)
+}
