@@ -1,0 +1,12 @@
+// Listing 10-3: Generic type with multiple type parameters Point<T, U>
+type Point<T, U> {
+    x T
+    y U
+}
+
+fn main() {
+    let p1 = Point(5, 10.4)
+    let p2 = Point("Hello", 'c')
+    print(f"p1: (${p1.x}, ${p1.y})")
+    print(f"p2: (${p2.x}, ${p2.y})")
+}

@@ -1,0 +1,13 @@
+// Listing 10-8: Lifetimes are automatic in Auto
+fn longest(a String, b String) String {
+    if a.len() > b.len() {
+        a
+    } else {
+        b
+    }
+}
+
+fn main() {
+    let result = longest("long string", "xyz")
+    print(f"The longest string is ${result}")
+}

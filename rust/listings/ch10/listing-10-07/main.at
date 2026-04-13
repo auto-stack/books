@@ -1,0 +1,26 @@
+// Listing 10-7: Generic spec with type parameter
+spec Container<T> {
+    fn get(self) T
+    fn set(self, value T)
+}
+
+type Box<T> as Container<T> {
+    value T
+}
+
+ext Box<T> {
+    fn get(self) T {
+        self.value
+    }
+    fn set(self, value T) {
+        self.value = value
+    }
+}
+
+fn main() {
+    var b = Box(42)
+    let v = b.get()
+    print(f"Value: ${v}")
+    b.set(100)
+    print(f"Updated: ${b.get()}")
+}

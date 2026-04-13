@@ -1,0 +1,25 @@
+// Listing 10-6: Using spec as a function parameter
+spec Summary {
+    fn summarize(self) String
+}
+
+type NewsArticle as Summary {
+    headline String
+    author String
+}
+
+ext NewsArticle {
+    fn summarize(self) String {
+        f"${self.headline}, by ${self.author}"
+    }
+}
+
+fn notify(item Summary) {
+    print("Breaking news!")
+    print(item.summarize())
+}
+
+fn main() {
+    let article = NewsArticle("Big News", "Alice")
+    notify(article)
+}

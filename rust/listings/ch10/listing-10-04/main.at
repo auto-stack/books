@@ -1,0 +1,17 @@
+// Listing 10-4: Methods on generic types with ext
+type Point<T> {
+    x T
+    y T
+}
+
+ext Point<T> {
+    fn x_value(self) T {
+        self.x
+    }
+}
+
+fn main() {
+    let p = Point(5, 10)
+    let x = p.x_value()
+    print(f"x = ${x}")
+}

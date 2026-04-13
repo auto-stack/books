@@ -1,0 +1,12 @@
+// Listing 10-2: Generic type Point<T>
+type Point<T> {
+    x T
+    y T
+}
+
+fn main() {
+    let integer = Point(5, 10)
+    let float = Point(1.0, 4.0)
+    print(f"integer: (${integer.x}, ${integer.y})")
+    print(f"float: (${float.x}, ${float.y})")
+}

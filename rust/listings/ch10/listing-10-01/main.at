@@ -1,0 +1,16 @@
+// Listing 10-1: Generic function to find the largest value
+fn largest<T>(list []T) T {
+    var largest = list[0]
+    for item in list {
+        if item > largest {
+            largest = item
+        }
+    }
+    largest
+}
+
+fn main() {
+    let numbers = [34, 50, 25, 100, 65]
+    let result = largest(numbers)
+    print(f"The largest number is ${result}")
+}

@@ -1,0 +1,35 @@
+// Listing 10-5: Defining and implementing a spec (trait)
+spec Summary {
+    fn summarize(self) String
+}
+
+type NewsArticle as Summary {
+    headline String
+    location String
+    author String
+    content String
+}
+
+ext NewsArticle {
+    fn summarize(self) String {
+        f"${self.headline}, by ${self.author} (${self.location})"
+    }
+}
+
+type Tweet as Summary {
+    username String
+    content String
+}
+
+ext Tweet {
+    fn summarize(self) String {
+        f"${self.username}: ${self.content}"
+    }
+}
+
+fn main() {
+    let article = NewsArticle("Headline", "NYC", "Author", "Content")
+    let tweet = Tweet("user", "hello world")
+    print(article.summarize())
+    print(tweet.summarize())
+}
