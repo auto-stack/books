@@ -1,0 +1,10 @@
+// Listing 9-4: Simplified error propagation with fn main() !
+fn read_number(text String) !int {
+    let value = text.to_int().!
+    value
+}
+
+fn main() ! {
+    let n = read_number("42")
+    print(f"Number: ${n}")
+}

@@ -1,0 +1,11 @@
+// Listing 9-3: Error propagation with !T and .?
+fn read_number(text String) !int {
+    let result = text.to_int()
+    let value = result.!
+    value
+}
+
+fn main() {
+    let n = read_number("42")
+    print(f"Number: ${n}")
+}

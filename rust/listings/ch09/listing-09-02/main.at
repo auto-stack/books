@@ -1,0 +1,13 @@
+// Listing 9-2: Pattern matching on ?T with is
+fn maybe_double(x ?int) ?int {
+    is x {
+        None => None
+        Some(v) => Some(v * 2)
+    }
+}
+
+fn main() {
+    let result1 = maybe_double(Some(21))
+    let result2 = maybe_double(None)
+    print("Done")
+}

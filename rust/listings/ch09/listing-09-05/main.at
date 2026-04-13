@@ -1,0 +1,13 @@
+// Listing 9-5: Option type with May.val and None
+fn divide(a int, b int) ?int {
+    if b == 0 {
+        return None
+    }
+    Some(a / b)
+}
+
+fn main() {
+    let result1 = divide(10, 3)
+    let result2 = divide(10, 0)
+    print("Done")
+}

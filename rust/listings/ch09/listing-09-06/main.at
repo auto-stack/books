@@ -1,0 +1,5 @@
+// Listing 9-6: Using expect for unrecoverable errors
+fn main() {
+    let value = "42".to_int().expect("should be a number")
+    print(f"Value: ${value}")
+}
