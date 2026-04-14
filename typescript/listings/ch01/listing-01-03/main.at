@@ -1,0 +1,5 @@
+// Listing 01-03: Type inference
+fn main() {
+    let msg = "hello there!"
+    print(msg)
+}

@@ -1,0 +1,13 @@
+// Listing 02-06: Optional function parameters
+fn greet(name str, greeting? str) {
+    if greeting {
+        print(f"${greeting}, ${name}!")
+    } else {
+        print(f"Hello, ${name}!")
+    }
+}
+
+fn main() {
+    greet("Alice")
+    greet("Bob", "Hi")
+}

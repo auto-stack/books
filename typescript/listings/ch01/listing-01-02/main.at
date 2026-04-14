@@ -1,0 +1,4 @@
+// Listing 01-02: Explicit type annotations
+fn greet(person str, date Date) {
+    print(f"Hello ${person}, today is ${date.toDateString()}!")
+}

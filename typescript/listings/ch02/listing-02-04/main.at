@@ -1,0 +1,10 @@
+// Listing 02-04: Object types
+type User {
+    name str
+    age int
+}
+
+fn main() {
+    let user = User("Alice", 30)
+    print(f"${user.name} is ${user.age} years old")
+}

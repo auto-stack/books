@@ -1,0 +1,4 @@
+// Listing 01-01: Hello world in Auto
+fn main() {
+    print("Hello, world!")
+}

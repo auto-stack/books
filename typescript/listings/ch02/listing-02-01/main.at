@@ -1,0 +1,9 @@
+// Listing 02-01: The primitives
+fn main() {
+    let name = "Alice"
+    let age = 25
+    let is_active = true
+    print(name)
+    print(age)
+    print(is_active)
+}

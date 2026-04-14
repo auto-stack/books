@@ -1,0 +1,11 @@
+// Listing 02-02: Arrays
+fn main() {
+    let nums = [1, 2, 3]
+    let names = ["Alice", "Bob", "Charlie"]
+    for n in nums {
+        print(n)
+    }
+    for name in names {
+        print(name)
+    }
+}

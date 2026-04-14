@@ -1,0 +1,11 @@
+// Listing 02-05: Nullable types
+fn process_name(name ?str) {
+    name is
+        Some(n) -> print(f"Hello, ${n}!")
+        None -> print("No name provided")
+}
+
+fn main() {
+    process_name("Alice")
+    process_name(None)
+}

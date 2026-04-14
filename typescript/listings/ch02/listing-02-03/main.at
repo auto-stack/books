@@ -1,0 +1,14 @@
+// Listing 02-03: Function type annotations
+fn add(a int, b int) int {
+    return a + b
+}
+
+fn greet(name str) {
+    print(f"Hello, ${name}!")
+}
+
+fn main() {
+    let result = add(5, 3)
+    print(result)
+    greet("Alice")
+}
