@@ -13,11 +13,11 @@
 
 | # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
 |---|------|------|------|--------|--------|------|
-| 1 | [Auto 与 Rust](rust/) | `rust/` | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
-| 2 | [Auto 与 TypeScript](typescript/) | `typescript/` | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
-| 3 | [Auto 与 TypeScript 深入篇](typescript-deepdive/) | `typescript-deepdive/` | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
-| 4 | [Auto 与 C 语言小书](little-c/) | `little-c/` | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
-| 5 | [Auto 与 Modern C](modern-c/) | `modern-c/` | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
+| 1 | [Auto 与 Rust](#rust-版本--auto-与-rust-双语对照参考) | [`rust/`](rust/) | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
+| 2 | [Auto 与 TypeScript](#typescript-版本--auto-与-typescript-双语对照参考) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
+| 3 | [Auto 与 TypeScript 深入篇](#typescript-深入篇--auto-与-typescript-深度对照) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
+| 4 | [Auto 与 C 语言小书](#c-语言小书--auto-与-c-系统编程对照) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
+| 5 | [Auto 与 Modern C](#modern-c--auto-与-modern-c-深度对照) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
 
 **共计：80 个章节、约 45 个代码示例（含转译器输出），全部提供英中双语版本。**
 

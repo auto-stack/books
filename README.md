@@ -14,11 +14,11 @@ book for the Auto language. Every book provides paired **English** (`.md`) and *
 
 | # | Book | Directory | Source | Chapters | Transpiler | Focus |
 |---|------|-----------|--------|----------|------------|-------|
-| 1 | [Auto vs Rust](rust/) | `rust/` | [*The Rust Programming Language*](https://doc.rust-lang.org/book/) | 22 (ch00-21 + appendix) | `a2r` → Rust | Systems programming, ownership, actors, async |
-| 2 | [Auto vs TypeScript](typescript/) | `typescript/` | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10 (ch00-09) | `a2ts` → TypeScript | Web development, types, classes, modules |
-| 3 | [Auto vs TypeScript DeepDive](typescript-deepdive/) | `typescript-deepdive/` | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16 (ch00-15) | `a2ts` → TypeScript | Advanced type system, generics, pattern matching |
-| 4 | [Auto vs Little C](little-c/) | `little-c/` | [*The Little Book of C*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
-| 5 | [Auto vs Modern C](modern-c/) | `modern-c/` | [*Modern C* by Jens Gustedt](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
+| 1 | [Auto vs Rust](#rust-version--auto-vs-rust-bilingual-reference) | [`rust/`](rust/) | [*The Rust Programming Language*](https://doc.rust-lang.org/book/) | 22 (ch00-21 + appendix) | `a2r` → Rust | Systems programming, ownership, actors, async |
+| 2 | [Auto vs TypeScript](#typescript-version--auto-vs-typescript-bilingual-reference) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10 (ch00-09) | `a2ts` → TypeScript | Web development, types, classes, modules |
+| 3 | [Auto vs TypeScript DeepDive](#typescript-deepdive--auto-vs-typescript-in-depth) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16 (ch00-15) | `a2ts` → TypeScript | Advanced type system, generics, pattern matching |
+| 4 | [Auto vs Little C](#little-c--auto-vs-c-systems-programming) | [`little-c/`](little-c/) | [*The Little Book of C*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
+| 5 | [Auto vs Modern C](#modern-c--auto-vs-modern-c-deep-reference) | [`modern-c/`](modern-c/) | [*Modern C* by Jens Gustedt](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
 
 **Total: 80 chapters, ~45 code listings with transpiler output, all EN + CN.**
 
