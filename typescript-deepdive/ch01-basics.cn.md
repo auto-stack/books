@@ -93,53 +93,47 @@ fn();           // undefined — this = global/undefined
 Auto 使用**显式的 `self`**。没有动态的 `this` 绑定——`self` 始终
 引用当前实例：
 
+<Listing name="self-in-methods" file="listings/ch01-self-in-methods">
+
 ```auto
 type User {
     name str
     fn greet() {
-        print("Hello from", self.name)   // self 始终是当前实例
+        print("Hello from " + self.name)
     }
 }
 
 fn main() {
     let user = User("Alice")
-    user.greet()    // "Hello from Alice"
+    user.greet()
 }
 ```
+
+</Listing>
 
 ## 闭包
 
 闭包是从外层作用域捕获变量的函数。JavaScript 和 Auto 都支持闭包，
 但 Auto 的类型系统提供更强的保证：
 
+<Listing name="closure-counter" file="listings/ch01-closure-counter">
+
 ```auto
-// Auto
-fn makeCounter() -> fn() int {
-    var count = 0
-    return () => {
-        count = count + 1
-        count
-    }
+fn apply(f fn(int) int, x int) int {
+    f(x)
+}
+
+fn double(x int) int {
+    x * 2
 }
 
 fn main() {
-    let counter = makeCounter()
-    print(counter())   // 1
-    print(counter())   // 2
-    print(counter())   // 3
+    let result = apply(double, 5)
+    print(result)
 }
 ```
 
-```typescript
-// TypeScript
-function makeCounter(): () => number {
-    let count = 0;
-    return () => {
-        count++;
-        return count;
-    };
-}
-```
+</Listing>
 
 ## 数字
 

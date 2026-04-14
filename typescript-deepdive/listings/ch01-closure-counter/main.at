@@ -1,0 +1,12 @@
+fn apply(f fn(int) int, x int) int {
+    f(x)
+}
+
+fn double(x int) int {
+    x * 2
+}
+
+fn main() {
+    let result = apply(double, 5)
+    print(result)
+}

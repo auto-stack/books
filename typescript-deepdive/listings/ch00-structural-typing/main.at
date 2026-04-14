@@ -1,0 +1,21 @@
+type Point2D {
+    x int
+    y int
+}
+
+type Point3D {
+    x int
+    y int
+    z int
+}
+
+fn printX(p Point2D) {
+    print(p.x)
+}
+
+fn main() {
+    let p2 = Point2D(1, 2)
+    let p3 = Point3D(1, 2, 3)
+    printX(p2)
+    printX(p3)
+}

@@ -27,6 +27,8 @@ class Point3D extends Point {
 Auto uses `type` declarations with inline methods. Inheritance uses the `is`
 keyword:
 
+<Listing name="types-with-methods" file="listings/ch02-types-with-methods">
+
 ```auto
 type Point {
     x int
@@ -45,6 +47,8 @@ type Point3D is Point {
     }
 }
 ```
+
+</Listing>
 
 Auto does not have `public`/`private`/`protected` access modifiers. All fields
 are accessible by default (Auto favors simplicity over encapsulation via

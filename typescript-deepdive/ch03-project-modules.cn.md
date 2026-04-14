@@ -110,14 +110,17 @@ add(1, 2);
 
 Auto 使用 `use` 导入，通过模块系统组织：
 
+<Listing name="mod-and-use" file="listings/ch03-mod-and-use">
+
 ```auto
-// Auto
 use utils::add
 
 fn main() {
     let result = add(1, 2)
 }
 ```
+
+</Listing>
 
 ## 声明空间
 

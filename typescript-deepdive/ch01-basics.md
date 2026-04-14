@@ -96,19 +96,23 @@ fn();           // undefined — this = global/undefined
 Auto uses **explicit `self`** in method bodies. There is no dynamic `this`
 binding — `self` always refers to the current instance:
 
+<Listing name="self-in-methods" file="listings/ch01-self-in-methods">
+
 ```auto
 type User {
     name str
     fn greet() {
-        print("Hello from", self.name)   // self is always the instance
+        print("Hello from " + self.name)
     }
 }
 
 fn main() {
     let user = User("Alice")
-    user.greet()    // "Hello from Alice"
+    user.greet()
 }
 ```
+
+</Listing>
 
 ## Closures
 
@@ -116,34 +120,24 @@ Closures are functions that capture variables from their enclosing scope.
 Both JavaScript and Auto support closures, but Auto's type system provides
 stronger guarantees:
 
+<Listing name="closure-counter" file="listings/ch01-closure-counter">
+
 ```auto
-// Auto
-fn makeCounter() -> fn() int {
-    var count = 0
-    return () => {
-        count = count + 1
-        count
-    }
+fn apply(f fn(int) int, x int) int {
+    f(x)
+}
+
+fn double(x int) int {
+    x * 2
 }
 
 fn main() {
-    let counter = makeCounter()
-    print(counter())   // 1
-    print(counter())   // 2
-    print(counter())   // 3
+    let result = apply(double, 5)
+    print(result)
 }
 ```
 
-```typescript
-// TypeScript
-function makeCounter(): () => number {
-    let count = 0;
-    return () => {
-        count++;
-        return count;
-    };
-}
-```
+</Listing>
 
 ## Numbers
 

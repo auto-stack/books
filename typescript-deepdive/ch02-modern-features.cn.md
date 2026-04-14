@@ -25,6 +25,8 @@ class Point3D extends Point {
 
 Auto 使用 `type` 声明配合内联方法。继承使用 `is` 关键字：
 
+<Listing name="types-with-methods" file="listings/ch02-types-with-methods">
+
 ```auto
 type Point {
     x int
@@ -43,6 +45,8 @@ type Point3D is Point {
     }
 }
 ```
+
+</Listing>
 
 Auto 没有 `public`/`private`/`protected` 访问修饰符。所有字段默认可访问
 （Auto 倾向于简洁而非通过关键字实现封装）。

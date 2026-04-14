@@ -65,6 +65,8 @@ Both Auto and TypeScript use **structural typing** — a value's type is
 determined by its *shape*, not its *name*. If two types have the same
 structure, they are compatible, even if they were defined separately.
 
+<Listing name="structural-typing" file="listings/ch00-structural-typing">
+
 ```auto
 type Point2D {
     x int
@@ -102,6 +104,8 @@ const p3: Point3D = { x: 1, y: 2, z: 3 };
 printX(p2);  // exact match
 printX(p3);  // extra fields okay — structural typing
 ```
+
+</Listing>
 
 This is different from nominally typed languages (like Java or Rust's
 structs) where you must explicitly declare inheritance or trait

@@ -113,14 +113,17 @@ add(1, 2);
 
 Auto uses `use` for importing and Auto's module system for organizing:
 
+<Listing name="mod-and-use" file="listings/ch03-mod-and-use">
+
 ```auto
-// Auto
 use utils::add
 
 fn main() {
     let result = add(1, 2)
 }
 ```
+
+</Listing>
 
 ## Declaration Spaces
 

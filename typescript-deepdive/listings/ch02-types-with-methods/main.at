@@ -1,0 +1,28 @@
+type Point {
+    x int
+    y int
+
+    fn add(other Point) Point {
+        Point(self.x + other.x, self.y + other.y)
+    }
+}
+
+type Point3D is Point {
+    z int
+
+    fn add(other Point3D) Point3D {
+        Point3D(self.x + other.x, self.y + other.y, self.z + other.z)
+    }
+}
+
+fn main() {
+    let p1 = Point(1, 2)
+    let p2 = Point(3, 4)
+    let p3 = p1.add(p2)
+    print("Point: ({p3.x}, {p3.y})")
+
+    let p4 = Point3D(1, 2, 3)
+    let p5 = Point3D(4, 5, 6)
+    let p6 = p4.add(p5)
+    print("Point3D: ({p6.x}, {p6.y}, {p6.z})")
+}

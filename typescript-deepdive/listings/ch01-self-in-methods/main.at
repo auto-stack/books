@@ -1,0 +1,11 @@
+type User {
+    name str
+    fn greet() {
+        print("Hello from " + self.name)
+    }
+}
+
+fn main() {
+    let user = User("Alice")
+    user.greet()
+}
