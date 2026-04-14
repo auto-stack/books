@@ -6,8 +6,8 @@ class User implements Greetable {
     }
 
     greet(): void {
-    console.log("Hello from user", this.name);
-}
+        console.log("Hello from user", this.name);
+    }
 }
 
 function main(): void {
