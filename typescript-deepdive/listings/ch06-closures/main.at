@@ -1,0 +1,43 @@
+// Auto — functions, closures, and higher-order functions
+fn add(a int, b int) int {
+    a + b
+}
+
+fn apply(f fn(int) int, x int) int {
+    f(x)
+}
+
+fn greet(name str, greeting ?str) {
+    if greeting != nil {
+        print("{greeting}, {name}!")
+    } else {
+        print("Hello, {name}!")
+    }
+}
+
+fn make_counter() fn() int {
+    var count int = 0
+    fn() int {
+        count = count + 1
+        count
+    }
+}
+
+fn main() {
+    // Basic function
+    print("3 + 4 = {add(3, 4)}")
+
+    // Higher-order function
+    let double = (x int) => x * 2
+    print("double(5) = {apply(double, 5)}")
+
+    // Closure counter
+    let counter = make_counter()
+    print("counter: {counter()}")
+    print("counter: {counter()}")
+    print("counter: {counter()}")
+
+    // Optional parameters
+    greet("Alice")
+    greet("Bob", "Good morning")
+}

@@ -1,0 +1,48 @@
+// Auto — specs, enums, and pattern matching
+spec Printable {
+    fn to_string() str
+}
+
+type User as Printable {
+    name str
+    age int
+
+    fn to_string() str {
+        "User({self.name}, {self.age})"
+    }
+}
+
+enum Result<T> {
+    Ok(T),
+    Err(str)
+}
+
+fn process_result(r Result<int>) {
+    r is
+        Ok(value) => print("Success: {value}")
+        Err(msg) => print("Error: {msg}")
+}
+
+fn divide(a f64, b f64) Result<f64> {
+    if b == 0 {
+        Result.Err("division by zero")
+    } else {
+        Result.Ok(a / b)
+    }
+}
+
+fn main() {
+    let user = User("Alice", 30)
+    print(user.to_string())
+
+    let ok = Result.Ok(42)
+    let err = Result.Err("something failed")
+    process_result(ok)
+    process_result(err)
+
+    let result = divide(10, 3)
+    process_result(result)
+
+    let bad = divide(10, 0)
+    process_result(bad)
+}

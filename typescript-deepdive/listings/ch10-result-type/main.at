@@ -1,0 +1,49 @@
+// Auto — discriminated unions via enum Result
+enum Result<T> {
+    Ok(T),
+    Err(str)
+}
+
+fn parse_int(input str) Result<int> {
+    // Simulated parsing
+    if input.len() == 0 {
+        Result.Err("empty string")
+    } else {
+        // In real code: actual parsing logic
+        Result.Ok(42)
+    }
+}
+
+fn safe_divide(a f64, b f64) Result<f64> {
+    if b == 0.0 {
+        Result.Err("division by zero")
+    } else {
+        Result.Ok(a / b)
+    }
+}
+
+fn process(result Result<int>) {
+    result is
+        Ok(value) => print("Success: {value}")
+        Err(msg) => print("Failed: {msg}")
+}
+
+fn main() {
+    // Parse results
+    let good = parse_int("42")
+    let bad = parse_int("")
+    process(good)
+    process(bad)
+
+    // Division results
+    let r1 = safe_divide(10.0, 3.0)
+    let r2 = safe_divide(10.0, 0.0)
+    process(r1)
+    process(r2)
+
+    // Immutability
+    let config = "production"   // immutable
+    var attempts int = 0         // mutable counter
+    attempts = attempts + 1
+    print("Attempts: {attempts}, Config: {config}")
+}

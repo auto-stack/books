@@ -1,0 +1,51 @@
+// Auto — pattern matching and exhaustiveness
+enum Shape {
+    Circle(f64),
+    Rect(f64, f64),
+    Triangle(f64, f64, f64)
+}
+
+enum Option<T> {
+    Some(T),
+    None
+}
+
+fn area(s Shape) f64 {
+    s is
+        Circle(r) => 3.14159 * r * r
+        Rect(w, h) => w * h
+        Triangle(a, b, c) => {
+            let s = (a + b + c) / 2.0
+            sqrt(s * (s - a) * (s - b) * (s - c))
+        }
+}
+
+fn describe(s Shape) str {
+    s is
+        Circle(r) => "Circle(r={r})"
+        Rect(w, h) => "Rect({w}, {h})"
+        Triangle(a, b, c) => "Triangle({a}, {b}, {c})"
+}
+
+fn process(value int | str | bool) {
+    value is
+        int => print("Integer: {value}")
+        str => print("String length: {value.len()}")
+        bool => print(if value { "true" } else { "false" })
+}
+
+fn main() {
+    let shapes = [
+        Shape.Circle(5.0),
+        Shape.Rect(3.0, 4.0),
+        Shape.Triangle(3.0, 4.0, 5.0)
+    ]
+    for shape in shapes {
+        print(describe(shape))
+        print("  area = {area(shape)}")
+    }
+
+    process(42)
+    process("hello")
+    process(true)
+}

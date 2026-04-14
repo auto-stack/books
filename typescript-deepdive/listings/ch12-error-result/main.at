@@ -1,0 +1,47 @@
+// Auto — Result-based error handling
+enum Result<T> {
+    Ok(T),
+    Err(str)
+}
+
+fn safe_divide(a f64, b f64) Result<f64> {
+    if b == 0.0 {
+        Result.Err("division by zero")
+    } else {
+        Result.Ok(a / b)
+    }
+}
+
+fn parse_age(input str) Result<int> {
+    let trimmed = input.trim()
+    if trimmed.len() == 0 {
+        Result.Err("empty input")
+    } else if trimmed[0] < '0' || trimmed[0] > '9' {
+        Result.Err("not a number")
+    } else {
+        Result.Ok(int.from_str(trimmed))
+    }
+}
+
+fn compute(input str) Result<f64> {
+    let age = parse_age(input)?
+    let result = safe_divide(100.0, f64(age))?
+    Result.Ok(result)
+}
+
+fn main() {
+    let r1 = compute("25")
+    r1 is
+        Ok(v) => print("Result: {v}")
+        Err(e) => print("Error: {e}")
+
+    let r2 = compute("abc")
+    r2 is
+        Ok(v) => print("Result: {v}")
+        Err(e) => print("Error: {e}")
+
+    let r3 = compute("0")
+    r3 is
+        Ok(v) => print("Result: {v}")
+        Err(e) => print("Error: {e}")
+}

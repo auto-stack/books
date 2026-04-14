@@ -1,0 +1,63 @@
+// Auto — generics and type inference
+type Box<T> {
+    value T
+
+    fn map<U>(f fn(T) U) Box<U> {
+        Box(f(self.value))
+    }
+}
+
+type Stack<T> {
+    items []T
+
+    fn push(item T) {
+        self.items.push(item)
+    }
+
+    fn pop() ?T {
+        self.items.pop()
+    }
+
+    fn is_empty() bool {
+        self.items.len() == 0
+    }
+}
+
+fn identity<T>(value T) T {
+    value
+}
+
+fn first<T>(items []T) ?T {
+    if items.len() > 0 {
+        items[0]
+    } else {
+        nil
+    }
+}
+
+fn main() {
+    // Generic function with inference
+    let x = identity(42)
+    let y = identity("hello")
+    print("x: {x}, y: {y}")
+
+    // Generic type
+    let box = Box(10)
+    let mapped = box.map((n int) => n * 2)
+    print("mapped: {mapped.value}")
+
+    // Generic stack
+    var stack = Stack([]int)
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    print("pop: {stack.pop()}")
+    print("empty: {stack.is_empty()}")
+
+    // Generic function with arrays
+    let nums = [10, 20, 30]
+    let head = first(nums)
+    if head != nil {
+        print("first: {head}")
+    }
+}

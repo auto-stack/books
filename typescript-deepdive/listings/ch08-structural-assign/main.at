@@ -1,0 +1,39 @@
+// Auto — structural type compatibility
+type Point2D {
+    x f64
+    y f64
+}
+
+type Point3D {
+    x f64
+    y f64
+    z f64
+}
+
+fn print_x(p Point2D) {
+    print("x = {p.x}")
+}
+
+type Named {
+    name str
+}
+
+type Employee {
+    name str
+    role str
+}
+
+fn greet(n Named) {
+    print("Hello, {n.name}")
+}
+
+fn main() {
+    let p2 = Point2D(1.0, 2.0)
+    let p3 = Point3D(1.0, 2.0, 3.0)
+
+    print_x(p2)   // exact match
+    print_x(p3)   // OK — extra field is fine (structural)
+
+    let emp = Employee("Alice", "Engineer")
+    greet(emp)    // OK — Employee has `name` field
+}

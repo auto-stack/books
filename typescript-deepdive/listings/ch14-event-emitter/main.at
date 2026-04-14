@@ -1,0 +1,46 @@
+// Auto — type-safe event emitter
+type Emitter<T> {
+    var listeners []fn(T)
+
+    fn on(listener fn(T)) {
+        self.listeners.push(listener)
+    }
+
+    fn emit(event T) {
+        for listener in self.listeners {
+            listener(event)
+        }
+    }
+
+    fn off(listener fn(T)) bool {
+        let idx = self.listeners.index_of(listener)
+        if idx >= 0 {
+            self.listeners.remove_at(idx)
+            true
+        } else {
+            false
+        }
+    }
+}
+
+// Currying example
+let add = (x int) => (y int) => x + y
+
+fn main() {
+    // Event emitter
+    var clicks = Emitter([]fn(int))
+    clicks.on((n int) => print("Click #{n}"))
+    clicks.on((n int) => print("  count = {n}"))
+    clicks.emit(1)
+    clicks.emit(2)
+
+    // Currying
+    let add5 = add(5)
+    print("add(5)(3) = {add5(3)}")
+    print("add(5)(10) = {add5(10)}")
+
+    // String events
+    var messages = Emitter([]fn(str))
+    messages.on((msg str) => print("Message: {msg}"))
+    messages.emit("Hello, Auto!")
+}

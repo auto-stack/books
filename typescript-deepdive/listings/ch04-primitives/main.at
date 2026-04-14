@@ -1,0 +1,31 @@
+// Auto — primitive types and annotations
+fn main() {
+    // Explicit type annotations
+    let count int = 42
+    let pi f64 = 3.14159
+    let name str = "Auto"
+    let is_ready bool = true
+
+    // Type inference
+    let sum = count + 8       // inferred as int
+    let items = [1, 2, 3]     // inferred as []int
+
+    // Nullable types
+    let middle_name ?str = nil
+
+    // Arrays
+    let numbers = [10, 20, 30]
+    let doubled = numbers.map((n int) => n * 2)
+
+    print("Name: {name}")
+    print("Sum: {sum}")
+    print("Doubled: {doubled}")
+
+    // Union types
+    let id int | str = 42
+    id = "user-001"
+
+    // Tuple-like types
+    let pair = (1, "hello")
+    print("First: {pair.0}, Second: {pair.1}")
+}

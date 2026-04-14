@@ -1,0 +1,41 @@
+// Auto — has composition vs index signatures
+type Named {
+    name str
+    fn greet() { print("Hi, I'm {self.name}") }
+}
+
+type Aged {
+    age int
+}
+
+type Logged {
+    fn log(msg str) { print("[LOG] {msg}") }
+}
+
+type User has Named, Aged, Logged {
+    email str
+}
+
+type Admin has Named, Logged {
+    level int
+}
+
+fn introduce(u User) {
+    u.greet()
+    print("Age: {u.age}")
+}
+
+fn main() {
+    let user = User("Alice", 30, "alice@example.com")
+    user.greet()
+    user.log("User created")
+    print("Email: {user.email}")
+
+    let admin = Admin("Bob", 1)
+    admin.greet()
+    admin.log("Admin logged in")
+    print("Admin level: {admin.level}")
+
+    // Structural typing — Admin satisfies the parts User needs
+    // But introduce() requires `age`, which Admin doesn't have
+}
