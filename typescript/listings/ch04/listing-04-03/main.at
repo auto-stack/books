@@ -1,0 +1,9 @@
+fn first<T>(arr []T) T {
+    arr[0]
+}
+
+fn main() {
+    let nums = [1, 2, 3]
+    let n = first(nums)
+    print(n)
+}

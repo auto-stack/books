@@ -1,0 +1,10 @@
+fn identity<T>(arg T) T {
+    arg
+}
+
+fn main() {
+    let a = identity(5)
+    let b = identity("hello")
+    print(a)
+    print(b)
+}

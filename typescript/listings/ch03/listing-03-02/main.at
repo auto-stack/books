@@ -1,0 +1,12 @@
+fn process_count(count int) {
+    if count {
+        print("Count is non-zero:", count)
+    } else {
+        print("Count is zero")
+    }
+}
+
+fn main() {
+    process_count(5)
+    process_count(0)
+}

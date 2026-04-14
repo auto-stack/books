@@ -1,0 +1,15 @@
+type Wing {
+    fn flap() {
+        print("Flap!")
+    }
+}
+
+type Duck has Wing {
+    name int
+}
+
+fn main() {
+    let duck = Duck(1)
+    duck.flap()
+    print("Duck name:", duck.name)
+}

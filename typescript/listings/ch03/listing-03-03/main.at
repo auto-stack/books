@@ -1,0 +1,18 @@
+enum Shape {
+    Circle float
+    Square float
+}
+
+fn area(shape Shape) {
+    is shape {
+        Shape.Circle(r) => print("Circle area:", 3.14 * r * r)
+        Shape.Rectangle(w) => print("Rectangle area:", w * w)
+    }
+}
+
+fn main() {
+    let c = Shape.Circle(5.0)
+    let s = Shape.Square(4.0)
+    area(c)
+    area(s)
+}

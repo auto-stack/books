@@ -1,0 +1,16 @@
+enum Value {
+    Num int
+    Text int
+}
+
+fn describe(value Value) {
+    is value {
+        Value.Num(n) => print("It's a number:", n)
+        Value.Text(t) => print("It's text:", t)
+    }
+}
+
+fn main() {
+    describe(Value.Num(42))
+    describe(Value.Text(99))
+}

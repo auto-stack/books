@@ -1,0 +1,12 @@
+fn greet(name int, greeting? int) {
+    if greeting {
+        print(greeting, name)
+    } else {
+        print(name)
+    }
+}
+
+fn main() {
+    greet(42)
+    greet(42, 1)
+}

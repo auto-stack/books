@@ -1,0 +1,15 @@
+spec Greetable {
+    fn greet()
+}
+
+type User as Greetable {
+    name int
+    fn greet() {
+        print("Hello from user", self.name)
+    }
+}
+
+fn main() {
+    let user = User(42)
+    user.greet()
+}

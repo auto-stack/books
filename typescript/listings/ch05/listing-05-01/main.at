@@ -1,0 +1,7 @@
+spec Greetable {
+    fn greet()
+}
+
+fn main() {
+    print("spec Greetable defined")
+}

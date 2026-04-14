@@ -1,0 +1,12 @@
+type Config {
+    host int
+    port? int
+}
+
+fn main() {
+    let c = Config(8080)
+    print("Host:", c.host)
+    if c.port {
+        print("Port:", c.port)
+    }
+}
