@@ -1,0 +1,29 @@
+type Counter {
+    value int
+}
+
+fn Counter.new() Counter {
+    Counter(0)
+}
+
+fn Counter.increment(c Counter) {
+    // C: mtx_lock(&mutex);
+    c.value = c.value + 1
+    // C: mtx_unlock(&mutex);
+}
+
+fn main() {
+    var counter Counter = Counter.new()
+
+    // C: requires mutex to protect shared counter
+    // C: mtx_t mutex; mtx_init(&mutex, mtx_plain);
+    // C: mtx_lock(&mutex); counter++; mtx_unlock(&mutex);
+
+    // Auto: each actor has isolated state
+    // No mutex needed -- state is not shared
+    for i in 0..1000 {
+        counter.increment(counter)
+    }
+    print("Counter:", counter.value)
+    print("Auto: no mutexes needed with actor model")
+}

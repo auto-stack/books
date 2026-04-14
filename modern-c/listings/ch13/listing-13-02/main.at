@@ -1,0 +1,20 @@
+type Config {
+    name str
+    value int
+    active bool
+}
+
+fn Config.default() Config {
+    Config("unnamed", 0, false)
+}
+
+fn Config.with_name(name str) Config {
+    Config(name, 0, true)
+}
+
+fn main() {
+    let default_cfg Config = Config.default()
+    let named_cfg Config = Config.with_name("production")
+    print("Default:", default_cfg.name, default_cfg.active)
+    print("Named:", named_cfg.name, named_cfg.active)
+}

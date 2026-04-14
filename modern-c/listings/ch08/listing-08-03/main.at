@@ -1,0 +1,11 @@
+fn main() {
+    let greeting str = "Hello, Modern C!"
+    let name str = "Auto"
+
+    print("Greeting:", greeting)
+    print("Length:", len(greeting))
+
+    // Concatenation
+    let full str = greeting + " Meet " + name + "."
+    print("Full:", full)
+}

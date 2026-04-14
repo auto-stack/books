@@ -1,0 +1,11 @@
+fn main() {
+    // Implicit conversion: int → float
+    let n int = 42
+    let f float = float(n)    // explicit cast
+    print("int as float:", f)
+
+    // Float → int (truncation)
+    let pi float = 3.14159
+    let truncated int = int(pi)
+    print("truncated pi:", truncated)
+}

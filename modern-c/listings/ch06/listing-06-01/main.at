@@ -1,0 +1,13 @@
+fn main() {
+    let primes [5]int = [5]int{2, 3, 5, 7, 11}
+    for i in 0..5 {
+        print("primes[", i, "] =", primes[i])
+    }
+
+    // Sum of array
+    var total int = 0
+    for i in 0..5 {
+        total = total + primes[i]
+    }
+    print("Sum of primes:", total)
+}

@@ -1,0 +1,16 @@
+fn main() {
+    let x int = 42
+    let y int = 0
+
+    // Boolean context: truth values
+    if x {
+        print("x is truthy")
+    }
+    if !y {
+        print("y is falsy (zero)")
+    }
+
+    // Ternary → if/else expression
+    let label str = if x > 0 { "positive" } else { "non-positive" }
+    print("x is", label)
+}

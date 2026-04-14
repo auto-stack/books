@@ -1,0 +1,13 @@
+fn main() {
+    let a int = 17
+    let b int = 5
+
+    // C: div_t result = div(17, 5);
+    print("Quotient:", a / b)
+    print("Remainder:", a % b)
+    print("Absolute:", abs(-42))
+
+    // Bounds checking (Modern C emphasis)
+    let large int = 2147483647
+    print("Large int:", large)
+}

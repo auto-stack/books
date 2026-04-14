@@ -1,0 +1,22 @@
+enum Value {
+    IntVal int
+    FloatVal float
+    StrVal str
+}
+
+fn describe(v Value) str {
+    is v {
+        IntVal(n) => "integer: " + str(n)
+        FloatVal(f) => "float: " + str(f)
+        StrVal(s) => "string: " + s
+    }
+}
+
+fn main() {
+    let a Value = Value.IntVal(42)
+    let b Value = Value.FloatVal(3.14)
+    let c Value = Value.StrVal("hello")
+    print(describe(a))
+    print(describe(b))
+    print(describe(c))
+}

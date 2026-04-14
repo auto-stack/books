@@ -150,3 +150,54 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | `var x int = 5` | `int x = 5;` | Mutable variable |
 | `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | Counted loop |
 | `auto a2c` / `auto b` | `gcc` / `make` | Build commands |
+
+## Modern C — Auto vs Modern C Deep Reference
+
+The [`modern-c/`](modern-c/) directory contains a rigorous adaptation of "Modern C" (Jens Gustedt)
+for Auto programmers. Covers the full C language across 4 levels: Encounter, Acquaintance,
+Cognition, Experience — including the abstract state machine, memory model, type-generic
+programming, threads, and atomics.
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | Level | English | Chinese |
+|----|-------|---------|---------|
+| 00 | — | [Introduction](modern-c/ch00-introduction.md) | [简介](modern-c/ch00-introduction.cn.md) |
+| 01 | Encounter | [Getting Started](modern-c/ch01-getting-started.md) | [入门](modern-c/ch01-getting-started.cn.md) |
+| 02 | Encounter | [Program Structure](modern-c/ch02-program-structure.md) | [程序结构](modern-c/ch02-program-structure.cn.md) |
+| 03 | Acquaintance | [Control Flow](modern-c/ch03-control-flow.md) | [控制流](modern-c/ch03-control-flow.cn.md) |
+| 04 | Acquaintance | [Expressions](modern-c/ch04-expressions.md) | [表达式](modern-c/ch04-expressions.cn.md) |
+| 05 | Acquaintance | [Basic Values & Data](modern-c/ch05-basic-values.md) | [基本值与数据](modern-c/ch05-basic-values.cn.md) |
+| 06 | Acquaintance | [Derived Data Types](modern-c/ch06-derived-types.md) | [派生数据类型](modern-c/ch06-derived-types.cn.md) |
+| 07 | Acquaintance | [Functions](modern-c/ch07-functions.md) | [函数](modern-c/ch07-functions.cn.md) |
+| 08 | Acquaintance | [C Library Functions](modern-c/ch08-c-library.md) | [C 库函数](modern-c/ch08-c-library.cn.md) |
+| 09 | Cognition | [Style](modern-c/ch09-style.md) | [代码风格](modern-c/ch09-style.cn.md) |
+| 10 | Cognition | [Organization](modern-c/ch10-organization.md) | [组织与文档](modern-c/ch10-organization.cn.md) |
+| 11 | Cognition | [Pointers](modern-c/ch11-pointers.md) | [指针](modern-c/ch11-pointers.cn.md) |
+| 12 | Cognition | [Memory Model](modern-c/ch12-memory-model.md) | [内存模型](modern-c/ch12-memory-model.cn.md) |
+| 13 | Cognition | [Storage](modern-c/ch13-storage.md) | [存储](modern-c/ch13-storage.cn.md) |
+| 14 | Cognition | [I/O Processing](modern-c/ch14-io-processing.md) | [I/O 处理](modern-c/ch14-io-processing.cn.md) |
+| 15 | Cognition | [Program Failure](modern-c/ch15-program-failure.md) | [程序故障](modern-c/ch15-program-failure.cn.md) |
+| 16 | Experience | [Performance](modern-c/ch16-performance.md) | [性能](modern-c/ch16-performance.cn.md) |
+| 17 | Experience | [Function-like Macros](modern-c/ch17-macros.md) | [函数式宏](modern-c/ch17-macros.cn.md) |
+| 18 | Experience | [Type-generic Programming](modern-c/ch18-type-generic.md) | [类型泛型编程](modern-c/ch18-type-generic.cn.md) |
+| 19 | Experience | [Control Flow Variations](modern-c/ch19-control-flow-variations.md) | [控制流变体](modern-c/ch19-control-flow-variations.cn.md) |
+| 20 | Experience | [Threads](modern-c/ch20-threads.md) | [线程](modern-c/ch20-threads.cn.md) |
+| 21 | Experience | [Atomics & Memory Consistency](modern-c/ch21-atomics.md) | [原子操作与内存一致性](modern-c/ch21-atomics.cn.md) |
+
+### Key Concept Mappings (Auto → Modern C)
+
+| Auto | Modern C | Description |
+|------|----------|-------------|
+| `type` | `struct` + `typedef` | Data structure definition |
+| `spec` | function pointer / vtable | Behavioral interface |
+| `enum` | tagged union | Sum type / data enum |
+| `is` | `switch` / `_Generic` | Pattern matching |
+| `let`/`var` | `const`/mutable | Immutable/mutable binding |
+| `var x = expr` | `auto x = expr` (C23) | Type inference |
+| `fn` | function definition | Functions |
+| `mod`/`use` | `#include` / headers | Module system |
+| `#[]` comptime | preprocessor macros | Compile-time metaprogramming |
+| actors | `thrd_*` / `mtx_*` | Concurrency model |
+| `!T` error type | `errno` / `setjmp` | Error handling |
+| AutoFree | `malloc`/`free` | Memory management |

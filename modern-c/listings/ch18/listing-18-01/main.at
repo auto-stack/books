@@ -1,0 +1,22 @@
+fn generic_add(a int, b int) int {
+    a + b
+}
+
+fn generic_add_f(a float, b float) float {
+    a + b
+}
+
+// C: uses _Generic to dispatch based on type
+// Auto: uses generics (spec constraints) for type dispatch
+// fn add<T>(a T, b T) T { a + b }  // future syntax
+
+fn main() {
+    print("int add:", generic_add(3, 7))
+    print("float add:", generic_add_f(3.14, 2.72))
+
+    // C Deep Dive: _Generic dispatches at compile time
+    // #define add(a, b) _Generic((a), \
+    //   int: add_int, \
+    //   double: add_double)(a, b)
+    print("Auto's spec system provides type-safe generics")
+}

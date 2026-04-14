@@ -1,0 +1,19 @@
+type Fraction {
+    num int
+    den int
+}
+
+fn Fraction.new(n int, d int) Fraction {
+    Fraction(n, d)
+}
+
+fn Fraction.to_float(f Fraction) float {
+    float(f.num) / float(f.den)
+}
+
+fn main() {
+    let half Fraction = Fraction.new(1, 2)
+    let third Fraction = Fraction.new(1, 3)
+    print("1/2 =", half.to_float(half))
+    print("1/3 =", third.to_float(third))
+}

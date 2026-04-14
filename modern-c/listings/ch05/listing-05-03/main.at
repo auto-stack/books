@@ -1,0 +1,17 @@
+enum Direction {
+    North
+    East
+    South
+    West
+}
+
+fn main() {
+    let pi float = 3.14159    // immutable constant (let)
+    let max_size int = 1024
+
+    print("PI:", pi)
+    print("Max size:", max_size)
+
+    let d Direction = Direction.North
+    print("Direction:", d)
+}

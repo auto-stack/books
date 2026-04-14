@@ -1,0 +1,25 @@
+// math_utils module — interface documentation
+// Provides basic geometric calculations
+
+type Rectangle {
+    width float
+    height float
+}
+
+fn Rectangle.new(w float, h float) Rectangle {
+    Rectangle(w, h)
+}
+
+fn Rectangle.area(r Rectangle) float {
+    r.width * r.height
+}
+
+fn Rectangle.perimeter(r Rectangle) float {
+    2.0 * (r.width + r.height)
+}
+
+fn main() {
+    let r Rectangle = Rectangle.new(4.0, 6.0)
+    print("Area:", r.area(r))
+    print("Perimeter:", r.perimeter(r))
+}

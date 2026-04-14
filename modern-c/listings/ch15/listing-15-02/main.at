@@ -1,0 +1,32 @@
+type Result {
+    value int
+    ok bool
+}
+
+fn Result.ok(val int) Result {
+    Result(val, true)
+}
+
+fn Result.err() Result {
+    Result(0, false)
+}
+
+fn process(data int) Result {
+    if data < 0 {
+        print("Invalid input:", data)
+        return Result.err()
+    }
+    Result.ok(data * 2)
+}
+
+fn main() {
+    let r1 Result = process(21)
+    if r1.ok {
+        print("Success:", r1.value)
+    }
+
+    let r2 Result = process(-5)
+    if !r2.ok {
+        print("Processing failed")
+    }
+}

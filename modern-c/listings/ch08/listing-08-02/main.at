@@ -1,0 +1,14 @@
+fn main() {
+    let name str = "Modern C"
+    let version float = 2.0
+    let year int = 2024
+
+    // C uses printf with format specifiers
+    // Auto's print infers types automatically
+    print("Book:", name)
+    print("Version:", version)
+    print("Year:", year)
+
+    // Multi-argument print
+    print(name, "version", version, "published in", year)
+}

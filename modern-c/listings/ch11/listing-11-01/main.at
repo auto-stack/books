@@ -1,0 +1,15 @@
+fn main() {
+    let x int = 42
+    // C: int *ptr = &x; *ptr = 99;
+    // Auto: no raw pointers, direct value access
+    print("Value:", x)
+
+    // Pointer arithmetic in C:
+    // int arr[5]; int *p = arr; p += 3;
+    // Auto: use array indexing
+    let arr [5]int = [5]int{10, 20, 30, 40, 50}
+    print("arr[3]:", arr[3])
+
+    // C Deep Dive: pointer subtraction gives distance
+    print("Array access replaces pointer arithmetic")
+}

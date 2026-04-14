@@ -1,0 +1,25 @@
+fn main() {
+    // Counting up
+    var sum int = 0
+    for i in 0..11 {
+        sum = sum + i
+    }
+    print("Sum 1..10 =", sum)
+
+    // Countdown
+    var countdown int = 10
+    while countdown > 0 {
+        countdown = countdown - 1
+    }
+    print("Countdown done, value:", countdown)
+
+    // Fibonacci
+    var a int = 0
+    var b int = 1
+    for i in 0..10 {
+        print("fib(" + str(i) + ") =", a)
+        let temp int = a + b
+        a = b
+        b = temp
+    }
+}

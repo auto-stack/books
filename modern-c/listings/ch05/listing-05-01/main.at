@@ -1,0 +1,16 @@
+fn main() {
+    // Basic types mapping
+    let c char = 'A'          // char
+    let i int = 42            // int (signed)
+    let f float = 3.14        // float
+    let d float = 2.718       // double → Auto float
+    let b bool = true         // bool
+    let s str = "hello"       // char* string
+
+    print("char:", c)
+    print("int:", i)
+    print("float:", f)
+    print("double:", d)
+    print("bool:", b)
+    print("string:", s)
+}

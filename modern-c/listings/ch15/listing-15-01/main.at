@@ -1,0 +1,24 @@
+fn safe_divide(a int, b int) int {
+    if b == 0 {
+        print("Error: division by zero")
+        return 0
+    }
+    a / b
+}
+
+fn safe_access(arr [5]int, index int) int {
+    if index < 0 || index >= 5 {
+        print("Error: index out of bounds")
+        return 0
+    }
+    arr[index]
+}
+
+fn main() {
+    print("10 / 3 =", safe_divide(10, 3))
+    print("10 / 0 =", safe_divide(10, 0))
+
+    let data [5]int = [5]int{10, 20, 30, 40, 50}
+    print("data[2] =", safe_access(data, 2))
+    print("data[10] =", safe_access(data, 10))
+}

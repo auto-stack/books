@@ -1,0 +1,29 @@
+fn main() {
+    // C Deep Dive: _Atomic int x = 0;
+    // C: atomic_fetch_add(&x, 1);
+    // C: atomic_load(&x);
+    // C: memory_order_relaxed, memory_order_acquire, memory_order_release
+
+    // These are low-level primitives for lock-free programming
+    // Auto provides higher-level concurrency abstractions
+
+    let x int = 0
+    for i in 0..100 {
+        x = x + 1
+    }
+    print("Sequential count:", x)
+    print("C atomics: _Atomic, atomic_fetch_add, memory_order_*")
+    print("Auto: actors provide safe concurrency without atomics")
+    print("If needed, Auto may expose atomic primitives via sys")
+
+    // Memory consistency models:
+    // Sequential consistency (default, strongest)
+    // Release/acquire (common pattern)
+    // Relaxed (weakest, fastest)
+    print("")
+    print("Memory ordering levels:")
+    print("  seq_cst  - sequential consistency (safest)")
+    print("  acquire  - no reordering of reads before")
+    print("  release  - no reordering of writes after")
+    print("  relaxed  - no ordering guarantees")
+}

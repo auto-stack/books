@@ -1,0 +1,24 @@
+fn worker(id int) {
+    print("Worker", id, "started")
+    var sum int = 0
+    for i in 0..100 {
+        sum = sum + i
+    }
+    print("Worker", id, "finished, sum =", sum)
+}
+
+fn main() {
+    // C: thrd_t t1, t2;
+    // C: thrd_create(&t1, worker, (void*)1);
+    // C: thrd_create(&t2, worker, (void*)2);
+    // C: thrd_join(t1, NULL); thrd_join(t2, NULL);
+    // Auto: uses actor model with message passing
+
+    print("C threads: shared memory, manual synchronization")
+    print("Auto actors: isolated state, message passing")
+    print("No data races by design")
+
+    // Sequential execution (simulating concept)
+    worker(1)
+    worker(2)
+}

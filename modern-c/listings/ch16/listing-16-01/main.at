@@ -1,0 +1,23 @@
+fn square(n int) int {
+    n * n
+}
+
+fn max(a int, b int) int {
+    if a > b { a } else { b }
+}
+
+fn min(a int, b int) int {
+    if a < b { a } else { b }
+}
+
+fn clamp(val int, lo int, hi int) int {
+    max(lo, min(val, hi))
+}
+
+fn main() {
+    // C: inline functions go in headers
+    // Auto: compiler decides inlining automatically
+    print("square(7) =", square(7))
+    print("max(3, 7) =", max(3, 7))
+    print("clamp(15, 0, 10) =", clamp(15, 0, 10))
+}

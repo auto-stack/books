@@ -1,0 +1,18 @@
+fn parse_int(s str) int {
+    // C: sscanf(s, "%d", &result);
+    // Auto: str to int conversion
+    let result int = int(s)
+    result
+}
+
+fn main() {
+    // Simulating input parsing
+    let input str = "42"
+    let value int = parse_int(input)
+    print("Parsed:", value)
+    print("Double:", value * 2)
+
+    // C Deep Dive: scanf is error-prone
+    // Auto provides safer input alternatives
+    print("Auto provides safe input parsing")
+}

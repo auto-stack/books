@@ -1,0 +1,12 @@
+fn greet(name str) {
+    print("Hello,", name)
+}
+
+fn main() {
+    let count int = 0
+    for i in 0..5 {
+        count = count + 1
+    }
+    print("Count:", count)
+    greet("Modern C")
+}

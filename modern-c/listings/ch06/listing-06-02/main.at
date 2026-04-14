@@ -1,0 +1,12 @@
+fn main() {
+    let x int = 42
+    // C: int *ptr = &x;
+    // Auto: references are managed, no raw pointers
+    print("Value:", x)
+
+    // Auto's optional type for nullable references
+    let maybe ?int = x
+    if maybe != nil {
+        print("Has value:", maybe)
+    }
+}

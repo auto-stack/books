@@ -1,0 +1,5 @@
+fn main() {
+    print("Modern C meets Auto!")
+    let answer int = 42
+    print("The answer is", answer)
+}

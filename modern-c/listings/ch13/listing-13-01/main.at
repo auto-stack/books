@@ -1,0 +1,27 @@
+type Buffer {
+    data [256]int
+    size int
+}
+
+fn Buffer.new() Buffer {
+    Buffer([256]int{}, 0)
+}
+
+fn Buffer.push(b Buffer, val int) {
+    if b.size < 256 {
+        b.data[b.size] = val
+        b.size = b.size + 1
+    }
+}
+
+fn main() {
+    // C: Buffer *b = malloc(sizeof(Buffer)); ... free(b);
+    // Auto: automatic storage, no malloc/free needed
+    var b Buffer = Buffer.new()
+    for i in 0..10 {
+        b.push(b, i * i)
+    }
+    print("Buffer size:", b.size)
+    print("First element:", b.data[0])
+    print("Last element:", b.data[b.size - 1])
+}

@@ -1,0 +1,16 @@
+fn fibonacci(n int) int {
+    if n <= 1 { return n }
+    fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+fn main() {
+    // C: clock_t start = clock(); ... clock_t end = clock();
+    // Auto: use built-in timing tools
+
+    let n int = 35
+    print("Computing fib(" + str(n) + ")...")
+    let result int = fibonacci(n)
+    print("Result:", result)
+    print("In C, you would use clock() to measure time")
+    print("Auto provides: auto bench <command>")
+}

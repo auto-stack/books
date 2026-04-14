@@ -1,0 +1,18 @@
+fn day_type(day int) str {
+    is day {
+        1 => "Monday"
+        2 => "Tuesday"
+        3 => "Wednesday"
+        4 => "Thursday"
+        5 => "Friday"
+        6 => "Weekend"
+        7 => "Weekend"
+        else => "Invalid"
+    }
+}
+
+fn main() {
+    for d in 1..8 {
+        print("Day", d, "is", day_type(d))
+    }
+}

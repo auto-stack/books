@@ -1,0 +1,16 @@
+fn main() {
+    let a int = 17
+    let b int = 5
+    print("a + b =", a + b)
+    print("a - b =", a - b)
+    print("a * b =", a * b)
+    print("a / b =", a / b)
+    print("a % b =", a % b)
+
+    // Increment/decrement → Auto uses assignment
+    var count int = 0
+    count = count + 1
+    count = count + 1
+    count = count + 1
+    print("Count:", count)
+}

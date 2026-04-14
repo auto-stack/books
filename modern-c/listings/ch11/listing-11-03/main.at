@@ -1,0 +1,22 @@
+spec Comparator {
+    fn compare(a int, b int) int
+}
+
+type Ascending {}
+
+fn Ascending.compare(a int, b int) int {
+    if a < b { -1 } else if a > b { 1 } else { 0 }
+}
+
+type Descending {}
+
+fn Descending.compare(a int, b int) int {
+    if a > b { -1 } else if a < b { 1 } else { 0 }
+}
+
+fn main() {
+    let asc Ascending = Ascending()
+    let desc Descending = Descending()
+    print("Asc compare(3,7):", asc.compare(3, 7))
+    print("Desc compare(3,7):", desc.compare(3, 7))
+}

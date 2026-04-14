@@ -1,0 +1,19 @@
+fn main() {
+    // C23: auto x = 42;  (type inferred as int)
+    // Auto: var x = 42;   (type inferred as int)
+
+    var x = 42           // inferred as int
+    var pi = 3.14        // inferred as float
+    var name = "Auto"    // inferred as str
+    var flag = true      // inferred as bool
+
+    print("x:", x)
+    print("pi:", pi)
+    print("name:", name)
+    print("flag:", flag)
+
+    // C23: typeof(x) y = x;
+    // Auto: let y = x  (type inferred from initializer)
+    let y = x
+    print("y (copied from x):", y)
+}

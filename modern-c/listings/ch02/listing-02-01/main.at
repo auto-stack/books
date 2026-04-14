@@ -1,0 +1,12 @@
+fn main() {
+    // Declarations with types
+    let name str = "Auto"
+    let age int = 25
+    let height float = 1.75
+    let active bool = true
+
+    print("Name:", name)
+    print("Age:", age)
+    print("Height:", height)
+    print("Active:", active)
+}

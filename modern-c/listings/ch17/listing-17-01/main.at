@@ -1,0 +1,25 @@
+// C: #define MAX(a,b) ((a)>(b)?(a):(b))
+// C: #define SQUARE(x) ((x)*(x))  // double-evaluation pitfall!
+// Auto: regular functions — type-safe, no pitfalls
+
+fn safe_max(a int, b int) int {
+    if a > b { a } else { b }
+}
+
+fn safe_square(n int) int {
+    n * n
+}
+
+// C: #define STR(x) #x
+// C: #define CAT(a,b) a##b
+// Auto: comptime #[] provides compile-time operations
+
+fn main() {
+    print("MAX(3, 7) =", safe_max(3, 7))
+    print("SQUARE(5) =", safe_square(5))
+
+    // C macro pitfall: SQUARE(x++) evaluates x twice
+    // Auto function: no such pitfall — x++ is not valid syntax
+    print("Auto functions are always safe")
+    print("No macro pitfalls in Auto")
+}

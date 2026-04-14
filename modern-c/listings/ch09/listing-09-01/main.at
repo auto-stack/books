@@ -1,0 +1,16 @@
+// Well-named functions, clear structure
+fn calculate_area(width float, height float) float {
+    width * height
+}
+
+fn calculate_perimeter(width float, height float) float {
+    2.0 * (width + height)
+}
+
+fn main() {
+    let width float = 5.0
+    let height float = 3.0
+    print("Rectangle", width, "x", height)
+    print("Area:", calculate_area(width, height))
+    print("Perimeter:", calculate_perimeter(width, height))
+}

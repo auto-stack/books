@@ -1,0 +1,17 @@
+fn max(a int, b int) int {
+    if a > b { a } else { b }
+}
+
+fn clamp(val int, lo int, hi int) int {
+    max(lo, min(val, hi))
+}
+
+fn min(a int, b int) int {
+    if a < b { a } else { b }
+}
+
+fn main() {
+    print("max(3, 7) =", max(3, 7))
+    print("clamp(15, 0, 10) =", clamp(15, 0, 10))
+    print("clamp(-5, 0, 10) =", clamp(-5, 0, 10))
+}

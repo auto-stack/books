@@ -1,0 +1,14 @@
+fn main() {
+    // C Deep Dive: effective types and strict aliasing
+    // C: int x; float *fp = (float*)&x; // UB!
+    // Auto prevents type punning by design
+
+    let x int = 42
+    let f float = float(x)  // safe conversion
+    print("int to float:", f)
+
+    // Alignment in C: alignas(16) int x;
+    // Auto handles alignment automatically
+    print("Auto handles memory alignment automatically")
+    print("No type punning — conversions are explicit and safe")
+}

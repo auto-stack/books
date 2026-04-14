@@ -150,3 +150,53 @@
 | `var x int = 5` | `int x = 5;` | 可变变量 |
 | `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | 计数循环 |
 | `auto a2c` / `auto b` | `gcc` / `make` | 构建命令 |
+
+## Modern C — Auto 与 Modern C 深度对照
+
+[`modern-c/`](modern-c/) 目录包含了对《Modern C》（Jens Gustedt 著）的严谨 Auto 适配版本。
+覆盖完整 C 语言的四个层次：Encounter、Acquaintance、Cognition、Experience — 包括抽象状态机、
+内存模型、类型泛型编程、线程和原子操作。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 层级 | 英文版 | 中文版 |
+|----|------|-------|--------|
+| 00 | — | [Introduction](modern-c/ch00-introduction.md) | [简介](modern-c/ch00-introduction.cn.md) |
+| 01 | Encounter | [Getting Started](modern-c/ch01-getting-started.md) | [入门](modern-c/ch01-getting-started.cn.md) |
+| 02 | Encounter | [Program Structure](modern-c/ch02-program-structure.md) | [程序结构](modern-c/ch02-program-structure.cn.md) |
+| 03 | Acquaintance | [Control Flow](modern-c/ch03-control-flow.md) | [控制流](modern-c/ch03-control-flow.cn.md) |
+| 04 | Acquaintance | [Expressions](modern-c/ch04-expressions.md) | [表达式](modern-c/ch04-expressions.cn.md) |
+| 05 | Acquaintance | [Basic Values & Data](modern-c/ch05-basic-values.md) | [基本值与数据](modern-c/ch05-basic-values.cn.md) |
+| 06 | Acquaintance | [Derived Data Types](modern-c/ch06-derived-types.md) | [派生数据类型](modern-c/ch06-derived-types.cn.md) |
+| 07 | Acquaintance | [Functions](modern-c/ch07-functions.md) | [函数](modern-c/ch07-functions.cn.md) |
+| 08 | Acquaintance | [C Library Functions](modern-c/ch08-c-library.md) | [C 库函数](modern-c/ch08-c-library.cn.md) |
+| 09 | Cognition | [Style](modern-c/ch09-style.md) | [代码风格](modern-c/ch09-style.cn.md) |
+| 10 | Cognition | [Organization](modern-c/ch10-organization.md) | [组织与文档](modern-c/ch10-organization.cn.md) |
+| 11 | Cognition | [Pointers](modern-c/ch11-pointers.md) | [指针](modern-c/ch11-pointers.cn.md) |
+| 12 | Cognition | [Memory Model](modern-c/ch12-memory-model.md) | [内存模型](modern-c/ch12-memory-model.cn.md) |
+| 13 | Cognition | [Storage](modern-c/ch13-storage.md) | [存储](modern-c/ch13-storage.cn.md) |
+| 14 | Cognition | [I/O Processing](modern-c/ch14-io-processing.md) | [I/O 处理](modern-c/ch14-io-processing.cn.md) |
+| 15 | Cognition | [Program Failure](modern-c/ch15-program-failure.md) | [程序故障](modern-c/ch15-program-failure.cn.md) |
+| 16 | Experience | [Performance](modern-c/ch16-performance.md) | [性能](modern-c/ch16-performance.cn.md) |
+| 17 | Experience | [Function-like Macros](modern-c/ch17-macros.md) | [函数式宏](modern-c/ch17-macros.cn.md) |
+| 18 | Experience | [Type-generic Programming](modern-c/ch18-type-generic.md) | [类型泛型编程](modern-c/ch18-type-generic.cn.md) |
+| 19 | Experience | [Control Flow Variations](modern-c/ch19-control-flow-variations.md) | [控制流变体](modern-c/ch19-control-flow-variations.cn.md) |
+| 20 | Experience | [Threads](modern-c/ch20-threads.md) | [线程](modern-c/ch20-threads.cn.md) |
+| 21 | Experience | [Atomics & Memory Consistency](modern-c/ch21-atomics.md) | [原子操作与内存一致性](modern-c/ch21-atomics.cn.md) |
+
+### 核心概念映射（Auto → Modern C）
+
+| Auto | Modern C | 说明 |
+|------|----------|------|
+| `type` | `struct` + `typedef` | 数据结构定义 |
+| `spec` | 函数指针 / vtable | 行为接口 |
+| `enum` | 标记联合 | 和类型 / 数据枚举 |
+| `is` | `switch` / `_Generic` | 模式匹配 |
+| `let`/`var` | `const`/可变 | 不可变/可变绑定 |
+| `var x = expr` | `auto x = expr` (C23) | 类型推断 |
+| `fn` | 函数定义 | 函数 |
+| `mod`/`use` | `#include` / 头文件 | 模块系统 |
+| `#[]` comptime | 预处理器宏 | 编译期元编程 |
+| Actor | `thrd_*` / `mtx_*` | 并发模型 |
+| `!T` 错误类型 | `errno` / `setjmp` | 错误处理 |
+| AutoFree | `malloc`/`free` | 内存管理 |

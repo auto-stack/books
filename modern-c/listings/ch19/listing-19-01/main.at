@@ -1,0 +1,43 @@
+type ParseResult {
+    value int
+    ok bool
+    error str
+}
+
+fn ParseResult.ok(val int) ParseResult {
+    ParseResult(val, true, "")
+}
+
+fn ParseResult.err(msg str) ParseResult {
+    ParseResult(0, false, msg)
+}
+
+fn parse_positive(s str) ParseResult {
+    let n int = int(s)
+    if n <= 0 {
+        return ParseResult.err("expected positive number, got: " + s)
+    }
+    ParseResult.ok(n)
+}
+
+fn main() {
+    let r1 ParseResult = parse_positive("42")
+    if r1.ok {
+        print("Parsed:", r1.value)
+    } else {
+        print("Error:", r1.error)
+    }
+
+    let r2 ParseResult = parse_positive("-5")
+    if r2.ok {
+        print("Parsed:", r2.value)
+    } else {
+        print("Error:", r2.error)
+    }
+
+    // C Deep Dive: setjmp/longjmp for non-local jumps
+    // jmp_buf buf;
+    // if (setjmp(buf) == 0) { ... longjmp(buf, 1); }
+    // Auto uses Result types instead -- safer and more explicit
+    print("Auto uses Result types instead of setjmp/longjmp")
+}
