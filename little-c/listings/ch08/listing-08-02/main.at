@@ -1,0 +1,16 @@
+fn worker(id int) {
+    print("Worker", id, "running")
+}
+
+fn main() {
+    // C: pthread_create(&t, NULL, worker, (void*)id);
+    // C: pthread_join(t, NULL);
+    // Auto: task-based concurrency (conceptual)
+
+    print("Threading in C uses pthreads")
+    print("Auto uses task-based concurrency instead")
+    print("Tasks communicate via mailboxes")
+    worker(1)
+    worker(2)
+    print("In C, these would run in parallel threads")
+}

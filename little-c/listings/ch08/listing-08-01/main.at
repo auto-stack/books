@@ -1,0 +1,13 @@
+fn main() {
+    // C has evolved through standards: C89, C99, C11, C17, C23
+    // Each adds features while maintaining backwards compatibility
+    // Auto targets modern C (C11+) through a2c
+
+    print("C Standards Timeline:")
+    print("  C89 - ANSI C, the foundation")
+    print("  C99 - // comments, mixed declarations, stdint.h")
+    print("  C11 - _Static_assert, _Generic, threads.h")
+    print("  C17 - Bug fixes, refinements")
+    print("  C23 - typeof, constexpr, auto type inference")
+    print("Auto generates C11-compatible code")
+}

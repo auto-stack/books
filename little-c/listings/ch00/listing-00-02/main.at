@@ -1,0 +1,6 @@
+fn main() {
+    let name str = "C Learner"
+    let age int = 25
+    print("Hello,", name)
+    print("Age:", age)
+}

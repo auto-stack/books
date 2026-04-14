@@ -88,3 +88,65 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | `readonly` | — | Use `let` for immutable variables |
 | `keyof` / `typeof` / mapped types | — | TypeScript-only advanced types |
 | `import` / `export` | `use` / `mod` | Module system |
+
+## TypeScript DeepDive — Auto vs TypeScript In-Depth
+
+The [`typescript-deepdive/`](typescript-deepdive/) directory contains an in-depth exploration of TypeScript's type system
+adapted for Auto, covering advanced patterns like discriminated unions, generics, and mapped types.
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | English | Chinese |
+|----|---------|---------|
+| 00 | [Introduction](typescript-deepdive/ch00-introduction.md) | [简介](typescript-deepdive/ch00-introduction.cn.md) |
+| 01 | [Type Basics](typescript-deepdive/ch01-type-basics.md) | [类型基础](typescript-deepdive/ch01-type-basics.cn.md) |
+| 02 | [Functions](typescript-deepdive/ch02-functions.md) | [函数](typescript-deepdive/ch02-functions.cn.md) |
+| 03 | [Literal Types](typescript-deepdive/ch03-literal-types.md) | [字面量类型](typescript-deepdive/ch03-literal-types.cn.md) |
+| 04 | [Primitives](typescript-deepdive/ch04-primitives.md) | [原始类型](typescript-deepdive/ch04-primitives.cn.md) |
+| 05 | [Spec Implementation](typescript-deepdive/ch05-spec-implementation.md) | [规范实现](typescript-deepdive/ch05-spec-implementation.cn.md) |
+| 06 | [Enums & Unions](typescript-deepdive/ch06-enums-unions.md) | [枚举与联合](typescript-deepdive/ch06-enums-unions.cn.md) |
+| 07 | [Generics](typescript-deepdive/ch07-generics.md) | [泛型](typescript-deepdive/ch07-generics.cn.md) |
+| 08 | [Advanced Types](typescript-deepdive/ch08-advanced-types.md) | [高级类型](typescript-deepdive/ch08-advanced-types.cn.md) |
+| 09 | [Pattern Matching](typescript-deepdive/ch09-pattern-matching.md) | [模式匹配](typescript-deepdive/ch09-pattern-matching.cn.md) |
+| 10 | [Error Handling](typescript-deepdive/ch10-error-handling.md) | [错误处理](typescript-deepdive/ch10-error-handling.cn.md) |
+| 11 | [Composition](typescript-deepdive/ch11-composition.md) | [组合](typescript-deepdive/ch11-composition.cn.md) |
+| 12 | [Collections](typescript-deepdive/ch12-collections.md) | [集合](typescript-deepdive/ch12-collections.cn.md) |
+| 13 | [Common Errors](typescript-deepdive/ch13-common-errors.md) | [常见错误](typescript-deepdive/ch13-common-errors.cn.md) |
+| 14 | [Async Patterns](typescript-deepdive/ch14-async-patterns.md) | [异步模式](typescript-deepdive/ch14-async-patterns.cn.md) |
+| 15 | [Compiler API](typescript-deepdive/ch15-compiler.md) | [编译器 API](typescript-deepdive/ch15-compiler.cn.md) |
+
+## Little C — Auto vs C Systems Programming
+
+The [`little-c/`](little-c/) directory contains an adaptation of "The Little Book of C"
+for Auto programmers targeting C via the a2c transpiler. Covers memory, pointers,
+structs, I/O, system programming, debugging, and real-world project building.
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | English | Chinese |
+|----|---------|---------|
+| 00 | [Getting Started](little-c/ch00-getting-started.md) | [入门指南](little-c/ch00-getting-started.cn.md) |
+| 01 | [Language Basics](little-c/ch01-language-basics.md) | [语言基础](little-c/ch01-language-basics.cn.md) |
+| 02 | [Working with Memory](little-c/ch02-memory.md) | [内存管理](little-c/ch02-memory.cn.md) |
+| 03 | [Structuring Data](little-c/ch03-structuring-data.md) | [数据结构](little-c/ch03-structuring-data.cn.md) |
+| 04 | [I/O and Files](little-c/ch04-io-files.md) | [输入输出与文件](little-c/ch04-io-files.cn.md) |
+| 05 | [Compilation & Build](little-c/ch05-compilation.md) | [编译与构建](little-c/ch05-compilation.cn.md) |
+| 06 | [System Programming](little-c/ch06-system-programming.md) | [系统编程](little-c/ch06-system-programming.cn.md) |
+| 07 | [Debugging & Testing](little-c/ch07-debugging.md) | [调试与测试](little-c/ch07-debugging.cn.md) |
+| 08 | [Portable & Modern C](little-c/ch08-portable-modern.md) | [可移植与现代 C](little-c/ch08-portable-modern.cn.md) |
+| 09 | [Building Real Projects](little-c/ch09-real-projects.md) | [构建真实项目](little-c/ch09-real-projects.cn.md) |
+
+### Key Concept Mappings (Auto → C)
+
+| Auto | C | Description |
+|------|---|-------------|
+| `fn main()` | `int main(void)` | Entry point |
+| `print("text")` | `printf("%s\n", "text")` | Print output |
+| `type Point { x int, y int }` | `struct Point { int x; int y; };` | Struct definition |
+| `enum Color { RED, GREEN, BLUE }` | `enum Color { COLOR_RED, ... };` | Enum definition |
+| `is x { ... }` | `switch (x) { ... }` | Pattern matching / switch |
+| `spec Drawable { fn draw() }` | vtable struct | Interface / vtable |
+| `let x int = 5` | `const int x = 5;` | Immutable binding |
+| `var x int = 5` | `int x = 5;` | Mutable variable |
+| `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | Counted loop |
+| `auto a2c` / `auto b` | `gcc` / `make` | Build commands |

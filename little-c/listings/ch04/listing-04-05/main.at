@@ -1,0 +1,18 @@
+type LogEntry {
+    level str
+    message str
+}
+
+fn LogEntry.new(level str, message str) LogEntry {
+    LogEntry(level, message)
+}
+
+fn main() {
+    let e1 LogEntry = LogEntry.new("INFO", "Server started")
+    let e2 LogEntry = LogEntry.new("WARN", "Low memory")
+    let e3 LogEntry = LogEntry.new("ERROR", "Disk full")
+
+    print("[" + e1.level + "] " + e1.message)
+    print("[" + e2.level + "] " + e2.message)
+    print("[" + e3.level + "] " + e3.message)
+}

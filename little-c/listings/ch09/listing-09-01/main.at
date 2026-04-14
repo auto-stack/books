@@ -1,0 +1,24 @@
+type Vec2 {
+    x float
+    y float
+}
+
+fn Vec2.new(x float, y float) Vec2 {
+    Vec2(x, y)
+}
+
+fn Vec2.add(a Vec2, b Vec2) Vec2 {
+    Vec2(a.x + b.x, a.y + b.y)
+}
+
+fn Vec2.length(v Vec2) float {
+    (v.x * v.x + v.y * v.y) ** 0.5
+}
+
+fn main() {
+    let a Vec2 = Vec2.new(3.0, 4.0)
+    let b Vec2 = Vec2.new(1.0, 2.0)
+    let c Vec2 = Vec2.add(a, b)
+    print("a + b = (", c.x, ",", c.y, ")")
+    print("|a| =", Vec2.length(a))
+}

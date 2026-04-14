@@ -1,0 +1,21 @@
+type Config {
+    name str
+    version str
+    debug bool
+}
+
+fn Config.new(name str, ver str) Config {
+    Config(name, ver, false)
+}
+
+fn Config.display(c Config) {
+    print(c.name, "v" + c.version)
+    if c.debug {
+        print("  [DEBUG MODE]")
+    }
+}
+
+fn main() {
+    let cfg Config = Config.new("myapp", "1.0.0")
+    cfg.display(cfg)
+}

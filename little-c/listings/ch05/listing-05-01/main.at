@@ -1,0 +1,8 @@
+fn square(n int) int {
+    n * n
+}
+
+fn main() {
+    let result int = square(7)
+    print("7 squared =", result)
+}

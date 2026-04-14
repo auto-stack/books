@@ -1,0 +1,28 @@
+type Stack {
+    items [100]int
+    top int
+}
+
+fn Stack.new() Stack {
+    Stack([100]int{}, 0)
+}
+
+fn Stack.push(s Stack, val int) {
+    s.items[s.top] = val
+    s.top = s.top + 1
+}
+
+fn Stack.pop(s Stack) int {
+    s.top = s.top - 1
+    s.items[s.top]
+}
+
+fn main() {
+    var s Stack = Stack.new()
+    s.push(s, 10)
+    s.push(s, 20)
+    s.push(s, 30)
+    print("Popped:", s.pop(s))
+    print("Popped:", s.pop(s))
+    print("Top:", s.top)
+}

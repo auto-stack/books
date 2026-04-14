@@ -1,0 +1,24 @@
+type Request {
+    method str
+    path str
+}
+
+type Response {
+    status int
+    body str
+}
+
+fn handle_request(req Request) Response {
+    is req.path {
+        "/" => Response(200, "Welcome!")
+        "/about" => Response(200, "About page")
+        else => Response(404, "Not found")
+    }
+}
+
+fn main() {
+    let req Request = Request("GET", "/")
+    let res Response = handle_request(req)
+    print("Status:", res.status)
+    print("Body:", res.body)
+}

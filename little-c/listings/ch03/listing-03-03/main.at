@@ -1,0 +1,13 @@
+type UserId int
+type Score float
+
+fn make_user(id int, score float) {
+    let uid UserId = UserId(id)
+    let s Score = Score(score)
+    print("User ID:", uid)
+    print("Score:", s)
+}
+
+fn main() {
+    make_user(1, 95.5)
+}

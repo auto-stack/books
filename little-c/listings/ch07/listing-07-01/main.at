@@ -1,0 +1,21 @@
+fn divide(a int, b int) int {
+    if b == 0 {
+        print("Error: division by zero")
+        return 0
+    }
+    a / b
+}
+
+fn main() {
+    let result int = divide(10, 3)
+    print("Result:", result)
+
+    let bad int = divide(10, 0)
+    print("Bad result:", bad)
+
+    // Debugging tips:
+    // 1. Print intermediate values
+    // 2. Check boundary conditions
+    // 3. Use assert for invariants
+    print("Debugging: check return values for errors")
+}

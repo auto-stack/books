@@ -1,0 +1,15 @@
+type Record {
+    id int
+    value float
+}
+
+fn main() {
+    let r Record = Record(1, 3.14)
+    print("Record id:", r.id)
+    print("Record value:", r.value)
+
+    // C binary I/O:
+    // fwrite(&r, sizeof(struct Record), 1, f);
+    // fread(&r, sizeof(struct Record), 1, f);
+    // Auto handles serialization automatically
+}

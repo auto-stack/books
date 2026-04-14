@@ -1,0 +1,25 @@
+fn main() {
+    // C undefined behaviors that Auto prevents:
+
+    // 1. Buffer overflow
+    // C: int arr[3]; arr[5] = 42;  // UB!
+    // Auto: bounds-checked array access
+
+    // 2. Use after free
+    // C: free(p); *p = 42;  // UB!
+    // Auto: AutoFree prevents dangling references
+
+    // 3. Null pointer dereference
+    // C: int *p = NULL; *p = 42;  // UB!
+    // Auto: ?T optional type, must check before use
+
+    // 4. Integer overflow
+    // C: int x = INT_MAX; x++;  // UB!
+    // Auto: checked arithmetic by default
+
+    print("Auto prevents common C undefined behaviors:")
+    print("  1. Buffer overflow — bounds checking")
+    print("  2. Use-after-free — AutoFree ownership")
+    print("  3. Null dereference — ?T optional type")
+    print("  4. Integer overflow — checked arithmetic")
+}

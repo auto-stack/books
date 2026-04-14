@@ -1,0 +1,25 @@
+type Token {
+    kind str
+    value str
+}
+
+fn tokenize(input str) {
+    print("Tokenizing:", input)
+    // Simplified tokenizer
+    let tokens int = 0
+    var i int = 0
+    while i < len(input) {
+        let ch str = str(input[i])
+        if ch == " " {
+            tokens = tokens + 1
+        }
+        i = i + 1
+    }
+    tokens = tokens + 1
+    print("Found", tokens, "tokens")
+}
+
+fn main() {
+    tokenize("hello world foo bar")
+    tokenize("one two three")
+}

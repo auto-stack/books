@@ -1,0 +1,13 @@
+fn main() {
+    // Auto can call C functions via FFI
+    // sys extern fn abs(n int) int
+    // This lets Auto use existing C libraries
+
+    let x int = -42
+    let y int = abs(x)
+    print("abs(-42) =", y)
+
+    // In generated C, this becomes a direct call:
+    // int y = abs(x);
+    print("FFI allows Auto to call any C function")
+}

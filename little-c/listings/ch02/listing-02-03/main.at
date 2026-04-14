@@ -1,0 +1,10 @@
+fn main() {
+    let scores [5]int = [5]int{90, 85, 78, 92, 88}
+    for i in 0..5 {
+        print("Score", i, "=", scores[i])
+    }
+    print("First three printed via loop")
+    for i in 0..3 {
+        print(scores[i])
+    }
+}

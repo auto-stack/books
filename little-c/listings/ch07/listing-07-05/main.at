@@ -1,0 +1,28 @@
+// Exercise: find and fix the bugs
+// Bug 1: off-by-one in loop
+fn sum_to(n int) int {
+    var total int = 0
+    for i in 0..n + 1 {
+        total = total + i
+    }
+    total
+}
+
+// Bug 2: wrong comparison
+fn is_positive(n int) bool {
+    n > 0
+}
+
+// Bug 3: missing base case
+fn fib(n int) int {
+    if n <= 0 { return 0 }
+    if n == 1 { return 1 }
+    fib(n - 1) + fib(n - 2)
+}
+
+fn main() {
+    print("Sum 1..10 =", sum_to(10))
+    print("is_positive(5):", is_positive(5))
+    print("is_positive(-1):", is_positive(-1))
+    print("fib(10) =", fib(10))
+}

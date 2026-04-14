@@ -1,0 +1,8 @@
+fn main() {
+    let local int = 42
+    print("Stack value:", local)
+
+    // In C, global vars live in data segment
+    // In Auto, all memory management is automatic
+    print("Auto manages stack and heap automatically")
+}

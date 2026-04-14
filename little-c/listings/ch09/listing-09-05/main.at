@@ -1,0 +1,23 @@
+// Template for your own project
+type Project {
+    name str
+    version str
+    author str
+}
+
+fn Project.new(name str, ver str, author str) Project {
+    Project(name, ver, author)
+}
+
+fn Project.info(p Project) {
+    print("Project:", p.name)
+    print("Version:", p.version)
+    print("Author:", p.author)
+}
+
+fn main() {
+    let p Project = Project.new("my-project", "0.1.0", "You")
+    p.info(p)
+    print("Now customize this template!")
+    print("Add your own types, functions, and logic.")
+}

@@ -1,0 +1,15 @@
+fn is_little_endian() bool {
+    let val int = 1
+    let bytes [4]u8 = to_bytes(val)
+    bytes[0] == 1
+}
+
+fn main() {
+    if is_little_endian() {
+        print("System is little-endian")
+    } else {
+        print("System is big-endian")
+    }
+    print("Auto handles endianness automatically")
+    print("Generated C code is portable across platforms")
+}

@@ -1,0 +1,13 @@
+fn main() {
+    let age int = 25
+    let height float = 1.75
+    let initial char = 'A'
+    let name str = "Auto"
+    let active bool = true
+
+    print("Age:", age)
+    print("Height:", height)
+    print("Initial:", initial)
+    print("Name:", name)
+    print("Active:", active)
+}

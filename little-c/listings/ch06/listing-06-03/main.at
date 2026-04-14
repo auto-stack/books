@@ -1,0 +1,13 @@
+fn main() {
+    // C: int fd = open("file.txt", O_RDONLY);
+    // C: read(fd, buffer, size);
+    // C: close(fd);
+    // Auto: read_file("file.txt") — simpler API
+
+    let content str = "Sample file content\nWith multiple lines\n"
+    write_file("sample.txt", content)
+    print("Wrote sample file")
+
+    let read_back str = read_file("sample.txt")
+    print("Read:", read_back)
+}

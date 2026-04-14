@@ -1,0 +1,12 @@
+fn main() {
+    // Auto file I/O is simplified compared to C
+    // C: FILE *f = fopen("data.txt", "w"); fprintf(f, "..."); fclose(f);
+    // Auto: write_file("data.txt", "Hello from Auto\n")
+
+    let content str = "Hello from Auto\nLine 2\nLine 3\n"
+    write_file("output.txt", content)
+    print("Written to output.txt")
+
+    let data str = read_file("output.txt")
+    print("Read back:", data)
+}

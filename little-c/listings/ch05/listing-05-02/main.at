@@ -1,0 +1,17 @@
+fn main() {
+    // C uses #define PI 3.14159
+    // Auto uses let (immutable binding)
+    let pi float = 3.14159
+    let radius float = 5.0
+    let area float = pi * radius * radius
+    print("Area:", area)
+
+    // C uses #define MAX(a,b) ((a)>(b)?(a):(b))
+    // Auto uses a regular function
+    let larger int = max(10, 20)
+    print("Max:", larger)
+}
+
+fn max(a int, b int) int {
+    if a > b { a } else { b }
+}

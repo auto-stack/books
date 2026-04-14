@@ -1,0 +1,11 @@
+fn main() {
+    // C: signal(SIGINT, handler);
+    // C: void handler(int sig) { ... }
+    // Signals are asynchronous interrupts in POSIX systems
+
+    print("Signals are C/POSIX asynchronous events")
+    print("SIGINT - interrupt (Ctrl+C)")
+    print("SIGTERM - termination request")
+    print("SIGSEGV - segmentation fault")
+    print("Auto does not expose raw signal handling")
+}

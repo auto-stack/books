@@ -1,0 +1,15 @@
+fn main() {
+    // Auto handles memory automatically via AutoFree
+    // No manual malloc/free needed
+    var total int = 0
+    for i in 1..11 {
+        total = total + i
+    }
+    print("Sum 1..10 =", total)
+
+    // C equivalent would use malloc:
+    // int *arr = malloc(10 * sizeof(int));
+    // ... use arr ...
+    // free(arr);
+    // Auto does this automatically
+}

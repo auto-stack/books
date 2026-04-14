@@ -1,0 +1,23 @@
+type Counter {
+    count int
+}
+
+fn Counter.new() Counter {
+    Counter(0)
+}
+
+fn Counter.increment(c Counter) {
+    c.count = c.count + 1
+}
+
+fn Counter.value(c Counter) int {
+    c.count
+}
+
+fn main() {
+    var c Counter = Counter.new()
+    c.increment(c)
+    c.increment(c)
+    c.increment(c)
+    print("Count:", c.value(c))
+}

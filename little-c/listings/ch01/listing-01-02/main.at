@@ -1,0 +1,14 @@
+fn main() {
+    let a int = 10
+    let b int = 3
+
+    print("a + b =", a + b)
+    print("a - b =", a - b)
+    print("a * b =", a * b)
+    print("a / b =", a / b)
+    print("a % b =", a % b)
+
+    print("a == b:", a == b)
+    print("a > b:", a > b)
+    print("a && b:", a > 0 && b > 0)
+}

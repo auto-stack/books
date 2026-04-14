@@ -1,0 +1,27 @@
+fn calculate(a int, op str, b int) int {
+    if op == "+" {
+        a + b
+    } else if op == "-" {
+        a - b
+    } else if op == "*" {
+        a * b
+    } else if op == "/" {
+        if b == 0 {
+            print("Error: division by zero")
+            0
+        } else {
+            a / b
+        }
+    } else {
+        print("Unknown operator:", op)
+        0
+    }
+}
+
+fn main() {
+    print("10 + 3 =", calculate(10, "+", 3))
+    print("10 - 3 =", calculate(10, "-", 3))
+    print("10 * 3 =", calculate(10, "*", 3))
+    print("10 / 3 =", calculate(10, "/", 3))
+    print("10 / 0 =", calculate(10, "/", 0))
+}

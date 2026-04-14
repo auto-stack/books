@@ -1,0 +1,30 @@
+spec Drawable {
+    fn draw()
+}
+
+type CircleObj {
+    radius float
+}
+
+fn CircleObj.draw() {
+    print("Drawing circle with radius:", self.radius)
+}
+
+type SquareObj {
+    side float
+}
+
+fn SquareObj.draw() {
+    print("Drawing square with side:", self.side)
+}
+
+fn render(d Drawable) {
+    d.draw()
+}
+
+fn main() {
+    let c CircleObj = CircleObj(5.0)
+    let s SquareObj = SquareObj(3.0)
+    render(c)
+    render(s)
+}

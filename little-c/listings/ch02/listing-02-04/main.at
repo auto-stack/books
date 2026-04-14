@@ -1,0 +1,7 @@
+fn main() {
+    let greeting str = "Hello"
+    let name str = "World"
+    let full str = greeting + " " + name
+    print(full)
+    print("Length:", len(full))
+}

@@ -1,0 +1,12 @@
+fn main() {
+    // C: int pipefd[2]; pipe(pipefd);
+    // Data flows: write(pipefd[1], ...) → read(pipefd[0], ...)
+    // Auto: higher-level inter-task communication
+
+    print("Pipes connect processes in C")
+    print("pipe() creates one-way data channel")
+    print("Auto uses message passing between tasks")
+
+    let data str = "Hello through pipe"
+    print("Data:", data)
+}

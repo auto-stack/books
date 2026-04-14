@@ -1,0 +1,5 @@
+name: "listing-07-05"
+version: "0.1.0"
+lang: "c"
+
+app("listing-07-05") {}

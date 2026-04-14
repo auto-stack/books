@@ -1,0 +1,6 @@
+fn main() {
+    let x int = 42
+    let ptr ?int = x  // Auto optional reference
+    print("Value:", x)
+    print("Has reference:", ptr != nil)
+}

@@ -1,0 +1,26 @@
+type Node {
+    value int
+    next ?Node
+}
+
+fn new_node(val int) Node {
+    Node(val, nil)
+}
+
+fn print_list(head ?Node) {
+    var current ?Node = head
+    while current != nil {
+        print(current.value)
+        current = current.next
+    }
+}
+
+fn main() {
+    let a Node = new_node(1)
+    let b Node = new_node(2)
+    let c Node = new_node(3)
+    a.next = b
+    b.next = c
+    print("Linked list:")
+    print_list(a)
+}

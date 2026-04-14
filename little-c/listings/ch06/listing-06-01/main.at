@@ -1,0 +1,13 @@
+fn main() {
+    // C: read(fd, buf, count) — low-level syscall
+    // C: fopen/fread/fwrite — stdlib wrapper
+    // Auto: print(), read_file(), write_file() — high-level wrappers
+
+    print("Stdlib functions wrap system calls")
+    print("Auto provides safe, high-level APIs")
+
+    // Demonstrate stdlib I/O
+    let msg str = "Hello from Auto"
+    print(msg)
+    print("Length:", len(msg))
+}

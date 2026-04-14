@@ -1,0 +1,10 @@
+fn main() {
+    let name str = "Alice"
+    let age int = 30
+    let height float = 1.68
+
+    print("Name:", name)
+    print("Age:", age)
+    print("Height:", height)
+    print("Formatted:", name, "is", age, "years old")
+}

@@ -1,0 +1,16 @@
+type Command {
+    name str
+    args [10]str
+    argc int
+}
+
+fn Command.new(name str) Command {
+    Command(name, [10]str{}, 0)
+}
+
+fn main() {
+    let cmd Command = Command.new("echo")
+    print("Command:", cmd.name)
+    print("Mini shell would fork/exec in C")
+    print("Auto uses higher-level process API")
+}

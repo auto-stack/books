@@ -1,0 +1,11 @@
+// fork/exec are C/POSIX concepts. Auto does not expose them directly.
+// Instead, Auto may provide a task-based concurrency model.
+fn main() {
+    // C: pid_t pid = fork(); if (pid == 0) { execvp(...); }
+    // Auto: uses higher-level concurrency primitives
+
+    print("Process creation is a C/POSIX concept")
+    print("Auto uses task-based concurrency instead")
+    print("fork() creates a copy of the current process")
+    print("exec() replaces the process with a new program")
+}

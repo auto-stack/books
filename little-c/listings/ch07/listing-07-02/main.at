@@ -1,0 +1,16 @@
+fn abs_val(n int) int {
+    assert(n >= 0, "abs_val expects non-negative input")
+    n
+}
+
+fn max(a int, b int) int {
+    assert(a >= 0 && b >= 0, "inputs must be non-negative")
+    if a > b { a } else { b }
+}
+
+fn main() {
+    print("abs(5) =", abs_val(5))
+    print("max(3, 7) =", max(3, 7))
+    // assert would fail: abs_val(-1)
+    print("Assertions catch logic errors early")
+}

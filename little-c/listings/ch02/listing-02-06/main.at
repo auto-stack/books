@@ -1,0 +1,25 @@
+spec IntOp {
+    fn apply(a int, b int) int
+}
+
+type Adder {}
+
+fn Adder.apply(a int, b int) int {
+    a + b
+}
+
+type Multiplier {}
+
+fn Multiplier.apply(a int, b int) int {
+    a * b
+}
+
+fn compute(op Adder, a int, b int) int {
+    op.apply(a, b)
+}
+
+fn main() {
+    let adder Adder = Adder()
+    let mult Multiplier = Multiplier()
+    print("3 + 4 =", compute(adder, 3, 4))
+}

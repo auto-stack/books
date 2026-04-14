@@ -1,0 +1,32 @@
+type Book {
+    title str
+    author str
+    available bool
+}
+
+fn Book.new(title str, author str) Book {
+    Book(title, author, true)
+}
+
+fn Book.borrow(b Book) {
+    if b.available {
+        b.available = false
+        print("Borrowed:", b.title)
+    } else {
+        print("Not available:", b.title)
+    }
+}
+
+fn Book.return_book(b Book) {
+    b.available = true
+    print("Returned:", b.title)
+}
+
+fn main() {
+    let b1 Book = Book.new("The C Programming Language", "K&R")
+    let b2 Book = Book.new("Auto Programming", "Auto Team")
+    b1.borrow(b1)
+    b1.borrow(b1)
+    b1.return_book(b1)
+    b1.borrow(b1)
+}

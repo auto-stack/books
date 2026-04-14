@@ -88,3 +88,65 @@
 | `readonly` | — | 使用 `let` 声明不可变变量 |
 | `keyof` / `typeof` / 映射类型 | — | TypeScript 独有高级类型 |
 | `import` / `export` | `use` / `mod` | 模块系统 |
+
+## TypeScript 深入篇 — Auto 与 TypeScript 深度对照
+
+[`typescript-deepdive/`](typescript-deepdive/) 目录包含了对 TypeScript 类型系统的深入探索，
+适配为 Auto 版本，涵盖高级模式如可辨识联合、泛型和映射类型。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 英文版 | 中文版 |
+|----|-------|--------|
+| 00 | [Introduction](typescript-deepdive/ch00-introduction.md) | [简介](typescript-deepdive/ch00-introduction.cn.md) |
+| 01 | [Type Basics](typescript-deepdive/ch01-type-basics.md) | [类型基础](typescript-deepdive/ch01-type-basics.cn.md) |
+| 02 | [Functions](typescript-deepdive/ch02-functions.md) | [函数](typescript-deepdive/ch02-functions.cn.md) |
+| 03 | [Literal Types](typescript-deepdive/ch03-literal-types.md) | [字面量类型](typescript-deepdive/ch03-literal-types.cn.md) |
+| 04 | [Primitives](typescript-deepdive/ch04-primitives.md) | [原始类型](typescript-deepdive/ch04-primitives.cn.md) |
+| 05 | [Spec Implementation](typescript-deepdive/ch05-spec-implementation.md) | [规范实现](typescript-deepdive/ch05-spec-implementation.cn.md) |
+| 06 | [Enums & Unions](typescript-deepdive/ch06-enums-unions.md) | [枚举与联合](typescript-deepdive/ch06-enums-unions.cn.md) |
+| 07 | [Generics](typescript-deepdive/ch07-generics.md) | [泛型](typescript-deepdive/ch07-generics.cn.md) |
+| 08 | [Advanced Types](typescript-deepdive/ch08-advanced-types.md) | [高级类型](typescript-deepdive/ch08-advanced-types.cn.md) |
+| 09 | [Pattern Matching](typescript-deepdive/ch09-pattern-matching.md) | [模式匹配](typescript-deepdive/ch09-pattern-matching.cn.md) |
+| 10 | [Error Handling](typescript-deepdive/ch10-error-handling.md) | [错误处理](typescript-deepdive/ch10-error-handling.cn.md) |
+| 11 | [Composition](typescript-deepdive/ch11-composition.md) | [组合](typescript-deepdive/ch11-composition.cn.md) |
+| 12 | [Collections](typescript-deepdive/ch12-collections.md) | [集合](typescript-deepdive/ch12-collections.cn.md) |
+| 13 | [Common Errors](typescript-deepdive/ch13-common-errors.md) | [常见错误](typescript-deepdive/ch13-common-errors.cn.md) |
+| 14 | [Async Patterns](typescript-deepdive/ch14-async-patterns.md) | [异步模式](typescript-deepdive/ch14-async-patterns.cn.md) |
+| 15 | [Compiler API](typescript-deepdive/ch15-compiler.md) | [编译器 API](typescript-deepdive/ch15-compiler.cn.md) |
+
+## C 语言小书 — Auto 与 C 系统编程对照
+
+[`little-c/`](little-c/) 目录包含了对《C 语言小书》的 Auto 适配版本，
+面向通过 a2c 转译器以 C 为目标的 Auto 程序员。涵盖内存、指针、结构体、I/O、
+系统编程、调试以及真实项目构建。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 英文版 | 中文版 |
+|----|-------|--------|
+| 00 | [Getting Started](little-c/ch00-getting-started.md) | [入门指南](little-c/ch00-getting-started.cn.md) |
+| 01 | [Language Basics](little-c/ch01-language-basics.md) | [语言基础](little-c/ch01-language-basics.cn.md) |
+| 02 | [Working with Memory](little-c/ch02-memory.md) | [内存管理](little-c/ch02-memory.cn.md) |
+| 03 | [Structuring Data](little-c/ch03-structuring-data.md) | [数据结构](little-c/ch03-structuring-data.cn.md) |
+| 04 | [I/O and Files](little-c/ch04-io-files.md) | [输入输出与文件](little-c/ch04-io-files.cn.md) |
+| 05 | [Compilation & Build](little-c/ch05-compilation.md) | [编译与构建](little-c/ch05-compilation.cn.md) |
+| 06 | [System Programming](little-c/ch06-system-programming.md) | [系统编程](little-c/ch06-system-programming.cn.md) |
+| 07 | [Debugging & Testing](little-c/ch07-debugging.md) | [调试与测试](little-c/ch07-debugging.cn.md) |
+| 08 | [Portable & Modern C](little-c/ch08-portable-modern.md) | [可移植与现代 C](little-c/ch08-portable-modern.cn.md) |
+| 09 | [Building Real Projects](little-c/ch09-real-projects.md) | [构建真实项目](little-c/ch09-real-projects.cn.md) |
+
+### 核心概念映射（Auto → C）
+
+| Auto | C | 说明 |
+|------|---|------|
+| `fn main()` | `int main(void)` | 入口函数 |
+| `print("text")` | `printf("%s\n", "text")` | 输出打印 |
+| `type Point { x int, y int }` | `struct Point { int x; int y; };` | 结构体定义 |
+| `enum Color { RED, GREEN, BLUE }` | `enum Color { COLOR_RED, ... };` | 枚举定义 |
+| `is x { ... }` | `switch (x) { ... }` | 模式匹配 / switch |
+| `spec Drawable { fn draw() }` | vtable 结构体 | 接口 / 虚表 |
+| `let x int = 5` | `const int x = 5;` | 不可变绑定 |
+| `var x int = 5` | `int x = 5;` | 可变变量 |
+| `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | 计数循环 |
+| `auto a2c` / `auto b` | `gcc` / `make` | 构建命令 |
