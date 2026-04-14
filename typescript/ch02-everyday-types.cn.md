@@ -30,28 +30,13 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
 function main(): void {
-    const name = "Alice";
-    const age = 25;
-    const is_active = true;
-    print(name);
-    print(age);
-    print(is_active);
+    const name: string = "Alice";
+    const age: number = 25;
+    const is_active: boolean = true;
+    console.log(name);
+    console.log(age);
+    console.log(is_active);
 }
 
 main();
@@ -92,29 +77,14 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
 function main(): void {
-    const nums = [1, 2, 3];
-    const names = ["Alice", "Bob", "Charlie"];
+    const nums: number[] = [1, 2, 3];
+    const names: string[] = ["Alice", "Bob", "Charlie"];
     for (const n of nums) {
-        print(n);
+        console.log(n);
     }
     for (const name of names) {
-        print(name);
+        console.log(name);
     }
 }
 
@@ -156,32 +126,17 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
 function add(a: number, b: number): number {
     return a + b;
 }
 
 function greet(name: string): void {
-    print(`Hello, ${name}!`);
+    console.log(`Hello, ${name}!`);
 }
 
 function main(): void {
     const result = add(5, 3);
-    print(result);
+    console.log(result);
     greet("Alice");
 }
 
@@ -222,21 +177,6 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
 class User {
     name: string;
     age: number;
@@ -249,7 +189,7 @@ class User {
 
 function main(): void {
     const user = User("Alice", 30);
-    print(`${user.name} is ${user.age} years old`);
+    console.log(`${user.name} is ${user.age} years old`);
 }
 
 main();
@@ -293,22 +233,6 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
-
 type MaybeId =
     { _tag: "Just", value: number }
     | { _tag: "Nothing", value: void };
@@ -383,26 +307,11 @@ fn main() {
 ```
 
 ```typescript
-/**
- * AutoLang TypeScript Runtime
- */
-const print = console.log.bind(console);
-
-function range(start: number, end: number, eq: boolean = false): number[] {
-    const res: number[] = [];
-    if (eq) {
-        for (let i = start; i <= end; i++) res.push(i);
-    } else {
-        for (let i = start; i < end; i++) res.push(i);
-    }
-    return res;
-}
-
-function greet(name: string, greeting?: string): void {
+function greet(name: string, greeting: string | null): void {
     if (greeting) {
-        print(`${greeting}, ${name}!`);
+        console.log(`${greeting}, ${name}!`);
     } else {
-        print(`Hello, ${name}!`);
+        console.log(`Hello, ${name}!`);
     }
 }
 
