@@ -1,9 +1,25 @@
 # Auto 编程语言
 
-本仓库包含《Auto 编程语言》一书的源码。
+本仓库包含《Auto 编程语言》一书的源码，
+以及五本双语（英/中）参考书，展示 Auto 如何映射到其他编程语言。
 
 主要内容采用 AutoDown 格式编写，
 同时我们也提供了从 AutoDown 生成的 Markdown 格式版本。
+
+## 书籍集合
+
+本仓库包含**五本**配套书籍，每本都将一本知名编程书籍适配为 Auto 语言版本。
+每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
+
+| # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
+|---|------|------|------|--------|--------|------|
+| 1 | [Auto 与 Rust](rust/) | `rust/` | *Rust 程序设计语言* | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
+| 2 | [Auto 与 TypeScript](typescript/) | `typescript/` | *TypeScript Handbook v2* | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
+| 3 | [Auto 与 TypeScript 深入篇](typescript-deepdive/) | `typescript-deepdive/` | *TypeScript Deep Dive* | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
+| 4 | [Auto 与 C 语言小书](little-c/) | `little-c/` | *C 语言小书* | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
+| 5 | [Auto 与 Modern C](modern-c/) | `modern-c/` | *Modern C*（Gustedt） | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
+
+**共计：80 个章节、约 45 个代码示例（含转译器输出），全部提供英中双语版本。**
 
 ## Rust 版本 — Auto 与 Rust 双语对照参考
 

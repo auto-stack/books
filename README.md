@@ -1,9 +1,26 @@
 # The Auto Programming Language
 
-This repository contains the source of "The Auto Programming Language" book.
+This repository contains the source of "The Auto Programming Language" book,
+plus five bilingual (EN/CN) reference books that show how Auto maps to other languages.
 
 The main source is in AutoDown format,
 we also provide a Markdown format generated from AutoDown.
+
+## Book Collection
+
+This repository contains **five** companion books, each adapting a well-known programming
+book for the Auto language. Every book provides paired **English** (`.md`) and **Chinese**
+(`.cn.md`) chapters with runnable code listings.
+
+| # | Book | Directory | Source | Chapters | Transpiler | Focus |
+|---|------|-----------|--------|----------|------------|-------|
+| 1 | [Auto vs Rust](rust/) | `rust/` | *The Rust Programming Language* | 22 (ch00-21 + appendix) | `a2r` → Rust | Systems programming, ownership, actors, async |
+| 2 | [Auto vs TypeScript](typescript/) | `typescript/` | *TypeScript Handbook v2* | 10 (ch00-09) | `a2ts` → TypeScript | Web development, types, classes, modules |
+| 3 | [Auto vs TypeScript DeepDive](typescript-deepdive/) | `typescript-deepdive/` | *TypeScript Deep Dive* | 16 (ch00-15) | `a2ts` → TypeScript | Advanced type system, generics, pattern matching |
+| 4 | [Auto vs Little C](little-c/) | `little-c/` | *The Little Book of C* | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
+| 5 | [Auto vs Modern C](modern-c/) | `modern-c/` | *Modern C* (Gustedt) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
+
+**Total: 80 chapters, ~45 code listings with transpiler output, all EN + CN.**
 
 ## Rust Version — Auto vs Rust Bilingual Reference
 
