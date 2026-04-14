@@ -54,6 +54,37 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | threads | actors | Concurrency model |
 | `Cargo` | `automan` | Package manager |
 
+## TypeScript Version — Auto vs TypeScript Bilingual Reference
 
+The [`typescript/`](typescript/) directory contains a complete adaptation of the "TypeScript Handbook v2" book
+for the Auto programming language, with paired Auto/TypeScript code examples in every chapter.
 
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 
+| Ch | English | Chinese |
+|----|---------|---------|
+| 00 | [Introduction](typescript/ch00-introduction.md) | [简介](typescript/ch00-introduction.cn.md) |
+| 01 | [Basics](typescript/ch01-basics.md) | [基础](typescript/ch01-basics.cn.md) |
+| 02 | [Everyday Types](typescript/ch02-everyday-types.md) | [常用类型](typescript/ch02-everyday-types.cn.md) |
+| 03 | [Narrowing](typescript/ch03-narrowing.md) | [类型收窄](typescript/ch03-narrowing.cn.md) |
+| 04 | [More on Functions](typescript/ch04-functions.md) | [函数进阶](typescript/ch04-functions.cn.md) |
+| 05 | [Object Types](typescript/ch05-object-types.md) | [对象类型](typescript/ch05-object-types.cn.md) |
+| 06 | [Creating Types from Types](typescript/ch06-creating-types.md) | [从类型创建类型](typescript/ch06-creating-types.cn.md) |
+| 07 | [Type Operators](typescript/ch07-type-operators.md) | [类型运算符](typescript/ch07-type-operators.cn.md) |
+| 08 | [Classes](typescript/ch08-classes.md) | [类](typescript/ch08-classes.cn.md) |
+| 09 | [Modules](typescript/ch09-modules.md) | [模块](typescript/ch09-modules.cn.md) |
+
+### Key Concept Mappings
+
+| TypeScript | Auto | Description |
+|-----------|------|-------------|
+| `class` | `type` | Data structure definition |
+| `interface` | `spec` | Behavioral contract |
+| `implements` | `as` | Interface implementation |
+| `extends` | `is` | Inheritance |
+| `class X extends Y` | — | Use `is` or `has` composition |
+| `(x: number) => number` | `fn(int)int` | Function type (annotation) |
+| `(x, y) => x + y` | `(x, y) => x + y` | Closure (value) |
+| `readonly` | — | Use `let` for immutable variables |
+| `keyof` / `typeof` / mapped types | — | TypeScript-only advanced types |
+| `import` / `export` | `use` / `mod` | Module system |

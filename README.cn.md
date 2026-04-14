@@ -53,3 +53,38 @@
 | `macro_rules!` | `#[]` comptime | 编译期元编程 |
 | 线程 | Actor | 并发模型 |
 | `Cargo` | `automan` | 包管理器 |
+
+## TypeScript 版本 — Auto 与 TypeScript 双语对照参考
+
+[`typescript/`](typescript/) 目录包含了对《TypeScript Handbook v2》一书的完整改编，
+为 Auto 编程语言量身定制，每章都包含配对的 Auto/TypeScript 代码示例。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 英文版 | 中文版 |
+|----|-------|--------|
+| 00 | [Introduction](typescript/ch00-introduction.md) | [简介](typescript/ch00-introduction.cn.md) |
+| 01 | [Basics](typescript/ch01-basics.md) | [基础](typescript/ch01-basics.cn.md) |
+| 02 | [Everyday Types](typescript/ch02-everyday-types.md) | [常用类型](typescript/ch02-everyday-types.cn.md) |
+| 03 | [Narrowing](typescript/ch03-narrowing.md) | [类型收窄](typescript/ch03-narrowing.cn.md) |
+| 04 | [More on Functions](typescript/ch04-functions.md) | [函数进阶](typescript/ch04-functions.cn.md) |
+| 05 | [Object Types](typescript/ch05-object-types.md) | [对象类型](typescript/ch05-object-types.cn.md) |
+| 06 | [Creating Types from Types](typescript/ch06-creating-types.md) | [从类型创建类型](typescript/ch06-creating-types.cn.md) |
+| 07 | [Type Operators](typescript/ch07-type-operators.md) | [类型运算符](typescript/ch07-type-operators.cn.md) |
+| 08 | [Classes](typescript/ch08-classes.md) | [类](typescript/ch08-classes.cn.md) |
+| 09 | [Modules](typescript/ch09-modules.md) | [模块](typescript/ch09-modules.cn.md) |
+
+### 核心概念映射
+
+| TypeScript | Auto | 说明 |
+|-----------|------|------|
+| `class` | `type` | 数据结构定义 |
+| `interface` | `spec` | 行为契约 |
+| `implements` | `as` | 接口实现 |
+| `extends` | `is` | 继承 |
+| `class X extends Y` | — | 使用 `is` 或 `has` 组合 |
+| `(x: number) => number` | `fn(int)int` | 函数类型（注解） |
+| `(x, y) => x + y` | `(x, y) => x + y` | 闭包（值） |
+| `readonly` | — | 使用 `let` 声明不可变变量 |
+| `keyof` / `typeof` / 映射类型 | — | TypeScript 独有高级类型 |
+| `import` / `export` | `use` / `mod` | 模块系统 |
