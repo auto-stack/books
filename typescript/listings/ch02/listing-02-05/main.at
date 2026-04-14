@@ -1,11 +1,17 @@
-// Listing 02-05: Nullable types
-fn process_name(name ?str) {
-    name is
-        Some(n) -> print(f"Hello, ${n}!")
-        None -> print("No name provided")
+enum MaybeId {
+    Just int
+    Nothing
+}
+
+fn process_id(id MaybeId) {
+    is id {
+        MaybeId.Just(n) => print("ID:", n)
+        MaybeId.Nothing => print("No ID provided")
+    }
 }
 
 fn main() {
-    process_name("Alice")
-    process_name(None)
+    let a = MaybeId.Just(42)
+    process_id(a)
+    process_id(MaybeId.Nothing)
 }

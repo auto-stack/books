@@ -2,6 +2,7 @@
 rust/listings/**/.am/
 rust/listings/**/rust/
 rust/listings/**/*.wrong.rs
+typescript/listings/**/.am/
 
 # Claude Code
 .claude/settings.local.json

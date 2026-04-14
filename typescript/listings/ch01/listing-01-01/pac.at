@@ -1,4 +1,5 @@
 name: "listing-01-01"
 version: "0.1.0"
+lang: "ts"
 
 app("listing-01-01") {}

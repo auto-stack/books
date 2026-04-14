@@ -13,20 +13,32 @@ function range(start: number, end: number, eq: boolean = false): number[] {
     return res;
 }
 
-function process_name(name: string | null): void {
-    switch (name) {
-        case null:
-            print("No name provided");
+
+type MaybeId =
+    { _tag: "Just", value: number }
+    | { _tag: "Nothing", value: void };
+
+const MaybeId = {
+    Just: (value: number) => ({ _tag: "Just", value }),
+    Nothing: (value: void) => ({ _tag: "Nothing", value })
+};
+
+
+function process_id(id: MaybeId): void {
+    switch (id) {
+        case MaybeId.Just(n):
+            console.log("ID:", n);
             break;
-        default:
-            print(`Hello, ${name}!`);
+        case MaybeId.Nothing(_):
+            console.log("No ID provided");
             break;
     }
 }
 
 function main(): void {
-    process_name("Alice");
-    process_name(null);
+    const a = MaybeId.Just(42);
+    process_id(a);
+    process_id(MaybeId.Nothing);
 }
 
 main();

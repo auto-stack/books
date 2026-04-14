@@ -272,24 +272,31 @@ without boilerplate.
 For structural contracts (like TypeScript's `interface`), Auto provides the
 `spec` keyword, which is covered in a later chapter.
 
-## Nullable Types
+## Nullable Types with Enums
 
-TypeScript uses `T | null` to represent a value that might be missing. Auto
-provides the `?T` syntax (inspired by Rust's `Option<T>`), which is more
-concise and forces you to handle the `None` case explicitly.
+TypeScript uses `T | null` to represent a value that might be missing. In Auto,
+you model nullable types using enums with tagged variants. This is inspired by
+Rust's `Option<T>` and gives you exhaustive pattern matching at compile time.
 
-<Listing number="02-05" file="listings/ch02/listing-02-05/main.at" caption="Nullable types">
+<Listing number="02-05" file="listings/ch02/listing-02-05/main.at" caption="Nullable types with enum">
 
 ```auto
-fn process_name(name ?str) {
-    name is
-        Some(n) -> print(f"Hello, ${n}!")
-        None -> print("No name provided")
+enum MaybeId {
+    Just int
+    Nothing
+}
+
+fn process_id(id MaybeId) {
+    is id {
+        MaybeId.Just(n) => print("ID:", n)
+        MaybeId.Nothing => print("No ID provided")
+    }
 }
 
 fn main() {
-    process_name("Alice")
-    process_name(None)
+    let a = MaybeId.Just(42)
+    process_id(a)
+    process_id(MaybeId.Nothing)
 }
 ```
 
@@ -309,20 +316,32 @@ function range(start: number, end: number, eq: boolean = false): number[] {
     return res;
 }
 
-function process_name(name: string | null): void {
-    switch (name) {
-        case null:
-            print("No name provided");
+
+type MaybeId =
+    { _tag: "Just", value: number }
+    | { _tag: "Nothing", value: void };
+
+const MaybeId = {
+    Just: (value: number) => ({ _tag: "Just", value }),
+    Nothing: (value: void) => ({ _tag: "Nothing", value })
+};
+
+
+function process_id(id: MaybeId): void {
+    switch (id) {
+        case MaybeId.Just(n):
+            console.log("ID:", n);
             break;
-        default:
-            print(`Hello, ${name}!`);
+        case MaybeId.Nothing(_):
+            console.log("No ID provided");
             break;
     }
 }
 
 function main(): void {
-    process_name("Alice");
-    process_name(null);
+    const a = MaybeId.Just(42);
+    process_id(a);
+    process_id(MaybeId.Nothing);
 }
 
 main();
@@ -330,20 +349,26 @@ main();
 
 </Listing>
 
-The `?str` type in Auto is equivalent to TypeScript's `string | null`. The `is`
-keyword provides pattern matching: `Some(n)` binds the unwrapped value to `n`,
-and `None` handles the null case. This transpiles to a `switch` statement in
-TypeScript.
+The enum `MaybeId` transpiles to a discriminated union type in TypeScript. Each
+variant becomes a `{ _tag: "...", value: T }` object, and the enum namespace
+provides constructor functions like `MaybeId.Just(42)`. The `is` expression
+transpiles to a `switch` statement with pattern matching on the `_tag` field.
 
-You can unwrap a nullable value with `is` in any scope, not just function
-bodies:
+This approach gives you exhaustive matching — the compiler ensures you handle
+every case. In TypeScript, you would typically use `T | null` instead, but
+Auto's enum approach is safer and more explicit.
+
+For string-based nullable types, you can define a similar enum:
 
 ```auto
-let name ?str = get_name()
-name is
-    Some(n) -> print(f"Got: ${n}")
-    None -> print("No name")
+enum MaybeName {
+    Just str
+    Nothing
+}
 ```
+
+Note: Auto reserves `Some` and `None` as keywords. Use `Just` and `Nothing`
+(or any other non-keyword names) for your enum variants.
 
 ## Optional Parameters
 
@@ -436,7 +461,7 @@ keeping your code self-documenting.
 | `number` | `int`, `float` | Numeric |
 | `boolean` | `bool` | True/false |
 | `T[]` | `[]T` | Array |
-| `T \| null` | `?T` | Nullable |
+| `T \| null` | enum with `Just`/`Nothing` | Nullable |
 | `{ name: string }` | `type Obj { name str }` | Object |
 | `(a: number) => void` | `(a int) =>` | Function type |
 

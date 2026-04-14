@@ -264,23 +264,31 @@ Auto 的 `type Name { fields }` 转译为带有构造函数的 TypeScript `class
 对于结构化契约（类似 TypeScript 的 `interface`），Auto 提供了 `spec` 关键字，
 这将在后面的章节中介绍。
 
-## 可空类型
+## 使用枚举的可空类型
 
-TypeScript 使用 `T | null` 来表示可能缺失的值。Auto 提供了 `?T` 语法（灵感
-来自 Rust 的 `Option<T>`），更加简洁，并强制你显式处理 `None` 情况。
+TypeScript 使用 `T | null` 来表示可能缺失的值。在 Auto 中，你可以使用带标签
+变体的枚举来建模可空类型。这受到 Rust 的 `Option<T>` 启发，并在编译时提供
+穷尽模式匹配。
 
-<Listing number="02-05" file="listings/ch02/listing-02-05/main.at" caption="可空类型">
+<Listing number="02-05" file="listings/ch02/listing-02-05/main.at" caption="使用枚举的可空类型">
 
 ```auto
-fn process_name(name ?str) {
-    name is
-        Some(n) -> print(f"Hello, ${n}!")
-        None -> print("No name provided")
+enum MaybeId {
+    Just int
+    Nothing
+}
+
+fn process_id(id MaybeId) {
+    is id {
+        MaybeId.Just(n) => print("ID:", n)
+        MaybeId.Nothing => print("No ID provided")
+    }
 }
 
 fn main() {
-    process_name("Alice")
-    process_name(None)
+    let a = MaybeId.Just(42)
+    process_id(a)
+    process_id(MaybeId.Nothing)
 }
 ```
 
@@ -300,20 +308,32 @@ function range(start: number, end: number, eq: boolean = false): number[] {
     return res;
 }
 
-function process_name(name: string | null): void {
-    switch (name) {
-        case null:
-            print("No name provided");
+
+type MaybeId =
+    { _tag: "Just", value: number }
+    | { _tag: "Nothing", value: void };
+
+const MaybeId = {
+    Just: (value: number) => ({ _tag: "Just", value }),
+    Nothing: (value: void) => ({ _tag: "Nothing", value })
+};
+
+
+function process_id(id: MaybeId): void {
+    switch (id) {
+        case MaybeId.Just(n):
+            console.log("ID:", n);
             break;
-        default:
-            print(`Hello, ${name}!`);
+        case MaybeId.Nothing(_):
+            console.log("No ID provided");
             break;
     }
 }
 
 function main(): void {
-    process_name("Alice");
-    process_name(null);
+    const a = MaybeId.Just(42);
+    process_id(a);
+    process_id(MaybeId.Nothing);
 }
 
 main();
@@ -321,18 +341,24 @@ main();
 
 </Listing>
 
-Auto 中的 `?str` 类型等价于 TypeScript 的 `string | null`。`is` 关键字提供
-模式匹配：`Some(n)` 将解包后的值绑定到 `n`，`None` 处理空值情况。这转译为
-TypeScript 中的 `switch` 语句。
+枚举 `MaybeId` 转译为 TypeScript 中的可辨识联合类型。每个变体变成一个
+`{ _tag: "...", value: T }` 对象，枚举命名空间提供类似 `MaybeId.Just(42)`
+的构造函数。`is` 表达式转译为对 `_tag` 字段进行模式匹配的 `switch` 语句。
 
-你可以在任何作用域中使用 `is` 来解包可空值，不仅限于函数体：
+这种方式为你提供穷尽匹配——编译器确保你处理了每种情况。在 TypeScript 中，
+你通常会使用 `T | null`，但 Auto 的枚举方法更安全、更明确。
+
+对于基于字符串的可空类型，你可以定义类似的枚举：
 
 ```auto
-let name ?str = get_name()
-name is
-    Some(n) -> print(f"Got: ${n}")
-    None -> print("No name")
+enum MaybeName {
+    Just str
+    Nothing
+}
 ```
+
+注意：Auto 将 `Some` 和 `None` 保留为关键字。请使用 `Just` 和 `Nothing`
+（或任何其他非关键字名称）作为你的枚举变体。
 
 ## 可选参数
 
@@ -422,7 +448,7 @@ type UserList = User[];
 | `number` | `int`, `float` | 数值 |
 | `boolean` | `bool` | 布尔值 |
 | `T[]` | `[]T` | 数组 |
-| `T \| null` | `?T` | 可空类型 |
+| `T \| null` | 带 `Just`/`Nothing` 的枚举 | 可空类型 |
 | `{ name: string }` | `type Obj { name str }` | 对象 |
 | `(a: number) => void` | `(a int) =>` | 函数类型 |
 
