@@ -1,0 +1,14 @@
+fn fib(n int) int {
+    if n <= 1 {
+        n
+    } else {
+        fib(n - 1) + fib(n - 2)
+    }
+}
+
+#[comptime]
+var FIB_10 = fib(10)
+
+fn main() {
+    print("Fibonacci(10) = " + FIB_10)
+}

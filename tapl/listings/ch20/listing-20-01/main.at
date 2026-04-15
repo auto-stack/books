@@ -1,0 +1,9 @@
+#[test]
+fn test_greeting() {
+    var greeting = "Hello"
+    assert!(greeting.contains("Hello"))
+}
+
+fn main() {
+    print("Run: automan test")
+}

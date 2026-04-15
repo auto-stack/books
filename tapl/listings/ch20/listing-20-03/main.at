@@ -1,0 +1,14 @@
+#[cfg(target = "linux")]
+fn platform_path() {
+    "/var/data"
+}
+
+#[cfg(target = "windows")]
+fn platform_path() {
+    "C:\\Users\\data"
+}
+
+fn main() {
+    var path = platform_path()
+    print("Data path: " + path)
+}

@@ -1,0 +1,9 @@
+#[macro]
+fn log(msg String) {
+    print("[LOG] " + msg)
+}
+
+fn main() {
+    log("Starting up")
+    log("Processing data")
+}

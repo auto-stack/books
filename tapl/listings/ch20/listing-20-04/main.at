@@ -1,0 +1,12 @@
+#[cfg(target_os = "linux")]
+fn os_name() { "Linux" }
+
+#[cfg(target_os = "macos")]
+fn os_name() { "macOS" }
+
+#[cfg(target_os = "windows")]
+fn os_name() { "Windows" }
+
+fn main() {
+    print("Running on: " + os_name())
+}
