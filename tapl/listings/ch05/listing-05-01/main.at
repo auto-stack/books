@@ -1,0 +1,6 @@
+fn main() {
+    print("Guess the number!")
+    print("Please input your guess.")
+    var guess = input()
+    print("You guessed: " + guess)
+}

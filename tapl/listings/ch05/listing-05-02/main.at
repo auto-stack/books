@@ -1,0 +1,18 @@
+fn main() {
+    var secret = 42
+    print("Guess the number!")
+    for true {
+        var guess_str = input()
+        var guess = parse_int(guess_str)
+        print("You guessed: " + guess)
+        if guess == secret {
+            print("You win!")
+            break
+        }
+        if guess < secret {
+            print("Too small!")
+        } else {
+            print("Too big!")
+        }
+    }
+}
