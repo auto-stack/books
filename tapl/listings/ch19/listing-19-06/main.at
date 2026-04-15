@@ -1,0 +1,7 @@
+fn main() {
+    var numbers = [1, 2, 3, 4, 5]
+    var sum = numbers.fold(0, fn(acc int, x int) int { acc + x })
+    print(sum)
+    var product = numbers.fold(1, fn(acc int, x int) int { acc * x })
+    print(product)
+}

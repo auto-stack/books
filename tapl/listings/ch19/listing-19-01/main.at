@@ -1,0 +1,10 @@
+fn apply(fn fn(int)int, x int) int {
+    fn(x)
+}
+
+fn main() {
+    var double = fn(x int) int { x * 2 }
+    print(apply(double, 5))
+    var add_one = fn(x int) int { x + 1 }
+    print(apply(add_one, 10))
+}

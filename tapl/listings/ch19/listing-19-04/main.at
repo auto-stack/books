@@ -1,0 +1,7 @@
+fn main() {
+    var numbers = [1, 2, 3, 4, 5]
+    var doubled = numbers.map(fn(x) int { x * 2 })
+    for n in doubled {
+        print(n)
+    }
+}

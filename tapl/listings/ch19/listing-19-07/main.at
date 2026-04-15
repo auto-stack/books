@@ -1,0 +1,7 @@
+fn main() {
+    var result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        .filter(fn(x int) bool { x % 2 == 0 })
+        .map(fn(x int) int { x * x })
+        .fold(0, fn(acc int, x int) int { acc + x })
+    print(result)
+}

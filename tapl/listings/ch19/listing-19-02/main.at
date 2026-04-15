@@ -1,0 +1,9 @@
+fn make_multiplier(factor int) fn(int)int {
+    fn(n int) int { n * factor }
+}
+
+fn main() {
+    var triple = make_multiplier(3)
+    print(triple(5))
+    print(triple(10))
+}
