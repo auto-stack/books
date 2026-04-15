@@ -1,0 +1,9 @@
+fn main() {
+    var greeting = "Hello"
+    var name = "Auto"
+    var message = greeting + ", " + name + "!"
+    print(message)
+    var multi = "This is a
+multiline string"
+    print(multi)
+}
