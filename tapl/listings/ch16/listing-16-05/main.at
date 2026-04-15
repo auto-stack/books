@@ -1,0 +1,31 @@
+enum Work {
+    Process(String),
+    Result(String)
+}
+
+fn worker(id int) {
+    for true {
+        on work Work {
+            is work {
+                Process(data) => {
+                    var result = "Processed: " + data
+                    send main Result(result)
+                },
+                Result(_) => {}
+            }
+        }
+    }
+}
+
+fn main() {
+    spawn worker(1)
+    spawn worker(2)
+    send worker(1) Work.Process("task-a")
+    send worker(2) Work.Process("task-b")
+    on result Work {
+        is result {
+            Result(msg) => print(msg),
+            Process(_) => {}
+        }
+    }
+}

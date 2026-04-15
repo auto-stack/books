@@ -1,0 +1,18 @@
+fn fetch_user(id int) ~String {
+    on _ { send caller "User" + id }
+}
+
+fn fetch_posts(user String) ~String {
+    on _ { send caller "Posts for " + user }
+}
+
+fn main() {
+    var user = fetch_user(1)
+    on u String {
+        var posts = fetch_posts(u)
+        on p String {
+            print("User: " + u)
+            print("Posts: " + p)
+        }
+    }
+}

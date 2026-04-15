@@ -1,0 +1,12 @@
+fn fetch_data() ~String {
+    on result String {
+        send main result
+    }
+}
+
+fn main() {
+    spawn fetcher
+    on data String {
+        print("Got: " + data)
+    }
+}

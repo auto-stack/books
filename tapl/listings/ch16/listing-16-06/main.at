@@ -1,0 +1,14 @@
+fn long_running() ~String {
+    on _ {
+        // simulates long work
+        send caller "Done!"
+    }
+}
+
+fn main() {
+    var job = long_running()
+    // Could implement timeout pattern
+    on result String {
+        print(result)
+    }
+}

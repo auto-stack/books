@@ -1,0 +1,13 @@
+fn delayed_greeting(name String) ~String {
+    // simulates async work
+    on _ {
+        send caller "Hello, " + name + "!"
+    }
+}
+
+fn main() {
+    var result = delayed_greeting("Alice")
+    on msg String {
+        print(msg)
+    }
+}

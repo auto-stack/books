@@ -1,0 +1,26 @@
+type Request {
+    url String
+}
+
+type Response {
+    data String
+    status int
+}
+
+fn http_server() {
+    for true {
+        on req Request {
+            // process request
+            var resp = Response { data: "OK", status: 200 }
+            send main resp
+        }
+    }
+}
+
+fn main() {
+    spawn http_server
+    send http_server Request { url: "/api/data" }
+    on resp Response {
+        print("Status: " + resp.status)
+    }
+}
