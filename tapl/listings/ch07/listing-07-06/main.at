@@ -1,0 +1,18 @@
+enum Color {
+    Red,
+    Green,
+    Blue
+}
+
+fn color_name(c Color) {
+    is c {
+        Red => "red",
+        Green => "green",
+        Blue => "blue"
+    }
+}
+
+fn main() {
+    print(color_name(Color.Red))
+    print(color_name(Color.Green))
+}

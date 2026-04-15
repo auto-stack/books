@@ -1,0 +1,11 @@
+enum Shape {
+    Circle(float),
+    Rect(float, float)
+}
+
+fn main() {
+    var c = Shape.Circle(5.0)
+    var r = Shape.Rect(3.0, 4.0)
+    print(c)
+    print(r)
+}

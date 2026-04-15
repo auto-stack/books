@@ -1,0 +1,19 @@
+enum Command {
+    Quit,
+    Move(int, int),
+    Speak(String)
+}
+
+fn handle(cmd Command) {
+    on cmd {
+        Quit => print("Goodbye!"),
+        Move(x, y) => print("Moving to " + x + ", " + y),
+        Speak(msg) => print(msg)
+    }
+}
+
+fn main() {
+    handle(Command.Quit)
+    handle(Command.Move(10, 20))
+    handle(Command.Speak("Hello!"))
+}

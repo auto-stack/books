@@ -1,0 +1,23 @@
+enum Value {
+    Int(int),
+    Float(float),
+    Str(String)
+}
+
+fn describe(v Value) {
+    is v {
+        Int(n) if n > 0 => "positive integer",
+        Int(n) if n < 0 => "negative integer",
+        Int(_) => "zero",
+        Float(f) => "float: " + f,
+        Str(s) => "string: " + s
+    }
+}
+
+fn main() {
+    print(describe(Value.Int(42)))
+    print(describe(Value.Int(-1)))
+    print(describe(Value.Int(0)))
+    print(describe(Value.Float(3.14)))
+    print(describe(Value.Str("hello")))
+}
