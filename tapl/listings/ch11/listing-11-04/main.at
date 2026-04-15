@@ -1,0 +1,7 @@
+fn main() {
+    var x = 42
+    var p *int = &x
+    print(*p)    // 42
+    *p = 100
+    print(x)     // 100
+}

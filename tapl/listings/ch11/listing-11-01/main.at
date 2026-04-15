@@ -1,0 +1,9 @@
+fn print_length(s view String) {
+    print(s.len())
+}
+
+fn main() {
+    var name = "Hello, Auto!"
+    print_length(name)
+    print(name)  // still valid -- view doesn't consume
+}

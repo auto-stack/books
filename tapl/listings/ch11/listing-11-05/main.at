@@ -1,0 +1,20 @@
+type Counter {
+    count int
+}
+
+ext Counter {
+    fn increment(&self) {
+        self.count = self.count + 1
+    }
+    fn get(&self) int {
+        self.count
+    }
+}
+
+fn main() {
+    var c = Counter { count: 0 }
+    c.increment()
+    c.increment()
+    c.increment()
+    print(c.get())  // 3
+}

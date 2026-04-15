@@ -1,0 +1,14 @@
+fn longest(a view String, b view String) view String {
+    if a.len() > b.len() {
+        a
+    } else {
+        b
+    }
+}
+
+fn main() {
+    var s1 = "hello"
+    var s2 = "world!"
+    var result = longest(s1, s2)
+    print(result)
+}

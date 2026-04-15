@@ -1,0 +1,9 @@
+fn increment(n mut int) {
+    n = n + 1
+}
+
+fn main() {
+    var x = 5
+    increment(x)
+    print(x)  // x is now 6
+}
