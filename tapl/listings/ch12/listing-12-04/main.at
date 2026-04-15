@@ -1,0 +1,9 @@
+fn make_point() Point {
+    Point { x: 1.0, y: 2.0 }
+}
+
+fn main() {
+    var p = make_point()
+    print(p.x)
+    print(p.y)
+}

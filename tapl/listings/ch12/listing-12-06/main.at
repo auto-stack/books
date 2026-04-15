@@ -1,0 +1,11 @@
+fn process() {
+    for i in 0..1000000 {
+        var data = [i, i + 1, i + 2]
+        // no GC pauses -- deterministic deallocation
+    }
+    print("Done processing 1M items")
+}
+
+fn main() {
+    process()
+}

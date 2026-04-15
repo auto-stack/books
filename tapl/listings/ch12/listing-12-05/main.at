@@ -1,0 +1,16 @@
+type Buffer {
+    data int
+}
+
+ext Buffer {
+    fn new(size int) Buffer {
+        Buffer { data: size }
+    }
+}
+
+fn main() {
+    var b1 = Buffer.new(1024)
+    var b2 = Buffer.new(2048)
+    // Automatically freed when b1 and b2 go out of scope
+    print("Buffers allocated and auto-freed")
+}

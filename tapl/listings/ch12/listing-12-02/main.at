@@ -1,0 +1,9 @@
+fn take_ownership(s String) {
+    print(s)
+}
+
+fn main() {
+    var greeting = "Hello"
+    take_ownership(greeting)
+    // print(greeting)  // ERROR: greeting was moved
+}
