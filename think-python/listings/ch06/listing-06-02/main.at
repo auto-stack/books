@@ -1,0 +1,32 @@
+fn is_divisible(x: int, y: int) -> bool {
+    return x % y == 0
+}
+
+fn distance(x1: f64, y1: f64, x2: f64, y2: f64) -> f64 {
+    let dx = x2 - x1
+    let dy = y2 - y1
+    let dsquared = dx * dx + dy * dy
+    let result = dsquared.sqrt()
+    return result
+}
+
+fn main() {
+    // Step 1: Start with a stub that always returns 0
+    // Step 2: Add dx, dy computation
+    // Step 3: Add dsquared computation
+    // Step 4: Use sqrt and return result
+
+    let d = distance(1.0, 2.0, 4.0, 6.0)
+    print("distance(1, 2, 4, 6) =", d)
+
+    // Boolean function in a conditional
+    if is_divisible(6, 2) {
+        print("6 is divisible by 2")
+    }
+
+    if is_divisible(6, 4) {
+        print("6 is divisible by 4")
+    } else {
+        print("6 is NOT divisible by 4")
+    }
+}

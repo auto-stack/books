@@ -1,0 +1,51 @@
+type Time {
+    hour: int,
+    minute: int,
+    second: int,
+}
+
+fn print_time(&self) {
+    let s = f"${self.hour:02d}:${self.minute:02d}:${self.second:02d}"
+    print(s)
+}
+
+fn time_to_int(&self) -> int {
+    let minutes = self.hour * 60 + self.minute
+    let seconds = minutes * 60 + self.second
+    return seconds
+}
+
+fn add_time(&self, hours: int, minutes: int, seconds: int) -> Time {
+    let duration = make_time(hours, minutes, seconds)
+    let total = Time.time_to_int(self) + Time.time_to_int(duration)
+    return Time.int_to_time(total)
+}
+
+fn int_to_time(seconds: int) -> Time {
+    let (minute, second) = divmod(seconds, 60)
+    let (hour, minute) = divmod(minute, 60)
+    return make_time(hour, minute, second)
+}
+
+fn make_time(hour: int, minute: int, second: int) -> Time {
+    return Time{hour: hour, minute: minute, second: second}
+}
+
+fn main() {
+    let start = make_time(9, 45, 0)
+
+    // Calling a method on an instance
+    start.print_time()  // 09:45:00
+
+    // Another method
+    let secs = start.time_to_int()
+    print("Seconds since midnight:", secs)  // 35100
+
+    // Calling a method that returns a new object
+    let end = start.add_time(1, 32, 0)
+    end.print_time()  // 11:17:00
+
+    // Calling the static method via the type
+    let t = Time.int_to_time(3661)
+    t.print_time()  // 01:01:01
+}

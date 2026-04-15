@@ -1,0 +1,80 @@
+use os
+
+fn walk(dirname: str) {
+    let names = os.listdir(dirname)
+    for name in names {
+        let path = os.path.join(dirname, name)
+        if os.path.isfile(path) {
+            print(path)
+        } else if os.path.isdir(path) {
+            walk(path)
+        }
+    }
+}
+
+fn main() {
+    // Build a word list by reading text files from a directory
+    os.makedirs("demo_texts", exist_ok=true)
+
+    // Create sample text files
+    let f1 = open("demo_texts/story1.txt", "w")
+    f1.write("The quick brown fox jumps over the lazy dog\n")
+    f1.write("The fox was very quick indeed\n")
+    f1.close()
+
+    let f2 = open("demo_texts/story2.txt", "w")
+    f2.write("A lazy dog slept in the sun all day\n")
+    f2.write("The sun was bright and warm\n")
+    f2.close()
+
+    let f3 = open("demo_texts/story3.txt", "w")
+    f3.write("Quick thinking helps in many situations\n")
+    f3.write("The dog chased the fox through the field\n")
+    f3.close()
+
+    // Collect unique words from all .txt files
+    let mut word_set: HashMap<str, int> = {}
+    let mut total_words = 0
+    let mut file_count = 0
+
+    let names = os.listdir("demo_texts")
+    for name in names {
+        let path = os.path.join("demo_texts", name)
+        if os.path.isfile(path) and path.endswith(".txt") {
+            file_count += 1
+            let content = open(path).read()
+            let words = content.split()
+            for word in words {
+                // Clean the word: strip punctuation, lowercase
+                let cleaned = word.strip(",.!?").lower()
+                if cleaned != "" {
+                    word_set[cleaned] = 1
+                    total_words += 1
+                }
+            }
+        }
+    }
+
+    print(f"Files read: $file_count")
+    print(f"Total word tokens: $total_words")
+    print(f"Unique words: ${len(word_set)}")
+
+    // Show sorted unique words
+    let sorted_words = sorted(word_set.keys())
+    print()
+    print("Unique words (sorted):")
+    print(sorted_words)
+
+    // Write word list to a file using f-string formatting
+    let writer = open("demo_texts/word_list.txt", "w")
+    writer.write(f"Total unique words: ${len(word_set)}\n")
+    writer.write(f"Total word tokens: $total_words\n")
+    writer.write(f"Files processed: $file_count\n")
+    writer.write("\nWords:\n")
+    for word in sorted_words {
+        writer.write(f"$word\n")
+    }
+    writer.close()
+    print()
+    print("Word list written to demo_texts/word_list.txt")
+}

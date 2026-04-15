@@ -1,0 +1,80 @@
+type Point {
+    x: float,
+    y: float,
+}
+
+fn init(&self, x: float = 0.0, y: float = 0.0) {
+    self.x = x
+    self.y = y
+}
+
+fn to_string(&self) -> str {
+    return f"Point(${self.x}, ${self.y})"
+}
+
+fn __eq__(&self, other: Point) -> bool {
+    return self.x == other.x and self.y == other.y
+}
+
+fn translate(&self, dx: float, dy: float) {
+    self.x += dx
+    self.y += dy
+}
+
+type Rectangle {
+    width: float,
+    height: float,
+    corner: Point,
+}
+
+fn init(&self, width: float, height: float, corner: Point) {
+    self.width = width
+    self.height = height
+    self.corner = corner
+}
+
+fn to_string(&self) -> str {
+    return f"Rectangle(${self.width}, ${self.height}, ${self.corner})"
+}
+
+fn grow(&self, dwidth: float, dheight: float) {
+    self.width += dwidth
+    self.height += dheight
+}
+
+fn translate(&self, dx: float, dy: float) {
+    self.corner.translate(dx, dy)
+}
+
+fn main() {
+    // Creating a Rectangle with a Point as its corner
+    let corner = Point(30.0, 20.0)
+    let box1 = Rectangle(100.0, 50.0, corner)
+    print(box1)  // Rectangle(100, 50, Point(30, 20))
+
+    // Shallow copy -- corner is shared
+    let box2 = copy(box1)
+    print(box1 is box2)          // false
+    print(box1.corner is box2.corner)  // true (shared!)
+
+    // Growing box2 does not affect box1
+    box2.grow(60.0, 40.0)
+    print(box1)  // Rectangle(100, 50, Point(30, 20))
+    print(box2)  // Rectangle(160, 90, Point(30, 20))
+
+    // Translating box2 moves its corner, which is shared with box1!
+    box2.translate(30.0, 20.0)
+    print(box1)  // Rectangle(100, 50, Point(60, 40))  <-- bug!
+    print(box2)  // Rectangle(160, 90, Point(60, 40))
+
+    // Deep copy -- corner is independent
+    let corner2 = Point(20.0, 20.0)
+    let box3 = Rectangle(100.0, 50.0, corner2)
+    let box4 = deepcopy(box3)
+    print(box3.corner is box4.corner)  // false (independent!)
+
+    box3.translate(50.0, 30.0)
+    box4.grow(100.0, 60.0)
+    print(box3)  // Rectangle(100, 50, Point(70, 50))
+    print(box4)  // Rectangle(200, 110, Point(20, 20))
+}

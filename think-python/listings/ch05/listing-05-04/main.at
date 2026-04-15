@@ -1,0 +1,36 @@
+fn countdown(n: int) {
+    if n <= 0 {
+        print("Blastoff!")
+    } else {
+        print(n)
+        countdown(n - 1)
+    }
+}
+
+fn print_n(string: str, n: int) {
+    if n > 0 {
+        print(string)
+        print_n(string, n - 1)
+    }
+}
+
+fn main() {
+    // Countdown from 3
+    print("Countdown from 3:")
+    countdown(3)
+    print()
+
+    // Countdown from 1
+    print("Countdown from 1:")
+    countdown(1)
+    print()
+
+    // Print a string n times
+    print("Print 'Spam' 4 times:")
+    print_n("Spam", 4)
+    print()
+
+    // Print with n = 0 (base case, prints nothing)
+    print("Print 'Hello' 0 times:")
+    print_n("Hello", 0)
+}

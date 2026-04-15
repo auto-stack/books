@@ -1,0 +1,74 @@
+type Time {
+    hour: int,
+    minute: int,
+    second: int,
+}
+
+fn print_time(time: Time) {
+    print(f"${time.hour:02d}:${time.minute:02d}:${time.second:02d}")
+}
+
+fn make_time(hour: int, minute: int, second: int) -> Time {
+    return Time{hour: hour, minute: minute, second: second}
+}
+
+fn time_to_int(time: Time) -> int {
+    let minutes = time.hour * 60 + time.minute
+    let seconds = minutes * 60 + time.second
+    return seconds
+}
+
+fn int_to_time(seconds: int) -> Time {
+    let (minute, second) = divmod(seconds, 60)
+    let (hour, minute) = divmod(minute, 60)
+    return make_time(hour, minute, second)
+}
+
+// Modifier: changes the object in place
+fn increment_time(time: Time, hours: int, minutes: int, seconds: int) {
+    time.hour += hours
+    time.minute += minutes
+    time.second += seconds
+    let (carry, time.second) = divmod(time.second, 60)
+    let (carry, time.minute) = divmod(time.minute + carry, 60)
+    let (_, time.hour) = divmod(time.hour + carry, 24)
+}
+
+// Pure function: does not modify the original
+fn add_time(time: Time, hours: int, minutes: int, seconds: int) -> Time {
+    let duration = make_time(hours, minutes, seconds)
+    let total_seconds = time_to_int(time) + time_to_int(duration)
+    return int_to_time(total_seconds)
+}
+
+fn main() {
+    // --- Modifier approach ---
+    let mut start = make_time(9, 40, 0)
+    print("Start (modifier):", end = " ")
+    print_time(start)  // 09:40:00
+
+    increment_time(start, 1, 32, 0)
+    print("After increment: ", end = " ")
+    print_time(start)  // 11:12:00
+    // Note: start has been changed!
+
+    // --- Pure function approach ---
+    let fresh = make_time(9, 40, 0)
+    let end = add_time(fresh, 1, 32, 0)
+    print("Start (pure):    ", end = " ")
+    print_time(fresh)  // 09:40:00  -- unchanged!
+    print("End (pure):      ", end = " ")
+    print_time(end)    // 11:12:00
+
+    // Pure function with large values
+    let end2 = add_time(fresh, 0, 90, 120)
+    print("End (+90m +120s):", end = " ")
+    print_time(end2)   // 11:12:00
+
+    // Convert to/from int
+    let t = make_time(1, 1, 1)
+    let secs = time_to_int(t)
+    print("01:01:01 =", secs, "seconds")  // 3661 seconds
+    let back = int_to_time(secs)
+    print_time(back)  // 01:01:01
+}

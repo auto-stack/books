@@ -1,0 +1,38 @@
+fn main() {
+    // Integer division and modulus
+    let minutes = 105
+    let hours = minutes / 60
+    print("Minutes: $minutes")
+    print("Hours: $hours")
+    print()
+
+    // Remainder via subtraction
+    let remainder = minutes - hours * 60
+    print("Remainder (subtraction): $remainder")
+
+    // Remainder via modulus operator
+    let remainder2 = minutes % 60
+    print("Remainder (modulus): $remainder2")
+    print()
+
+    // Extract rightmost digits
+    let x = 123
+    print("x = $x")
+    print("x % 10 = ${x % 10}")
+    print("x % 100 = ${x % 100}")
+    print()
+
+    // Clock arithmetic
+    let start = 11
+    let duration = 3
+    let end = (start + duration) % 12
+    print("Start: ${start} AM")
+    print("Duration: $duration hours")
+    print("End: ${if end == 0 { 12 } else { end }} PM")
+
+    // Divisibility check
+    let y = 15
+    print()
+    print("Is $y divisible by 3? ${y % 3 == 0}")
+    print("Is $y divisible by 4? ${y % 4 == 0}")
+}

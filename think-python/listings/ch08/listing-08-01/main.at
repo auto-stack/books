@@ -1,0 +1,22 @@
+fn main() {
+    let fruit = "banana"
+
+    // Indexing: accessing individual characters
+    print("fruit[0]:", fruit[0])
+    print("fruit[1]:", fruit[1])
+    print("fruit[-1]:", fruit[-1])
+    print("fruit[-2]:", fruit[-2])
+
+    // Slicing: accessing substrings
+    print("fruit[0..3]:", fruit[0..3])
+    print("fruit[2..5]:", fruit[2..5])
+    print("fruit[..3]:", fruit[..3])
+    print("fruit[3..]:", fruit[3..])
+    print("fruit[..]:", fruit[..])
+
+    // Empty slice
+    print("fruit[3..3]:", fruit[3..3])
+
+    // Length
+    print("len(fruit):", fruit.len())
+}

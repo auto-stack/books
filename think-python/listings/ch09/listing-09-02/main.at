@@ -1,0 +1,45 @@
+fn main() {
+    // append: add one element
+    let mut letters = ["a", "b", "c"]
+    letters.append("d")
+    print("After append:", letters)
+
+    // extend: add multiple elements
+    letters.extend(["e", "f"])
+    print("After extend:", letters)
+
+    // pop: remove by index
+    let mut t = ["a", "b", "c"]
+    let removed = t.pop(1)
+    print("Popped:", removed)
+    print("After pop:", t)
+
+    // remove: remove by value
+    let mut t2 = ["a", "b", "c"]
+    t2.remove("b")
+    print("After remove:", t2)
+
+    // sort: sort in place (ascending)
+    let mut nums = [3, 1, 4, 1, 5, 9]
+    nums.sort()
+    print("Sorted:", nums)
+
+    // sorted: returns a new sorted list (original unchanged)
+    let scramble = ["c", "a", "b"]
+    let sorted_list = sorted(scramble)
+    print("Original:", scramble)
+    print("Sorted copy:", sorted_list)
+
+    // reverse
+    let mut items = [1, 2, 3]
+    items.reverse()
+    print("Reversed:", items)
+
+    // index: find position of element
+    let fruits = ["apple", "banana", "cherry"]
+    print("index of banana:", fruits.index("banana"))
+
+    // count: count occurrences
+    let data = [1, 2, 2, 3, 2]
+    print("count of 2:", data.count(2))
+}

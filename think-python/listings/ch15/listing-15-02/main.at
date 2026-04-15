@@ -1,0 +1,37 @@
+type Time {
+    hour: int,
+    minute: int,
+    second: int,
+}
+
+// The init constructor -- called automatically on instantiation
+fn init(&self, hour: int = 0, minute: int = 0, second: int = 0) {
+    self.hour = hour
+    self.minute = minute
+    self.second = second
+}
+
+fn to_string(&self) -> str {
+    return f"${self.hour:02d}:${self.minute:02d}:${self.second:02d}"
+}
+
+fn main() {
+    // Creating with all arguments
+    let t1 = Time(9, 40, 0)
+    print(t1.to_string())  // 09:40:00
+
+    // Creating with default values (no arguments)
+    let t2 = Time()
+    print(t2.to_string())  // 00:00:00
+
+    // Partial arguments
+    let t3 = Time(9)
+    print(t3.to_string())  // 09:00:00
+
+    let t4 = Time(9, 45)
+    print(t4.to_string())  // 09:45:00
+
+    // Named arguments
+    let t5 = Time(minute = 30, second = 15)
+    print(t5.to_string())  // 00:30:15
+}

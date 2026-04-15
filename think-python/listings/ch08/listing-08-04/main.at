@@ -1,0 +1,46 @@
+use re
+
+fn main() {
+    let text = "I am Dracula; and I bid you welcome, Mr. Harker, to my house."
+
+    // Basic search
+    let pattern = "Dracula"
+    let result = re.search(pattern, text)
+    print("Found:", result.group())
+    print("Span:", result.span())
+
+    // Search that fails
+    let result2 = re.search("Count", text)
+    print("Not found:", result2)
+
+    // Alternation: match either name
+    let pattern2 = "Mina|Murray"
+    let result3 = re.search(pattern2, "Mina Murray was there")
+    print("Alternation:", result3.group())
+
+    // Anchors: start and end of string
+    let result4 = re.search("^Dracula", "Dracula is here")
+    print("Starts with Dracula:", result4.group())
+
+    let result5 = re.search("Harker$", "Mr. Harker")
+    print("Ends with Harker:", result5.group())
+
+    // Optional character with ?
+    let pattern3 = "colou?r"
+    let result6 = re.sub(pattern3, "color", "The colour of the sky")
+    print("Sub colour:", result6)
+    let result7 = re.sub(pattern3, "color", "The color of the sky")
+    print("Sub color:", result7)
+
+    // Grouping with parentheses
+    let pattern4 = "cent(er|re)"
+    let result8 = re.sub(pattern4, "center", "the centre of town")
+    print("Sub centre:", result8)
+    let result9 = re.sub(pattern4, "center", "the center of town")
+    print("Sub center:", result9)
+
+    // findall: find all matches
+    let words = "cat bat rat cat hat"
+    let result10 = re.findall("cat", words)
+    print("findall cat:", result10)
+}

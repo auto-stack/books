@@ -1,0 +1,113 @@
+type Card {
+    suit: int,
+    rank: int,
+}
+
+let suit_names = ["Clubs", "Diamonds", "Hearts", "Spades"]
+let rank_names = [None, "Ace", "2", "3", "4", "5", "6", "7",
+                 "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+
+fn init(&self, suit: int, rank: int) {
+    self.suit = suit
+    self.rank = rank
+}
+
+fn to_string(&self) -> str {
+    let rank_name = rank_names[self.rank]
+    let suit_name = suit_names[self.suit]
+    return f"${rank_name} of ${suit_name}"
+}
+
+fn __lt__(&self, other: Card) -> bool {
+    return (self.suit, self.rank) < (other.suit, other.rank)
+}
+
+type Deck {
+    cards: list,
+}
+
+fn init(&self, cards: list) {
+    self.cards = cards
+}
+
+fn to_string(&self) -> str {
+    let res = []
+    for card in self.cards {
+        res.append(card.to_string())
+    }
+    return "\n".join(res)
+}
+
+fn make_cards() -> list {
+    let cards = []
+    for suit in range(4) {
+        for rank in range(2, 15) {
+            let card = Card(suit, rank)
+            cards.append(card)
+        }
+    }
+    return cards
+}
+
+fn take_card(&self) -> Card {
+    return self.cards.pop()
+}
+
+fn put_card(&self, card: Card) {
+    self.cards.append(card)
+}
+
+fn shuffle(&self) {
+    random.shuffle(self.cards)
+}
+
+fn sort(&self) {
+    self.cards.sort()
+
+fn move_cards(&self, other: Deck, num: int) {
+    for i in range(num) {
+        let card = self.take_card()
+        other.put_card(card)
+    }
+
+fn main() {
+    // Create a full deck
+    let cards = Deck.make_cards()
+    let deck = Deck(cards)
+    print(f"Deck has ${len(deck.cards)} cards")  // Deck has 52 cards
+
+    // Print first few cards
+    for card in deck.cards[:3] {
+        print(card)
+    }
+    // 2 of Clubs
+    // 3 of Clubs
+    // 4 of Clubs
+
+    // Take a card
+    let card = deck.take_card()
+    print(f"Took: ${card}")  // Took: Ace of Clubs
+    print(f"Deck now has ${len(deck.cards)} cards")  // Deck now has 51 cards
+
+    // Put it back
+    deck.put_card(card)
+    print(f"Deck has ${len(deck.cards)} cards again")  // Deck has 52 cards again
+
+    // Shuffle
+    deck.shuffle()
+    print("After shuffle, first 4 cards:")
+    for card in deck.cards[:4] {
+        print(f"  ${card}")
+    }
+
+    // Sort
+    deck.sort()
+    print("After sort, first 4 cards:")
+    for card in deck.cards[:4] {
+        print(f"  ${card}")
+    }
+    // 2 of Clubs
+    // 3 of Clubs
+    // 4 of Clubs
+    // 5 of Clubs
+}

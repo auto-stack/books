@@ -1,0 +1,31 @@
+fn count_letter(word: str, target: str) -> int {
+    let mut count = 0
+    for letter in word {
+        if letter == target {
+            count += 1
+        }
+    }
+    return count
+}
+
+fn main() {
+    // Counting with accumulator pattern
+    print("Counting 'l' in 'hello':", count_letter("hello", "l"))
+    print("Counting 'e' in 'Emma':", count_letter("Emma", "e"))
+    print("Counting 'a' in 'banana':", count_letter("banana", "a"))
+    print("Counting 'z' in 'hello':", count_letter("hello", "z"))
+
+    // Counting words with 'e' from a list
+    let words = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape"]
+    let mut total = 0
+    let mut count_e = 0
+    for word in words {
+        total += 1
+        if count_letter(word, "e") > 0 {
+            count_e += 1
+        }
+    }
+    print("Total words:", total)
+    print("Words with 'e':", count_e)
+    print("Percentage with 'e':", count_e * 100 / total)
+}

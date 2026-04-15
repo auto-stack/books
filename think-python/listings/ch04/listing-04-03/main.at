@@ -1,0 +1,61 @@
+// --- Before refactoring: duplicated logic ---
+
+fn draw_filled_box(ch: str, width: int, height: int) {
+    for i in 0..height {
+        for j in 0..width {
+            print(ch, terminator: "")
+        }
+        print()
+    }
+}
+
+fn draw_empty_box(ch: str, width: int, height: int) {
+    for i in 0..height {
+        for j in 0..width {
+            if i == 0 || i == height - 1 || j == 0 || j == width - 1 {
+                print(ch, terminator: "")
+            } else {
+                print(" ", terminator: "")
+            }
+        }
+        print()
+    }
+}
+
+// --- After refactoring: shared helper ---
+
+// Helper: returns a single row as a string
+fn make_row(ch: str, fill: str, width: int, is_edge: bool) -> str {
+    if is_edge {
+        ch * width
+    } else {
+        "$ch" + fill * (width - 2) + "$ch"
+    }
+}
+
+fn draw_box_v2(ch: str, width: int, height: int, filled: bool) {
+    let fill = if filled { ch } else { " " }
+    for i in 0..height {
+        let is_edge = i == 0 || i == height - 1
+        print(make_row(ch, fill, width, is_edge))
+    }
+}
+
+fn main() {
+    // Before refactoring: two separate functions
+    print("Filled box 5x3:")
+    draw_filled_box("*", 5, 3)
+    print()
+
+    print("Empty box 5x3:")
+    draw_empty_box("#", 5, 3)
+    print()
+
+    // After refactoring: one function with a parameter
+    print("Filled box 5x3 (v2):")
+    draw_box_v2("*", 5, 3, true)
+    print()
+
+    print("Empty box 5x3 (v2):")
+    draw_box_v2("#", 5, 3, false)
+}

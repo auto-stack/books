@@ -1,0 +1,21 @@
+import math
+
+
+def main():
+    # Using module variables
+    print("The value of pi is approximately")
+    print(math.pi)
+
+    # Using module functions
+    print(math.sqrt(25))
+    print(math.pow(5, 2))
+
+    # print can display any number of values
+    print("Any", "number", "of", "arguments")
+
+    # print separates values with a space
+    print("The value of pi is approximately", math.pi)
+
+
+if __name__ == "__main__":
+    main()

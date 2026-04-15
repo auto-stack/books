@@ -1,0 +1,66 @@
+fn split_line(line: str) -> List<str> {
+    return line.replace("\u2014", " ").split()
+}
+
+fn clean_word(word: str, punctuation: str) -> str {
+    return word.strip(punctuation).lower()
+}
+
+fn second_element(t: Tuple) -> int {
+    return t[1]
+}
+
+fn print_most_common(word_counter: HashMap<str, int>, num: int = 5) {
+    let items = sorted(word_counter.items(), key=second_element, reverse=true)
+    for i in 0..num {
+        let (word, freq) = items[i]
+        print(f"$freq\t$word")
+    }
+}
+
+fn main() {
+    let lines = [
+        "The strange case of Dr. Jekyll and Mr. Hyde",
+        "was a curious affair\u2014indeed, it was most remarkable!",
+        "The doctor was not truly one, but two.",
+        "Mr. Utterson was the lawyer, a friend of Dr. Jekyll.",
+        "The strange door\u2014what secrets did it hide?",
+        "Dr. Jekyll was a well-known man in the city.",
+        "Mr. Hyde was a strange and violent man.",
+        "The lawyer Utterson was worried about his friend Dr. Jekyll."
+    ]
+
+    // Build punctuation set
+    let mut punc_marks: HashMap<str, int> = {}
+    for line in lines {
+        for char in line {
+            if not char.is_alphanumeric() and char != " " {
+                punc_marks[char] = 1
+            }
+        }
+    }
+    let punctuation = "".join(punc_marks.keys())
+
+    // Build word frequency counter
+    let mut word_counter: HashMap<str, int> = {}
+    for line in lines {
+        for word in split_line(line) {
+            let cleaned = clean_word(word, punctuation)
+            if cleaned == "" {
+                continue
+            }
+            if cleaned not in word_counter {
+                word_counter[cleaned] = 1
+            } else {
+                word_counter[cleaned] += 1
+            }
+        }
+    }
+
+    print("Word frequencies (top 10):")
+    print_most_common(word_counter, 10)
+
+    print()
+    print("Default number (top 5):")
+    print_most_common(word_counter)
+}

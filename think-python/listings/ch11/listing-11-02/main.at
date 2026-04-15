@@ -1,0 +1,42 @@
+fn min_max(t: Tuple) -> Tuple {
+    return (min(t), max(t))
+}
+
+fn swap(a: int, b: int) -> Tuple {
+    return (b, a)
+}
+
+fn main() {
+    // Tuple assignment
+    let (x, y) = (10, 20)
+    print("x:", x, "y:", y)
+
+    // Splitting a string with tuple assignment
+    let email = "monty@python.org"
+    let (username, domain) = email.split("@")
+    print("Username:", username)
+    print("Domain:", domain)
+
+    // Swapping variables
+    let mut (a, b) = (3, 7)
+    print("Before swap: a =", a, "b =", b)
+    let (a, b) = swap(a, b)
+    print("After swap:  a =", a, "b =", b)
+
+    // divmod -- returning a tuple
+    let (quotient, remainder) = divmod(17, 5)
+    print("17 / 5 =", quotient, "remainder", remainder)
+
+    // Function returning a tuple
+    let numbers: Tuple = (4, 1, 7, 2, 9, 3)
+    let (low, high) = min_max(numbers)
+    print("Numbers:", numbers)
+    print("Min:", low, "Max:", high)
+
+    // Iterating dictionary items with tuple assignment
+    let scores: HashMap<str, int> = {"Alice": 95, "Bob": 87, "Charlie": 92}
+    print("Scores:")
+    for (name, score) in scores.items() {
+        print(f"  $name: $score")
+    }
+}

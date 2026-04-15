@@ -1,0 +1,22 @@
+fn main() {
+    // Strings with single and double quotes
+    print("Hello")
+    print('world')
+
+    // String with apostrophe using double quotes
+    print("it's a small world.")
+
+    // String concatenation with +
+    print("Well, " + "it's a small " + "world.")
+
+    // String repetition with *
+    print("Spam, " * 4)
+
+    // String length
+    print("Spam".len())
+
+    // f-string with $ interpolation
+    let name = "Alice"
+    let age = 30
+    print(f"My name is $name and I am $age years old.")
+}

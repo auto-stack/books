@@ -1,0 +1,17 @@
+fn main() {
+    // Legal variable names
+    let my_name = "Alice"
+    let _private = 42
+    let item_count = 100
+    let speed2 = 60
+
+    print(my_name)
+    print(_private)
+    print(item_count)
+    print(speed2)
+
+    // These would cause syntax errors:
+    // let 76trombones = "big parade"   // starts with a number
+    // let million! = 1000000           // contains punctuation
+    // let fn = "keyword"               // fn is a keyword
+}

@@ -1,0 +1,79 @@
+use random
+
+fn split_line(line: str) -> List<str> {
+    return line.replace("\u2014", " ").split()
+}
+
+fn clean_word(word: str, punctuation: str) -> str {
+    return word.strip(punctuation).lower()
+}
+
+fn add_bigram(successor_map: HashMap<str, List<str>>, bigram: List<str>) {
+    let first = bigram[0]
+    let second = bigram[1]
+
+    if first not in successor_map {
+        successor_map[first] = [second]
+    } else {
+        successor_map[first].append(second)
+    }
+}
+
+fn main() {
+    let song = [
+        "Half", "a", "bee", "philosophically,",
+        "Must", "ipso", "facto,", "half", "not", "be.",
+        "But", "half", "the", "bee", "has", "got", "to", "be",
+        "Vis", "a", "vis,", "its", "entity.", "D'you", "see?"
+    ]
+
+    let mut punctuation: HashMap<str, int> = {}
+    let punc_chars = ",.'"
+    for c in punc_chars {
+        punctuation[c] = 1
+    }
+    let punc = "".join(punctuation.keys())
+
+    // Build successor map from the song
+    let mut successor_map: HashMap<str, List<str>> = {}
+    let mut window: List<str> = []
+
+    for string in song {
+        let word = clean_word(string, punc)
+        if word == "" {
+            continue
+        }
+        window.append(word)
+
+        if len(window) == 2 {
+            add_bigram(successor_map, window)
+            window.pop(0)
+        }
+    }
+
+    print("Successor map from song:")
+    for (key, value) in successor_map.items() {
+        print(f"  '$key' -> $value")
+    }
+
+    // Markov text generation
+    random.seed(42)
+    let start_word = "half"
+    print()
+    print(f"Starting word: '$start_word'")
+    print("Generated text:")
+
+    let mut word = start_word
+    let mut result: List<str> = [start_word]
+
+    for i in 0..15 {
+        if word not in successor_map {
+            break
+        }
+        let successors = successor_map[word]
+        word = random.choice(successors)
+        result.append(word)
+    }
+
+    print(" ".join(result))
+}

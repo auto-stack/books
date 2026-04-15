@@ -1,0 +1,26 @@
+fn circle_area(radius: f64) -> f64 {
+    let area = 3.14159 * radius * radius
+    return area
+}
+
+fn repeat_string(word: str, n: int) -> str {
+    return word * n
+}
+
+fn main() {
+    // Return value from circle_area
+    let radius = 3.66
+    let a = circle_area(radius)
+    print("Area of circle with radius $radius:", a)
+
+    // Using return value in an expression
+    let total = circle_area(radius) + 2.0 * circle_area(radius / 2.0)
+    print("Combined area:", total)
+
+    // Pure function: repeat_string returns a value
+    let line = repeat_string("Spam, ", 4)
+    print(line)
+
+    // Function without return statement returns nothing
+    print(repeat_string("Finland, ", 3))
+}

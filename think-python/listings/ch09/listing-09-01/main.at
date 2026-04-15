@@ -1,0 +1,30 @@
+fn main() {
+    // Creating lists
+    let numbers = [42, 123]
+    let cheeses = ["Cheddar", "Edam", "Gouda"]
+    let mixed = ["spam", 2.0, 5, [10, 20]]
+    let empty: [str; 0] = []
+
+    // Accessing elements by index
+    print("cheeses[0]:", cheeses[0])
+    print("cheeses[1]:", cheeses[1])
+    print("cheeses[2]:", cheeses[2])
+    print("cheeses[-1]:", cheeses[-1])
+
+    // Length
+    print("len(cheeses):", cheeses.len())
+    print("len(numbers):", numbers.len())
+    print("len(empty):", empty.len())
+
+    // The 'in' operator
+    print("Edam in cheeses:", "Edam" in cheeses)
+    print("Wensleydale in cheeses:", "Wensleydale" in cheeses)
+
+    // Nested list: counts as one element
+    print("len(mixed):", mixed.len())
+    print("10 in mixed:", 10 in mixed)
+
+    // Accessing nested element
+    print("mixed[3]:", mixed[3])
+    print("mixed[3][0]:", mixed[3][0])
+}

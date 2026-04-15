@@ -1,0 +1,45 @@
+fn main() {
+    // Looping through a list
+    let cheeses = ["Cheddar", "Edam", "Gouda"]
+    print("Cheeses:")
+    for cheese in cheeses {
+        print(" ", cheese)
+    }
+
+    // Looping through words from a string
+    let sentence = "pining for the fjords"
+    print("\nWords:")
+    for word in sentence.split(" ") {
+        print(" ", word)
+    }
+
+    // List concatenation
+    let t1 = [1, 2]
+    let t2 = [3, 4]
+    print("\nConcat:", t1 + t2)
+
+    // List repetition
+    print("Repeat:", ["spam"] * 3)
+
+    // Sum, min, max
+    print("Sum:", sum([1, 2, 3, 4]))
+    print("Min:", min([5, 2, 8, 1]))
+    print("Max:", max([5, 2, 8, 1]))
+
+    // String <-> List conversions
+    let s = "hello"
+    let chars = list(s)
+    print("list('hello'):", chars)
+    print("join:", chars.join("-"))
+
+    // Sorted string letters
+    let sorted_str = "".join(sorted("letters"))
+    print("Sorted letters:", sorted_str)
+
+    // Looping with index using enumerate
+    let fruits = ["apple", "banana", "cherry"]
+    print("\nWith index:")
+    for (i, fruit) in fruits.enumerate() {
+        print(f"  $i: $fruit")
+    }
+}

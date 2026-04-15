@@ -1,0 +1,132 @@
+type Card {
+    suit: int,
+    rank: int,
+}
+
+let suit_names = ["Clubs", "Diamonds", "Hearts", "Spades"]
+let rank_names = [None, "Ace", "2", "3", "4", "5", "6", "7",
+                 "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+
+fn init(&self, suit: int, rank: int) {
+    self.suit = suit
+    self.rank = rank
+}
+
+fn to_string(&self) -> str {
+    let rank_name = rank_names[self.rank]
+    let suit_name = suit_names[self.suit]
+    return f"${rank_name} of ${suit_name}"
+}
+
+fn __eq__(&self, other: Card) -> bool {
+    return self.suit == other.suit and self.rank == other.rank
+}
+
+fn __lt__(&self, other: Card) -> bool {
+    return (self.suit, self.rank) < (other.suit, other.rank)
+}
+
+type Deck {
+    cards: list,
+}
+
+fn init(&self, cards: list) {
+    self.cards = cards
+}
+
+fn to_string(&self) -> str {
+    let res = []
+    for card in self.cards {
+        res.append(card.to_string())
+    }
+    return "\n".join(res)
+}
+
+fn make_cards() -> list {
+    let cards = []
+    for suit in range(4) {
+        for rank in range(2, 15) {
+            cards.append(Card(suit, rank))
+        }
+    }
+    return cards
+}
+
+fn take_card(&self) -> Card {
+    return self.cards.pop()
+}
+
+fn put_card(&self, card: Card) {
+    self.cards.append(card)
+}
+
+fn shuffle(&self) {
+    random.shuffle(self.cards)
+}
+
+fn sort(&self) {
+    self.cards.sort()
+
+fn move_cards(&self, other: Deck, num: int) {
+    for i in range(num) {
+        other.put_card(self.take_card())
+    }
+
+// Hand inherits from Deck
+type Hand: Deck {
+    label: str,
+}
+
+fn init(&self, label: str = "") {
+    self.label = label
+    self.cards = []
+}
+
+// BridgeHand specializes Hand with a scoring method
+type BridgeHand: Hand {
+    hcp_dict: dict,
+}
+
+let hcp_dict = {
+    "Ace": 4,
+    "King": 3,
+    "Queen": 2,
+    "Jack": 1,
+}
+
+fn high_card_point_count(&self) -> int {
+    let count = 0
+    for card in self.cards {
+        let rank_name = rank_names[card.rank]
+        count += hcp_dict.get(rank_name, 0)
+    }
+    return count
+}
+
+fn main() {
+    // Create and shuffle a deck
+    let cards = Deck.make_cards()
+    let deck = Deck(cards)
+    deck.shuffle()
+
+    // Deal a bridge hand (normally 13, using 5 for demo)
+    let hand = BridgeHand("player 2")
+    deck.move_cards(hand, 5)
+    print(f"${hand.label}'s hand:")
+    print(hand)
+
+    // Count high card points
+    let points = hand.high_card_point_count()
+    print(f"High card points: ${points}")
+
+    // Inheritance chain: BridgeHand -> Hand -> Deck
+    // BridgeHand inherits put_card, sort, take_card from Hand/Deck
+    hand.sort()
+    print("Sorted hand:")
+    print(hand)
+
+    // Polymorphism: move_cards works with any Deck subtype
+    let another_hand = Hand("player 3")
+    deck.move_cards(another_hand, 5)
+    print(f"\n${another_hand.label}'s hand has ${len(another_hand.cards)} cards")
+}

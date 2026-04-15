@@ -1,0 +1,49 @@
+fn pop_first(lst: [str]) -> str {
+    return lst.pop(0)
+}
+
+fn append_item(lst: [str], item: str) {
+    lst.append(item)
+}
+
+fn main() {
+    // Aliasing: two names, one object
+    let mut a = [1, 2, 3]
+    let b = a
+    print("b is a:", b is a)
+    print("Before change - a:", a)
+
+    // Modifying through b affects a
+    b[0] = 5
+    print("After b[0] = 5 - a:", a)
+
+    // Lists are not identical even if equivalent
+    let c = [1, 2, 3]
+    let d = [1, 2, 3]
+    print("c == d:", c == d)
+    print("c is d:", c is d)
+
+    // Strings: aliasing is safe (immutable)
+    let s1 = "banana"
+    let s2 = s1
+    print("s1 is s2:", s1 is s2)
+
+    // List arguments: caller sees changes
+    let mut letters = ["a", "b", "c"]
+    print("\nBefore pop_first:", letters)
+    let first = pop_first(letters)
+    print("Popped:", first)
+    print("After pop_first:", letters)
+
+    let mut items = ["x", "y"]
+    print("\nBefore append_item:", items)
+    append_item(items, "z")
+    print("After append_item:", items)
+
+    // Copying a list to avoid aliasing
+    let mut original = [10, 20, 30]
+    let copy = original[..]  // slice copy
+    copy[0] = 99
+    print("\noriginal after copy modified:", original)
+    print("copy:", copy)
+}

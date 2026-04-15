@@ -1,0 +1,47 @@
+fn value_counts(string: str) -> HashMap<str, int> {
+    let mut counter: HashMap<str, int> = {}
+    for letter in string {
+        if !counter.contains_key(letter) {
+            counter[letter] = 1
+        } else {
+            counter[letter] += 1
+        }
+    }
+    return counter
+}
+
+fn main() {
+    // Counting letters in a word
+    let counter = value_counts("brontosaurus")
+    print("Letter counts:", counter)
+    print("Number of unique letters:", len(counter))
+
+    // Looping through keys
+    print("Keys:")
+    for key in counter.keys() {
+        print(key, end=" ")
+    }
+    print()
+
+    // Looping through values
+    print("Values:")
+    for value in counter.values() {
+        print(value, end=" ")
+    }
+    print()
+
+    // Looping through keys and values
+    print("Key-value pairs:")
+    for key in counter.keys() {
+        let value = counter[key]
+        print(f"$key: $value")
+    }
+
+    // Building a dictionary from a list
+    let words = ["apple", "banana", "cherry", "date", "elderberry"]
+    let mut word_lengths: HashMap<str, int> = {}
+    for word in words {
+        word_lengths[word] = len(word)
+    }
+    print("Word lengths:", word_lengths)
+}

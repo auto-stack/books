@@ -1,0 +1,97 @@
+fn split_line(line: str) -> List<str> {
+    return line.replace("\u2014", " ").split()
+}
+
+fn clean_word(word: str, punctuation: str) -> str {
+    return word.strip(punctuation).lower()
+}
+
+fn second_element(t: Tuple) -> int {
+    return t[1]
+}
+
+fn subtract(d1: HashMap<str, int>, d2: HashMap<str, int>) -> HashMap<str, int> {
+    let mut res: HashMap<str, int> = {}
+    for key in d1 {
+        if key not in d2 {
+            res[key] = d1[key]
+        }
+    }
+    return res
+}
+
+fn print_most_common(word_counter: HashMap<str, int>, num: int = 5) {
+    let items = sorted(word_counter.items(), key=second_element, reverse=true)
+    for i in 0..num {
+        let (word, freq) = items[i]
+        print(f"$freq\t$word")
+    }
+}
+
+fn main() {
+    let lines = [
+        "The strange case of Dr. Jekyll and Mr. Hyde",
+        "was a curious affair\u2014indeed, it was most remarkable!",
+        "The doctor was not truly one, but two.",
+        "Mr. Utterson was the lawyer, a friend of Dr. Jekyll.",
+        "The strange door\u2014what secrets did it hide?",
+        "Dr. Jekyll was a well-known man in the city.",
+        "Mr. Hyde was a strange and violent man.",
+        "The lawyer Utterson was worried about his friend Dr. Jekyll."
+    ]
+
+    // Build punctuation set
+    let mut punc_marks: HashMap<str, int> = {}
+    for line in lines {
+        for char in line {
+            if not char.is_alphanumeric() and char != " " {
+                punc_marks[char] = 1
+            }
+        }
+    }
+    let punctuation = "".join(punc_marks.keys())
+
+    // Build word frequency counter
+    let mut word_counter: HashMap<str, int> = {}
+    for line in lines {
+        for word in split_line(line) {
+            let cleaned = clean_word(word, punctuation)
+            if cleaned == "" {
+                continue
+            }
+            if cleaned not in word_counter {
+                word_counter[cleaned] = 1
+            } else {
+                word_counter[cleaned] += 1
+            }
+        }
+    }
+
+    // A small valid word list for demonstration
+    let valid_word_list = [
+        "the", "a", "was", "and", "of", "not", "but", "it",
+        "strange", "case", "door", "man", "city", "two",
+        "friend", "worried", "violent", "his", "about"
+    ]
+    let mut valid_words: HashMap<str, int> = {}
+    for word in valid_word_list {
+        valid_words[word] = 1
+    }
+
+    // Dictionary subtraction: find words in text not in valid list
+    let diff = subtract(word_counter, valid_words)
+
+    print("Words possibly misspelled (most common):")
+    print_most_common(diff, 8)
+
+    // Find singletons (words that appear only once)
+    let mut singletons: List<str> = []
+    for (word, freq) in diff.items() {
+        if freq == 1 {
+            singletons.append(word)
+        }
+    }
+    print()
+    print(f"Singletons: ${len(singletons)} words")
+    print("Sample:", singletons[-5:])
+}

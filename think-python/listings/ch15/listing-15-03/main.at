@@ -1,0 +1,38 @@
+type Time {
+    hour: int,
+    minute: int,
+    second: int,
+}
+
+fn init(&self, hour: int = 0, minute: int = 0, second: int = 0) {
+    self.hour = hour
+    self.minute = minute
+    self.second = second
+}
+
+// The to_string method -- Auto's equivalent of __str__
+fn to_string(&self) -> str {
+    return f"${self.hour:02d}:${self.minute:02d}:${self.second:02d}"
+}
+
+fn main() {
+    let start = Time(9, 45, 30)
+
+    // Calling to_string explicitly
+    let s = start.to_string()
+    print(s)  // 09:45:30
+
+    // to_string is called automatically by print
+    print(start)  // 09:45:30
+
+    // Using f-string interpolation
+    print(f"The time is ${start}")  // The time is 09:45:30
+
+    // Comparing two times via their string representation
+    let end = Time(10, 30, 0)
+    print(start.to_string() < end.to_string())  // true (lexicographic)
+
+    // Demonstrating formatting control
+    let noon = Time(12, 0, 0)
+    print(noon.to_string())  // 12:00:00
+}

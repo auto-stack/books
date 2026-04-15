@@ -1,0 +1,55 @@
+fn value_counts(string: str) -> HashMap<str, int> {
+    let mut counter: HashMap<str, int> = {}
+    for letter in string {
+        if !counter.contains_key(letter) {
+            counter[letter] = 1
+        } else {
+            counter[letter] += 1
+        }
+    }
+    return counter
+}
+
+fn invert_dict(d: HashMap<str, int>) -> HashMap<int, List<str>> {
+    let mut new: HashMap<int, List<str>> = {}
+    for (key, value) in d.items() {
+        if !new.contains_key(value) {
+            new[value] = [key]
+        } else {
+            new[value].append(key)
+        }
+    }
+    return new
+}
+
+fn main() {
+    // Zip: pairing elements from two sequences
+    let names: List<str> = ["Alice", "Bob", "Charlie", "Diana"]
+    let scores: List<int> = [95, 87, 92, 88]
+    print("Zipped pairs:")
+    for (name, score) in zip(names, scores) {
+        print(f"  $name: $score")
+    }
+
+    // Building a dictionary from two lists with zip
+    let letters = "abcde"
+    let values = [10, 20, 30, 40, 50]
+    let letter_values: HashMap<str, int> = dict(zip(letters, values))
+    print("Letter values:", letter_values)
+
+    // Enumerate: pairing elements with their indices
+    print("Enumerated:")
+    for (index, letter) in enumerate("hello") {
+        print(f"  $index: $letter")
+    }
+
+    // Dictionary inversion
+    let d = value_counts("parrot")
+    print("Original:", d)
+    let inverted = invert_dict(d)
+    print("Inverted:", inverted)
+
+    // Comparing tuples
+    print((0, 1, 2) < (0, 3, 4))         // true
+    print((0, 1, 2000000) < (0, 3, 4))    // true
+}

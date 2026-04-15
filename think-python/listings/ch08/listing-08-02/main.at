@@ -1,0 +1,36 @@
+fn main() {
+    let word = "banana"
+
+    // Case conversion
+    print("upper:", word.to_uppercase())
+    print("lower:", "BANANA".to_lowercase())
+
+    // Searching
+    print("find 'a':", word.find("a"))
+    print("find 'z':", word.find("z"))
+    print("contains 'ana':", word.contains("ana"))
+    print("starts with 'ban':", word.starts_with("ban"))
+    print("ends with 'na':", word.ends_with("na"))
+
+    // Stripping whitespace
+    let spaced = "  hello world  "
+    print("strip:", spaced.strip())
+    print("len before:", spaced.len())
+    print("len after:", spaced.strip().len())
+
+    // Counting occurrences
+    print("count 'a':", word.matches("a").count())
+
+    // Replacement
+    let text = "I like cats and cats like me"
+    print("replace:", text.replace("cats", "dogs"))
+
+    // Splitting
+    let sentence = "pining for the fjords"
+    let words = sentence.split(" ")
+    print("split:", words)
+
+    // Joining
+    let parts = ["hello", "world"]
+    print("join:", parts.join(" "))
+}

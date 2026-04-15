@@ -1,0 +1,22 @@
+fn print_twice(string: str) {
+    print(string)
+    print(string)
+}
+
+fn repeat(word: str, n: int) {
+    let result = word * n
+    print(result)
+}
+
+fn main() {
+    // Call with a literal argument
+    print_twice("Dennis Moore, ")
+
+    // Call with a variable argument
+    let line = "Dennis Moore, "
+    print_twice(line)
+
+    // Call a function with two parameters
+    let spam = "Spam, "
+    repeat(spam, 4)
+}

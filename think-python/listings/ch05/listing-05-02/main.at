@@ -1,0 +1,31 @@
+fn main() {
+    // Boolean expressions
+    let x = 5
+    let y = 7
+
+    print("x = $x, y = $y")
+    print("x == y: ${x == y}")
+    print("x != y: ${x != y}")
+    print("x > y: ${x > y}")
+    print("x < y: ${x < y}")
+    print("x >= y: ${x >= y}")
+    print("x <= y: ${x <= y}")
+    print()
+
+    // Logical operators
+    print("x > 0 && x < 10: ${x > 0 && x < 10}")
+    print("x % 2 == 0 || x % 3 == 0: ${x % 2 == 0 || x % 3 == 0}")
+    print("!(x > y): ${!(x > y)}")
+    print()
+
+    // Combining conditions
+    let age = 25
+    let has_ticket = true
+    print("age = $age, has_ticket = $has_ticket")
+    print("Can enter: ${age >= 18 && has_ticket}")
+
+    // Negation
+    let is_raining = false
+    print("is_raining = $is_raining")
+    print("Should go outside: ${!is_raining}")
+}

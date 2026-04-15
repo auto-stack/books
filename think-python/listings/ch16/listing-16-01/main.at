@@ -1,0 +1,78 @@
+type Point {
+    x: float,
+    y: float,
+}
+
+fn init(&self, x: float = 0.0, y: float = 0.0) {
+    self.x = x
+    self.y = y
+}
+
+fn to_string(&self) -> str {
+    return f"Point(${self.x}, ${self.y})"
+}
+
+fn __eq__(&self, other: Point) -> bool {
+    return self.x == other.x and self.y == other.y
+}
+
+fn translate(&self, dx: float, dy: float) {
+    self.x += dx
+    self.y += dy
+}
+
+type Line {
+    p1: Point,
+    p2: Point,
+}
+
+fn init(&self, p1: Point, p2: Point) {
+    self.p1 = p1
+    self.p2 = p2
+}
+
+fn to_string(&self) -> str {
+    return f"Line(${self.p1}, ${self.p2})"
+}
+
+fn __eq__(&self, other: Line) -> bool {
+    return (self.p1 == other.p1 and self.p2 == other.p2) or
+           (self.p1 == other.p2 and self.p2 == other.p1)
+}
+
+fn midpoint(&self) -> Point {
+    let mx = (self.p1.x + self.p2.x) / 2.0
+    let my = (self.p1.y + self.p2.y) / 2.0
+    return Point(mx, my)
+}
+
+fn main() {
+    // Creating Point objects
+    let start = Point(0.0, 0.0)
+    print(start)  // Point(0, 0)
+
+    let end = Point(300.0, 150.0)
+    print(end)    // Point(300, 150)
+
+    // Equivalence vs identity
+    let p1 = Point(200.0, 100.0)
+    let p2 = Point(200.0, 100.0)
+    print(p1 == p2)  // true  (equivalent)
+    print(p1 is p2)  // false (different objects)
+
+    // Translating a point
+    end.translate(50.0, 25.0)
+    print(end)  // Point(350, 175)
+
+    // Composition: Line contains Point objects
+    let line1 = Line(start, end)
+    print(line1)  // Line(Point(0, 0), Point(350, 175))
+
+    // Line equivalence (order-independent)
+    let line2 = Line(end, start)
+    print(line1 == line2)  // true
+
+    // Midpoint of a line
+    let mid = line1.midpoint()
+    print(mid)  // Point(175, 87.5)
+}

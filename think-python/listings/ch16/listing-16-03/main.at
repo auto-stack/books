@@ -1,0 +1,95 @@
+type Point {
+    x: float,
+    y: float,
+}
+
+fn init(&self, x: float = 0.0, y: float = 0.0) {
+    self.x = x
+    self.y = y
+}
+
+fn to_string(&self) -> str {
+    return f"Point(${self.x}, ${self.y})"
+}
+
+type Line {
+    p1: Point,
+    p2: Point,
+}
+
+fn init(&self, p1: Point, p2: Point) {
+    self.p1 = p1
+    self.p2 = p2
+}
+
+fn to_string(&self) -> str {
+    return f"Line(${self.p1}, ${self.p2})"
+}
+
+fn draw(&self) {
+    print(f"Drawing line from (${self.p1.x}, ${self.p1.y}) to (${self.p2.x}, ${self.p2.y})")
+}
+
+type Rectangle {
+    width: float,
+    height: float,
+    corner: Point,
+}
+
+fn init(&self, width: float, height: float, corner: Point) {
+    self.width = width
+    self.height = height
+    self.corner = corner
+}
+
+fn to_string(&self) -> str {
+    return f"Rectangle(${self.width}, ${self.height}, ${self.corner})"
+}
+
+fn draw(&self) {
+    let p1 = self.corner
+    let p2 = Point(self.corner.x + self.width, self.corner.y)
+    let p3 = Point(self.corner.x + self.width, self.corner.y + self.height)
+    let p4 = Point(self.corner.x, self.corner.y + self.height)
+    print(f"Drawing rectangle with corners (${p1.x},${p1.y}), (${p2.x},${p2.y}), (${p3.x},${p3.y}), (${p4.x},${p4.y})")
+}
+
+type Circle {
+    center: Point,
+    radius: float,
+}
+
+fn init(&self, center: Point, radius: float) {
+    self.center = center
+    self.radius = radius
+}
+
+fn to_string(&self) -> str {
+    return f"Circle(center=${self.center}, radius=${self.radius})"
+}
+
+fn draw(&self) {
+    print(f"Drawing circle at (${self.center.x}, ${self.center.y}) with radius ${self.radius}")
+}
+
+fn draw_shapes(shapes: list) {
+    for shape in shapes {
+        shape.draw()
+    }
+}
+
+fn main() {
+    let origin = Point(0.0, 0.0)
+    let line1 = Line(origin, Point(300.0, 0.0))
+    let line2 = Line(origin, Point(0.0, 150.0))
+    let rect = Rectangle(100.0, 50.0, Point(30.0, 20.0))
+    let circle = Circle(Point(80.0, 45.0), 25.0)
+
+    // Polymorphism: same interface, different types
+    let shapes = [line1, line2, rect, circle]
+    draw_shapes(shapes)
+    // Drawing line from (0, 0) to (300, 0)
+    // Drawing line from (0, 0) to (0, 150)
+    // Drawing rectangle with corners (30,20), (130,20), (130,70), (30,70)
+    // Drawing circle at (80, 45) with radius 25
+}

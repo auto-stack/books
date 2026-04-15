@@ -1,0 +1,44 @@
+// Draws a row of repeated characters
+fn draw_row(ch: str, width: int) {
+    print(ch * width)
+}
+
+// Draws a box of given width and height using a character
+fn draw_box(ch: str, width: int, height: int) {
+    draw_row(ch, width)
+    for i in 0..(height - 2) {
+        print("$ch" + " " * (width - 2) + "$ch")
+    }
+    if height > 1 {
+        draw_row(ch, width)
+    }
+}
+
+// Draws a centered box inside a wider line
+fn draw_centered_box(ch: str, width: int, height: int, canvas_width: int) {
+    let padding = (canvas_width - width) / 2
+    for i in 0..height {
+        print(" " * padding + draw_row_str(ch, width))
+    }
+}
+
+// Helper: returns a row string without printing
+fn draw_row_str(ch: str, width: int) -> str {
+    ch * width
+}
+
+fn main() {
+    // Simple row
+    print("Simple row:")
+    draw_row("*", 10)
+    print()
+
+    // Box
+    print("Box 5x3:")
+    draw_box("#", 5, 3)
+    print()
+
+    // Centered box on a wider canvas
+    print("Centered box 7x3 on canvas of 15:")
+    draw_centered_box("+", 7, 3, 15)
+}

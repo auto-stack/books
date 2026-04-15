@@ -1,0 +1,35 @@
+fn main() {
+    // Writing lines to a file
+    let writer = open("output.txt", "w")
+    writer.write("First line\n")
+    writer.write("Second line\n")
+    writer.write("Third line\n")
+    writer.close()
+
+    // Reading lines from a file
+    print("Contents of output.txt:")
+    for line in open("output.txt") {
+        let stripped = line.strip()
+        if stripped.len() > 0 {
+            print(stripped)
+        }
+    }
+
+    // Find and replace in a file
+    let reader = open("output.txt")
+    let writer2 = open("output_replaced.txt", "w")
+    for line in reader {
+        let new_line = line.replace("line", "row")
+        writer2.write(new_line)
+    }
+    reader.close()
+    writer2.close()
+
+    print("\nContents of output_replaced.txt:")
+    for line in open("output_replaced.txt") {
+        let stripped = line.strip()
+        if stripped.len() > 0 {
+            print(stripped)
+        }
+    }
+}

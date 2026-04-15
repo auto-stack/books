@@ -1,0 +1,29 @@
+let mut known: HashMap<int, int> = {0: 0, 1: 1}
+
+fn fibonacci_memo(n: int) -> int {
+    if known.contains_key(n) {
+        return known[n]
+    }
+    let res = fibonacci_memo(n - 1) + fibonacci_memo(n - 2)
+    known[n] = res
+    return res
+}
+
+fn main() {
+    // Computing Fibonacci numbers with memoization
+    print("Fibonacci numbers with memoization:")
+    for i in 0..=10 {
+        print(f"fib($i) = ${fibonacci_memo(i)}")
+    }
+
+    // Large Fibonacci number -- fast with memoization
+    print()
+    print("fib(40) =", fibonacci_memo(40))
+
+    // Show what's in the cache
+    print()
+    print("Cache contains", len(known), "entries")
+
+    // Demonstrate reusing the cache
+    print("fib(35) from cache:", known[35])
+}

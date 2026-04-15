@@ -1,0 +1,31 @@
+fn uses_any(word: str, letters: str) -> bool {
+    for letter in word.to_lowercase() {
+        if letters.to_lowercase().contains(letter) {
+            return true
+        }
+    }
+    return false
+}
+
+fn find(word: str, letter: str) -> int {
+    let mut index = 0
+    for ch in word {
+        if ch == letter {
+            return index
+        }
+        index += 1
+    }
+    return -1
+}
+
+fn main() {
+    // Testing uses_any (linear search)
+    print("uses_any('banana', 'aeiou'):", uses_any("banana", "aeiou"))
+    print("uses_any('apple', 'xyz'):", uses_any("apple", "xyz"))
+    print("uses_any('Banana', 'AEIOU'):", uses_any("Banana", "AEIOU"))
+
+    // Testing find (search for first occurrence)
+    print("find('hello', 'l'):", find("hello", "l"))
+    print("find('hello', 'o'):", find("hello", "o"))
+    print("find('hello', 'z'):", find("hello", "z"))
+}

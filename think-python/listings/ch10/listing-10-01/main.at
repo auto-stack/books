@@ -1,0 +1,24 @@
+fn main() {
+    // Creating an empty dictionary
+    let mut numbers: HashMap<str, int> = {}
+    numbers["zero"] = 0
+    numbers["one"] = 1
+    numbers["two"] = 2
+    print("numbers:", numbers)
+
+    // Creating a dictionary all at once
+    let scores: HashMap<str, int> = {"Alice": 95, "Bob": 87, "Charlie": 92}
+    print("scores:", scores)
+
+    // Accessing values
+    print("Alice's score:", scores["Alice"])
+    print("Length of scores:", len(scores))
+
+    // Checking if a key exists
+    print("Contains 'Alice':", scores.contains_key("Alice"))
+    print("Contains 'David':", scores.contains_key("David"))
+
+    // Using get with a default value
+    print("Eve's score:", scores.get("Eve", 0))
+    print("Bob's score:", scores.get("Bob", 0))
+}

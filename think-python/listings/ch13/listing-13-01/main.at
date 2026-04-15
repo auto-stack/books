@@ -1,0 +1,36 @@
+use os
+
+fn main() {
+    // Current working directory
+    let cwd = os.getcwd()
+    print("Current directory:", cwd)
+
+    // Absolute path
+    let abs_path = os.path.abspath("memo.txt")
+    print("Absolute path of 'memo.txt':", abs_path)
+
+    // f-string style formatting in Auto
+    let num_years = 1.5
+    let num_camels = 23
+
+    let line1 = f"Years of observation: $num_years"
+    let line2 = f"Camels spotted: $num_camels"
+    print(line1)
+    print(line2)
+
+    // f-string with expressions
+    let months = int(num_years * 12)
+    let line3 = f"In $months months I have spotted $num_camels camels"
+    print(line3)
+
+    // os.path operations
+    let joined = os.path.join("photos", "jan-2023", "photo1.jpg")
+    print("Joined path:", joined)
+
+    // Check if path exists (demonstration)
+    print("Does 'photos' exist?", os.path.exists("photos"))
+
+    // isdir and isfile checks
+    print("Is '.' a directory?", os.path.isdir("."))
+    print("Is 'memo.txt' a file?", os.path.isfile("memo.txt"))
+}

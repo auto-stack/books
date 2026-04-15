@@ -1,0 +1,5 @@
+name: "listing-06-03"
+version: "0.1.0"
+lang: "py"
+
+app("listing-06-03") {}

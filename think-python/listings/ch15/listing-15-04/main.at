@@ -1,0 +1,71 @@
+type Time {
+    hour: int,
+    minute: int,
+    second: int,
+}
+
+fn init(&self, hour: int = 0, minute: int = 0, second: int = 0) {
+    self.hour = hour
+    self.minute = minute
+    self.second = second
+}
+
+fn to_string(&self) -> str {
+    return f"${self.hour:02d}:${self.minute:02d}:${self.second:02d}"
+}
+
+fn time_to_int(&self) -> int {
+    let minutes = self.hour * 60 + self.minute
+    let seconds = minutes * 60 + self.second
+    return seconds
+}
+
+fn int_to_time(seconds: int) -> Time {
+    let (minute, second) = divmod(seconds, 60)
+    let (hour, minute) = divmod(minute, 60)
+    return Time(hour, minute, second)
+}
+
+// Operator overloading: is_after comparison
+fn is_after(&self, other: Time) -> bool {
+    return self.time_to_int() > other.time_to_int()
+}
+
+// Operator overloading: + operator (add)
+fn __add__(&self, other: Time) -> Time {
+    let seconds = self.time_to_int() + other.time_to_int()
+    return Time.int_to_time(seconds)
+}
+
+// Operator overloading: == operator (eq)
+fn __eq__(&self, other: Time) -> bool {
+    return self.time_to_int() == other.time_to_int()
+}
+
+fn main() {
+    let start = Time(9, 45, 0)
+    let end = Time(11, 17, 0)
+    let duration = Time(1, 32, 0)
+
+    // Comparing: is_after
+    print(end.is_after(start))    // true
+    print(start.is_after(end))    // false
+    print(end.is_after(end))      // false
+
+    // Operator overloading: +
+    let result = start + duration
+    print(result.to_string())  // 11:17:00
+
+    // Chaining additions
+    let result2 = start + duration + Time(0, 30, 0)
+    print(result2.to_string())  // 11:47:00
+
+    // Operator overloading: ==
+    print(start == Time(9, 45, 0))  // true
+    print(start == end)             // false
+
+    // Combining operators
+    let total = duration + Time(0, 30, 0)
+    let finish = start + total
+    print(finish.to_string())  // 11:47:00
+}

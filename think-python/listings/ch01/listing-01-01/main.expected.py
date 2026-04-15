@@ -1,0 +1,26 @@
+def main():
+    # Basic arithmetic
+    print(30 + 12)
+    print(43 - 1)
+    print(6 * 7)
+    print(84 / 2)
+
+    # Integer division (floor division)
+    print(84 // 2)
+    print(85 // 2)
+
+    # Modulus (remainder)
+    print(85 % 2)
+
+    # Exponentiation
+    print(7 ** 2)
+    print(2 ** 10)
+
+    # Order of operations
+    print(6 + 6 ** 2)
+    print(12 + 5 * 6)
+    print((12 + 5) * 6)
+
+
+if __name__ == "__main__":
+    main()

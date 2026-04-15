@@ -1,0 +1,103 @@
+type Card {
+    suit: int,
+    rank: int,
+}
+
+let suit_names = ["Clubs", "Diamonds", "Hearts", "Spades"]
+let rank_names = [None, "Ace", "2", "3", "4", "5", "6", "7",
+                 "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+
+fn init(&self, suit: int, rank: int) {
+    self.suit = suit
+    self.rank = rank
+}
+
+fn to_string(&self) -> str {
+    let rank_name = rank_names[self.rank]
+    let suit_name = suit_names[self.suit]
+    return f"${rank_name} of ${suit_name}"
+}
+
+fn __lt__(&self, other: Card) -> bool {
+    return (self.suit, self.rank) < (other.suit, other.rank)
+}
+
+type Deck {
+    cards: list,
+}
+
+fn init(&self, cards: list) {
+    self.cards = cards
+}
+
+fn to_string(&self) -> str {
+    let res = []
+    for card in self.cards {
+        res.append(card.to_string())
+    }
+    return "\n".join(res)
+}
+
+fn make_cards() -> list {
+    let cards = []
+    for suit in range(4) {
+        for rank in range(2, 15) {
+            cards.append(Card(suit, rank))
+        }
+    }
+    return cards
+}
+
+fn take_card(&self) -> Card {
+    return self.cards.pop()
+}
+
+fn put_card(&self, card: Card) {
+    self.cards.append(card)
+}
+
+fn shuffle(&self) {
+    random.shuffle(self.cards)
+}
+
+fn sort(&self) {
+    self.cards.sort()
+
+fn move_cards(&self, other: Deck, num: int) {
+    for i in range(num) {
+        other.put_card(self.take_card())
+    }
+
+// Hand inherits from Deck
+type Hand: Deck {
+    label: str,
+}
+
+fn init(&self, label: str = "") {
+    self.label = label
+    self.cards = []
+}
+
+fn main() {
+    // Create a deck and a hand
+    let cards = Deck.make_cards()
+    let deck = Deck(cards)
+    let hand = Hand("player 1")
+    print(f"Hand label: ${hand.label}")  // Hand label: player 1
+
+    // Hand inherits put_card from Deck
+    deck.shuffle()
+    deck.move_cards(hand, 5)
+    print(f"Hand has ${len(hand.cards)} cards:")
+    print(hand)
+
+    // Hand inherits sort from Deck
+    hand.sort()
+    print("After sorting:")
+    print(hand)
+
+    // Polymorphism: move_cards works with Deck and Hand
+    let hand2 = Hand("player 2")
+    deck.move_cards(hand2, 5)
+    print(f"Hand2 has ${len(hand2.cards)} cards")
+}

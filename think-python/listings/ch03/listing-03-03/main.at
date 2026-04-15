@@ -1,0 +1,34 @@
+fn repeat(word: str, n: int) {
+    print(word * n)
+}
+
+fn first_two_lines() {
+    repeat("Spam, ", 4)
+    repeat("Spam, ", 4)
+}
+
+fn last_three_lines() {
+    repeat("Spam, ", 2)
+    print("(Lovely Spam, Wonderful Spam!)")
+    repeat("Spam, ", 2)
+}
+
+fn print_verse() {
+    first_two_lines()
+    last_three_lines()
+}
+
+fn main() {
+    // Simple for loop
+    print("Counting:")
+    for i in 0..3 {
+        print(i)
+    }
+
+    // Using a for loop to repeat verses
+    print("Two verses:")
+    for i in 0..2 {
+        print("Verse", i)
+        print_verse()
+    }
+}

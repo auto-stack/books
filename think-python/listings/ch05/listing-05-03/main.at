@@ -1,0 +1,68 @@
+fn classify_number(x: int) {
+    if x > 0 {
+        print("$x is positive")
+    } else if x < 0 {
+        print("$x is negative")
+    } else {
+        print("$x is zero")
+    }
+}
+
+fn classify_even_odd(x: int) {
+    if x % 2 == 0 {
+        print("$x is even")
+    } else {
+        print("$x is odd")
+    }
+}
+
+fn classify_temperature(temp: int) {
+    if temp >= 30 {
+        print("$temp C is hot")
+    } else if temp >= 20 {
+        print("$temp C is warm")
+    } else if temp >= 10 {
+        print("$temp C is cool")
+    } else {
+        print("$temp C is cold")
+    }
+}
+
+fn compare(x: int, y: int) {
+    if x < y {
+        print("$x is less than $y")
+    } else if x > y {
+        print("$x is greater than $y")
+    } else {
+        print("$x and $y are equal")
+    }
+}
+
+fn main() {
+    // if / else
+    print("=== Positive / Negative / Zero ===")
+    classify_number(5)
+    classify_number(-3)
+    classify_number(0)
+    print()
+
+    // if / else (even/odd)
+    print("=== Even / Odd ===")
+    classify_even_odd(4)
+    classify_even_odd(7)
+    print()
+
+    // Chained conditionals (else if)
+    print("=== Temperature ===")
+    classify_temperature(35)
+    classify_temperature(25)
+    classify_temperature(15)
+    classify_temperature(5)
+    print()
+
+    // Chained conditional (three-way comparison)
+    print("=== Comparison ===")
+    compare(3, 5)
+    compare(7, 2)
+    compare(4, 4)
+}

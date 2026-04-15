@@ -1,0 +1,51 @@
+use os
+
+fn walk(dirname: str) {
+    let names = os.listdir(dirname)
+    for name in names {
+        let path = os.path.join(dirname, name)
+
+        if os.path.isfile(path) {
+            print(path)
+        } else if os.path.isdir(path) {
+            walk(path)
+        }
+    }
+}
+
+fn main() {
+    // Create a small demo directory structure
+    os.makedirs("demo/photos/jan-2023", exist_ok=true)
+    os.makedirs("demo/photos/feb-2023", exist_ok=true)
+
+    // Create some demo files
+    let f1 = open("demo/photos/notes.txt", "w")
+    f1.write("Some notes about photos\n")
+    f1.close()
+
+    let f2 = open("demo/photos/jan-2023/photo1.jpg", "w")
+    f2.write("fake jpeg data\n")
+    f2.close()
+
+    let f3 = open("demo/photos/jan-2023/photo2.jpg", "w")
+    f3.write("fake jpeg data 2\n")
+    f3.close()
+
+    let f4 = open("demo/photos/feb-2023/photo3.jpg", "w")
+    f4.write("fake jpeg data 3\n")
+    f4.close()
+
+    // Walk the directory
+    print("Walking 'demo/photos':")
+    walk("demo/photos")
+
+    // List directory contents
+    print()
+    print("os.listdir('demo/photos'):", os.listdir("demo/photos"))
+    print("os.listdir('demo/photos/jan-2023'):", os.listdir("demo/photos/jan-2023"))
+
+    // Check file vs directory
+    print()
+    print("isdir('demo/photos'):", os.path.isdir("demo/photos"))
+    print("isfile('demo/photos/notes.txt'):", os.path.isfile("demo/photos/notes.txt"))
+}
