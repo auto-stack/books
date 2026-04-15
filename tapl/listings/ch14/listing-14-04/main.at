@@ -1,0 +1,18 @@
+fn search_lines<T>(lines []String, predicate fn(String) T) []T {
+    var results = []
+    for line in lines {
+        var result = predicate(line)
+        results.push(result)
+    }
+    results
+}
+
+fn main() {
+    var lines = ["hello world", "foo bar", "hello auto"]
+    var found = search_lines(lines, fn(s String) ?String {
+        if s.contains("hello") { s } else { none }
+    })
+    for f in found {
+        print(f)
+    }
+}

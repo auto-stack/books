@@ -1,0 +1,9 @@
+fn read_file(path String) !String {
+    // reads file content, returns !String
+    "Hello from file!"
+}
+
+fn main() {
+    var content = read_file("input.txt")!
+    print(content)
+}

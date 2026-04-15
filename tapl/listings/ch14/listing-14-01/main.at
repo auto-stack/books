@@ -1,0 +1,19 @@
+type Config {
+    input_path String
+    output_path String
+    verbose bool
+}
+
+fn parse_args() Config {
+    Config {
+        input_path: "input.txt",
+        output_path: "output.txt",
+        verbose: false
+    }
+}
+
+fn main() {
+    var config = parse_args()
+    print("Input: " + config.input_path)
+    print("Output: " + config.output_path)
+}

@@ -1,0 +1,19 @@
+type Config {
+    input_path String
+    output_path String
+    verbose bool
+}
+
+fn validate(c Config) !Config {
+    if c.input_path == "" {
+        "input path cannot be empty"
+    } else {
+        c
+    }
+}
+
+fn main() {
+    var config = Config { input_path: "data.txt", output_path: "result.txt", verbose: true }
+    var valid = validate(config)!
+    print(valid.input_path)
+}

@@ -1,0 +1,30 @@
+type Config {
+    input_path String
+    output_path String
+    verbose bool
+}
+
+fn read_file(path String) !String {
+    "line1\nline2\nhello world\nline3\nhello auto"
+}
+
+fn process(config Config) !int {
+    var content = read_file(config.input_path)!
+    var lines = content.split("\n")
+    var count = 0
+    for line in lines {
+        if line.contains("hello") {
+            count = count + 1
+            if config.verbose {
+                print("Found: " + line)
+            }
+        }
+    }
+    count
+}
+
+fn main() {
+    var config = Config { input_path: "data.txt", output_path: "result.txt", verbose: true }
+    var matches = process(config)!
+    print("Found " + matches + " matches")
+}
