@@ -46,7 +46,7 @@
     * 底层真相：内存布局的首部对齐与零开销指针强转。
 * **4.3 `has` 关键字：带魔法的组合 (The "Has-A" Relationship)**
     * 语法表达：`type Person has Hand { ... }`
-    * 颠覆性创新：编译器自动生成隐式字段，并**自动代理转发（Delegation）**目标类型的所有公开接口。彻底消灭样板代码！
+    * 革新性设计：编译器自动生成隐式字段，并**自动代理转发（Delegation）**目标类型的所有公开接口。彻底消除样板代码！
 * **4.4 `spec` 与 `as` 关键字：多态契约与实现 (The "Conforms-To" Relationship)**
     * `spec`：定义能力规范（取代传统的 Interface/Trait）。
     * `as` 的内部实现：声明时直接履约（`type File as Reader { ... }`）。

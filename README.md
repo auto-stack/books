@@ -22,7 +22,7 @@ book for the Auto language. Every book provides paired **English** (`.md`) and *
 
 **Total: 80 chapters, ~45 code listings with transpiler output, all EN + CN.**
 
-## Rust Version — Auto vs Rust Bilingual Reference
+## Auto vs The Rust Programming Language
 
 The [`rust/`](rust/) directory contains a complete adaptation of "The Rust Programming Language" book
 for the Auto programming language, with paired Auto/Rust code examples in every chapter.
@@ -71,7 +71,7 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | threads | actors | Concurrency model |
 | `Cargo` | `automan` | Package manager |
 
-## TypeScript Version — Auto vs TypeScript Bilingual Reference
+## Auto vs TypeScript Handbook
 
 The [`typescript/`](typescript/) directory contains a complete adaptation of the "TypeScript Handbook v2" book
 for the Auto programming language, with paired Auto/TypeScript code examples in every chapter.
@@ -106,7 +106,7 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | `keyof` / `typeof` / mapped types | — | TypeScript-only advanced types |
 | `import` / `export` | `use` / `mod` | Module system |
 
-## TypeScript DeepDive — Auto vs TypeScript In-Depth
+## Auto vs TypeScript DeepDive
 
 The [`typescript-deepdive/`](typescript-deepdive/) directory contains an in-depth exploration of TypeScript's type system
 adapted for Auto, covering advanced patterns like discriminated unions, generics, and mapped types.
@@ -132,7 +132,7 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | 14 | [Async Patterns](typescript-deepdive/ch14-async-patterns.md) | [异步模式](typescript-deepdive/ch14-async-patterns.cn.md) |
 | 15 | [Compiler API](typescript-deepdive/ch15-compiler.md) | [编译器 API](typescript-deepdive/ch15-compiler.cn.md) |
 
-## Little C — Auto vs C Systems Programming
+## Auto vs The Little Book of C
 
 The [`little-c/`](little-c/) directory contains an adaptation of "The Little Book of C"
 for Auto programmers targeting C via the a2c transpiler. Covers memory, pointers,
@@ -168,7 +168,7 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | Counted loop |
 | `auto a2c` / `auto b` | `gcc` / `make` | Build commands |
 
-## Modern C — Auto vs Modern C Deep Reference
+## Auto vs Modern C
 
 The [`modern-c/`](modern-c/) directory contains a rigorous adaptation of "Modern C" (Jens Gustedt)
 for Auto programmers. Covers the full C language across 4 levels: Encounter, Acquaintance,

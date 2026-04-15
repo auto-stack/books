@@ -8,20 +8,20 @@
 
 ## 书籍集合
 
-本仓库包含**五本**配套书籍，每本都将一本知名编程书籍适配为 Auto 语言版本。
+本仓库包含**五本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
 每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
 
 | # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
 |---|------|------|------|--------|--------|------|
-| 1 | [Auto 与 Rust](#rust-版本--auto-与-rust-双语对照参考) | [`rust/`](rust/) | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
-| 2 | [Auto 与 TypeScript](#typescript-版本--auto-与-typescript-双语对照参考) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
-| 3 | [Auto 与 TypeScript 深入篇](#typescript-深入篇--auto-与-typescript-深度对照) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
-| 4 | [Auto 与 C 语言小书](#c-语言小书--auto-与-c-系统编程对照) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
-| 5 | [Auto 与 Modern C](#modern-c--auto-与-modern-c-深度对照) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
+| 1 | [Auto版《Rust程序设计语言》](#rust-版本--auto-与-rust-双语对照参考) | [`rust/`](rust/) | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
+| 2 | [Auto版《TypeScript Handbook》](#typescript-版本--auto-与-typescript-双语对照参考) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
+| 3 | [Auto版《TypeScript DeepDive》](#typescript-深入篇--auto-与-typescript-深度对照) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
+| 4 | [Auto版《Little Book of C》](#c-语言小书--auto-与-c-系统编程对照) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
+| 5 | [Auto版《Modern C》](#modern-c--auto-与-modern-c-深度对照) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
 
 **共计：80 个章节、约 45 个代码示例（含转译器输出），全部提供英中双语版本。**
 
-## Rust 版本 — Auto 与 Rust 双语对照参考
+## Auto版《Rust程序设计语言》
 
 [`rust/`](rust/) 目录包含了对《Rust 程序设计语言》一书的完整改编，
 为 Auto 编程语言量身定制，每章都包含配对的 Auto/Rust 代码示例。
@@ -70,7 +70,7 @@
 | 线程 | Actor | 并发模型 |
 | `Cargo` | `automan` | 包管理器 |
 
-## TypeScript 版本 — Auto 与 TypeScript 双语对照参考
+## Auto版《TypeScript Handbook》
 
 [`typescript/`](typescript/) 目录包含了对《TypeScript Handbook v2》一书的完整改编，
 为 Auto 编程语言量身定制，每章都包含配对的 Auto/TypeScript 代码示例。
@@ -105,7 +105,7 @@
 | `keyof` / `typeof` / 映射类型 | — | TypeScript 独有高级类型 |
 | `import` / `export` | `use` / `mod` | 模块系统 |
 
-## TypeScript 深入篇 — Auto 与 TypeScript 深度对照
+## Auto版《TypeScript DeepDive》
 
 [`typescript-deepdive/`](typescript-deepdive/) 目录包含了对 TypeScript 类型系统的深入探索，
 适配为 Auto 版本，涵盖高级模式如可辨识联合、泛型和映射类型。
@@ -131,7 +131,7 @@
 | 14 | [Async Patterns](typescript-deepdive/ch14-async-patterns.md) | [异步模式](typescript-deepdive/ch14-async-patterns.cn.md) |
 | 15 | [Compiler API](typescript-deepdive/ch15-compiler.md) | [编译器 API](typescript-deepdive/ch15-compiler.cn.md) |
 
-## C 语言小书 — Auto 与 C 系统编程对照
+## Auto版《Little Book of C》
 
 [`little-c/`](little-c/) 目录包含了对《C 语言小书》的 Auto 适配版本，
 面向通过 a2c 转译器以 C 为目标的 Auto 程序员。涵盖内存、指针、结构体、I/O、
@@ -167,7 +167,7 @@
 | `for i in 0..10 { }` | `for (int i=0; i<10; i++) { }` | 计数循环 |
 | `auto a2c` / `auto b` | `gcc` / `make` | 构建命令 |
 
-## Modern C — Auto 与 Modern C 深度对照
+## Auto版《Modern C》
 
 [`modern-c/`](modern-c/) 目录包含了对《Modern C》（Jens Gustedt 著）的严谨 Auto 适配版本。
 覆盖完整 C 语言的四个层次：Encounter、Acquaintance、Cognition、Experience — 包括抽象状态机、
