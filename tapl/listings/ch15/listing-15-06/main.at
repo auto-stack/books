@@ -1,0 +1,24 @@
+enum Job {
+    Compute(int),
+    Done
+}
+
+fn worker(id int) {
+    for true {
+        on job Job {
+            is job {
+                Compute(n) => print("Worker " + id + " computing " + n),
+                Done => print("Worker " + id + " shutting down")
+            }
+        }
+    }
+}
+
+fn main() {
+    spawn worker(1)
+    spawn worker(2)
+    spawn worker(3)
+    send worker(1) Job.Compute(42)
+    send worker(2) Job.Compute(100)
+    send worker(3) Job.Compute(7)
+}

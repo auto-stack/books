@@ -1,0 +1,24 @@
+enum Command {
+    Increment,
+    GetCount,
+    Reset
+}
+
+fn counter() {
+    var count = 0
+    for true {
+        on cmd Command {
+            Increment => count = count + 1,
+            GetCount => send caller count,
+            Reset => count = 0
+        }
+    }
+}
+
+fn main() {
+    spawn counter
+    send counter Command.Increment
+    send counter Command.Increment
+    send counter Command.Increment
+    send counter Command.GetCount
+}

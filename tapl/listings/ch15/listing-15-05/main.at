@@ -1,0 +1,17 @@
+fn main() {
+    var total = 0
+    spawn worker
+    send worker 10
+    on result int {
+        total = total + result
+        print("Total so far: " + total)
+    }
+}
+
+fn worker() {
+    for true {
+        on n int {
+            send main n * 2
+        }
+    }
+}

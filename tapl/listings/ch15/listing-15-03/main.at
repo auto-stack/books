@@ -1,0 +1,18 @@
+type Request {
+    url String
+    reply_to int
+}
+
+fn fetcher() {
+    for true {
+        on req Request {
+            var result = "Response from " + req.url
+            print("Fetched: " + req.url)
+        }
+    }
+}
+
+fn main() {
+    spawn fetcher
+    send fetcher Request { url: "https://auto.dev", reply_to: 0 }
+}

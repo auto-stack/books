@@ -1,0 +1,25 @@
+type State {
+    count int
+    name String
+}
+
+fn stateful_actor() {
+    var state = State { count: 0, name: "counter" }
+    for true {
+        on cmd String {
+            if cmd == "inc" {
+                state.count = state.count + 1
+                print(state.name + ": " + state.count)
+            } else {
+                print("Unknown command: " + cmd)
+            }
+        }
+    }
+}
+
+fn main() {
+    spawn stateful_actor
+    send stateful_actor "inc"
+    send stateful_actor "inc"
+    send stateful_actor "hello"
+}

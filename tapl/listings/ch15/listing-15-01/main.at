@@ -1,0 +1,13 @@
+fn greeter() {
+    for true {
+        on msg String {
+            print("Greeting: " + msg)
+        }
+    }
+}
+
+fn main() {
+    spawn greeter
+    send greeter "Hello from main!"
+    send greeter "Auto is awesome!"
+}
