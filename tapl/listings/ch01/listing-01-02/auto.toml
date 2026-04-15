@@ -1,0 +1,5 @@
+[package]
+name = "hello_auto"
+version = "0.1.0"
+
+[dependencies]
