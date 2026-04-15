@@ -1,0 +1,8 @@
+fn greet(name String) {
+    print("Hello, " + name + "!")
+}
+
+fn main() {
+    greet("Alice")
+    greet("Bob")
+}

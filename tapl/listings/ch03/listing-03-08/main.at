@@ -1,0 +1,12 @@
+fn is_even(n int) {
+    if n % 2 == 0 {
+        true
+    } else {
+        false
+    }
+}
+
+fn main() {
+    print(is_even(4))
+    print(is_even(7))
+}
