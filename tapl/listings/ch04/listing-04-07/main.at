@@ -1,0 +1,12 @@
+node Item {
+    value int
+    next ?Item
+}
+
+fn main() {
+    var third = Item { value: 30, next: none }
+    var second = Item { value: 20, next: third }
+    var first = Item { value: 10, next: second }
+    print(first.value)
+    print(first.next.value)
+}

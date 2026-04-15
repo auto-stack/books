@@ -1,0 +1,6 @@
+fn main() {
+    var unique = {1, 2, 3, 2, 1}
+    print(unique.len())
+    unique.add(4)
+    print(unique.contains(3))
+}

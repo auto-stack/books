@@ -1,0 +1,10 @@
+fn main() {
+    var list = [10, 20, 30]
+    list.push(40)
+    print(list)
+    var last = list.pop()
+    print(last)
+    print(list.contains(20))
+    list.sort()
+    print(list)
+}

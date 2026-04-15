@@ -1,0 +1,15 @@
+node Item {
+    value int
+    next ?Item
+}
+
+fn main() {
+    var third = Item { value: 30, next: none }
+    var second = Item { value: 20, next: third }
+    var first = Item { value: 10, next: second }
+    var current = first
+    for current != none {
+        print(current.value)
+        current = current.next
+    }
+}

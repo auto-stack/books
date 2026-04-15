@@ -1,0 +1,9 @@
+fn main() {
+    var numbers = [1, 2, 3, 4, 5]
+    print(numbers[0])
+    print(numbers.len())
+    var names = ["Alice", "Bob", "Charlie"]
+    for name in names {
+        print(name)
+    }
+}

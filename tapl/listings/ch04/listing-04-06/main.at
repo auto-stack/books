@@ -1,0 +1,9 @@
+fn main() {
+    var s = "Hello, Auto!"
+    print(s.len())
+    print(s[0])
+    var parts = s.split(", ")
+    print(parts)
+    var upper = s.to_upper()
+    print(upper)
+}

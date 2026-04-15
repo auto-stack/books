@@ -1,0 +1,6 @@
+fn main() {
+    var scores = { "Alice": 90, "Bob": 85, "Charlie": 92 }
+    print(scores["Alice"])
+    scores["Dave"] = 88
+    print(scores.len())
+}
