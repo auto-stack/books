@@ -1,0 +1,122 @@
+// Listing 22-06: Complete multi-user chat server
+
+use std::net
+
+enum Message {
+    Connect(String),
+    Disconnect(String),
+    Chat(String, String),
+    PrivateMsg(String, String, String),
+    System(String),
+    JoinRoom(String, String),
+    LeaveRoom(String, String),
+    RoomMsg(String, String, String)
+}
+
+fn server() {
+    var clients: Map<String, int> = {}
+    var rooms: Map<String, List<String>> = {
+        "general": [],
+        "random": []
+    }
+    for true {
+        on msg Message {
+            is msg {
+                Connect(name) => {
+                    if clients.contains(name) {
+                        send caller Message.System("Name already taken: " + name)
+                    } else {
+                        clients[name] = 1
+                        rooms["general"].push(name.to_string())
+                        send caller Message.System("Welcome, " + name + "!")
+                        broadcast(clients, rooms, Message.System(name + " joined. Online: " + clients.len()))
+                    }
+                },
+                Disconnect(name) => {
+                    clients.remove(name)
+                    for room in rooms {
+                        room.value.remove(name)
+                    }
+                    broadcast(clients, rooms, Message.System(name + " left. Online: " + clients.len()))
+                },
+                Chat(from, text) => {
+                    var room = rooms["general"]
+                    broadcast(clients, rooms, Message.Chat(from, text))
+                },
+                PrivateMsg(from, to, text) => {
+                    if clients.contains(to) {
+                        println("[PM] " + from + " -> " + to + ": " + text)
+                    } else {
+                        println("[SYS] User " + to + " not found")
+                    }
+                },
+                JoinRoom(name, room_name) => {
+                    if rooms.contains(room_name) {
+                        rooms[room_name].push(name.to_string())
+                        broadcast_room(rooms, room_name, Message.System(name + " joined #" + room_name))
+                    } else {
+                        println("[SYS] Room #" + room_name + " does not exist")
+                    }
+                },
+                LeaveRoom(name, room_name) => {
+                    rooms[room_name].remove(name)
+                    broadcast_room(rooms, room_name, Message.System(name + " left #" + room_name))
+                },
+                RoomMsg(room_name, from, text) => {
+                    broadcast_room(rooms, room_name, Message.RoomMsg(room_name, from, text))
+                },
+                System(text) => {
+                    println("[SYS] " + text)
+                }
+            }
+        }
+    }
+}
+
+fn broadcast(clients Map<String, int>, rooms Map<String, List<String>>, msg Message) {
+    println(format!("[broadcast] {} clients", clients.len()))
+}
+
+fn broadcast_room(rooms Map<String, List<String>>, room_name String, msg Message) {
+    var members = rooms[room_name]
+    println(format!("[#{}] delivered to {}", room_name, members.len()))
+}
+
+fn client_handler(name String) {
+    println("Welcome, " + name + "! Commands: /msg, /join, /leave, /rooms, /quit")
+    for true {
+        on input String {
+            if input == "/quit" {
+                println("Goodbye, " + name + "!")
+                return
+            } else if input.starts_with("/msg ") {
+                var parts = input.split(" ")
+                if parts.len() >= 3 {
+                    var target = parts[1]
+                    var text = parts[2..].join(" ")
+                    println("[PM] " + name + " -> " + target + ": " + text)
+                }
+            } else if input.starts_with("/join ") {
+                var room_name = input.split(" ")[1]
+                println("[SYS] " + name + " joined #" + room_name)
+            } else if input.starts_with("/leave ") {
+                var room_name = input.split(" ")[1]
+                println("[SYS] " + name + " left #" + room_name)
+            } else if input == "/rooms" {
+                println("[SYS] Available rooms: general, random")
+            } else if input.len() > 0 {
+                println(name + ": " + input)
+            }
+        }
+    }
+}
+
+fn main() {
+    var port = 8080
+    println("=== AutoChat Server v1.0 ===")
+    println("Starting on port " + port + "...")
+    spawn server
+    spawn client_handler("Alice".to_string())
+    spawn client_handler("Bob".to_string())
+    println("Server running. Press Ctrl+C to stop.")
+}

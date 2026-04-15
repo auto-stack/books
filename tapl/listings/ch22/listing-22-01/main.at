@@ -1,0 +1,45 @@
+// Listing 22-01: Message types for the chat server
+
+enum Message {
+    Connect(String),
+    Disconnect(String),
+    Chat(String, String),
+    PrivateMsg(String, String, String),
+    System(String)
+}
+
+fn main() {
+    var m1 = Message.Connect("Alice".to_string())
+    var m2 = Message.Chat("Alice".to_string(), "Hello everyone!".to_string())
+    var m3 = Message.PrivateMsg("Alice".to_string(), "Bob".to_string(), "Hi Bob!".to_string())
+    var m4 = Message.System("Alice has joined the lobby.".to_string())
+    var m5 = Message.Disconnect("Alice".to_string())
+
+    is m1 {
+        Connect(name) => println(name + " connected"),
+        Disconnect(name) => println(name + " disconnected"),
+        Chat(from, text) => println(from + ": " + text),
+        PrivateMsg(from, to, text) => println("[PM] " + from + " -> " + to + ": " + text),
+        System(text) => println("[SYS] " + text)
+    }
+
+    is m2 {
+        Chat(from, text) => println(from + ": " + text),
+        _ => ()
+    }
+
+    is m3 {
+        PrivateMsg(from, to, text) => println("[PM] " + from + " -> " + to + ": " + text),
+        _ => ()
+    }
+
+    is m4 {
+        System(text) => println("[SYS] " + text),
+        _ => ()
+    }
+
+    is m5 {
+        Disconnect(name) => println(name + " disconnected"),
+        _ => ()
+    }
+}

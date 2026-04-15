@@ -1,0 +1,45 @@
+// Listing 22-02: Server actor that manages connected clients
+
+enum Message {
+    Connect(String),
+    Disconnect(String),
+    Chat(String, String),
+    PrivateMsg(String, String, String),
+    System(String)
+}
+
+fn server() {
+    var clients: Map<String, int> = {}
+    for true {
+        on msg Message {
+            is msg {
+                Connect(name) => {
+                    clients[name] = 1
+                    println("[SYS] " + name + " joined. Online: " + clients.len())
+                },
+                Disconnect(name) => {
+                    clients.remove(name)
+                    println("[SYS] " + name + " left. Online: " + clients.len())
+                },
+                Chat(from, text) => {
+                    println(from + ": " + text)
+                },
+                PrivateMsg(from, to, text) => {
+                    println("[PM] " + from + " -> " + to + ": " + text)
+                },
+                System(text) => {
+                    println("[SYS] " + text)
+                }
+            }
+        }
+    }
+}
+
+fn main() {
+    spawn server
+    send server Message.Connect("Alice".to_string())
+    send server Message.Connect("Bob".to_string())
+    send server Message.Chat("Alice".to_string(), "Hello Bob!".to_string())
+    send server Message.PrivateMsg("Bob".to_string(), "Alice".to_string(), "Hi Alice!".to_string())
+    send server Message.Disconnect("Bob".to_string())
+}

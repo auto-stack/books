@@ -1,0 +1,39 @@
+// Listing 22-03: Per-client actor that reads input and forwards messages
+
+enum Message {
+    Connect(String),
+    Disconnect(String),
+    Chat(String, String),
+    PrivateMsg(String, String, String),
+    System(String)
+}
+
+fn client_handler(name String, server_addr int) {
+    println("Welcome, " + name + "! Type /quit to disconnect.")
+    send server_addr Message.Connect(name.to_string())
+    for true {
+        on input String {
+            if input == "/quit" {
+                send server_addr Message.Disconnect(name.to_string())
+                println("Goodbye, " + name + "!")
+                return
+            } else if input.starts_with("/msg") {
+                var parts = input.split(" ")
+                if parts.len() >= 3 {
+                    var target = parts[1]
+                    var text = parts[2..].join(" ")
+                    send server_addr Message.PrivateMsg(name.to_string(), target.to_string(), text)
+                } else {
+                    println("Usage: /msg <name> <message>")
+                }
+            } else if input.len() > 0 {
+                send server_addr Message.Chat(name.to_string(), input)
+            }
+        }
+    }
+}
+
+fn main() {
+    spawn client_handler("Alice".to_string(), 0)
+    spawn client_handler("Bob".to_string(), 0)
+}

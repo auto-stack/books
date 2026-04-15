@@ -1,0 +1,82 @@
+// Listing 22-05: Main entry point -- wire everything together
+
+use std::net
+
+enum Message {
+    Connect(String),
+    Disconnect(String),
+    Chat(String, String),
+    PrivateMsg(String, String, String),
+    System(String),
+    JoinRoom(String, String),
+    LeaveRoom(String, String),
+    RoomMsg(String, String, String)
+}
+
+fn server() {
+    var clients: Map<String, int> = {}
+    var rooms: Map<String, List<String>> = {
+        "general": [],
+        "random": []
+    }
+    for true {
+        on msg Message {
+            is msg {
+                Connect(name) => {
+                    clients[name] = 1
+                    rooms["general"].push(name.to_string())
+                    println("[SYS] " + name + " joined. Online: " + clients.len())
+                },
+                Disconnect(name) => {
+                    clients.remove(name)
+                    for room in rooms {
+                        room.value.remove(name)
+                    }
+                    println("[SYS] " + name + " left. Online: " + clients.len())
+                },
+                Chat(from, text) => {
+                    println(from + ": " + text)
+                },
+                PrivateMsg(from, to, text) => {
+                    println("[PM] " + from + " -> " + to + ": " + text)
+                },
+                System(text) => {
+                    println("[SYS] " + text)
+                },
+                JoinRoom(name, room_name) => {
+                    if rooms.contains(room_name) {
+                        rooms[room_name].push(name.to_string())
+                        println("[SYS] " + name + " joined #" + room_name)
+                    }
+                },
+                LeaveRoom(name, room_name) => {
+                    rooms[room_name].remove(name)
+                    println("[SYS] " + name + " left #" + room_name)
+                },
+                RoomMsg(room_name, from, text) => {
+                    println("[#" + room_name + "] " + from + ": " + text)
+                }
+            }
+        }
+    }
+}
+
+fn main() {
+    var port = 8080
+    println("Starting chat server on port " + port)
+    spawn server
+    println("Chat server is running.")
+    println("Type /quit to stop the server.")
+    for true {
+        on input String {
+            if input == "/quit" {
+                println("Shutting down server...")
+                return
+            } else if input == "/status" {
+                println("Server is running on port " + port)
+            } else if input.len() > 0 {
+                println("Unknown command: " + input)
+            }
+        }
+    }
+}
