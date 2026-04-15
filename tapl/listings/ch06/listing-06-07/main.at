@@ -1,0 +1,9 @@
+type Point = (float, float)
+type Id = int
+
+fn main() {
+    var origin Point = (0.0, 0.0)
+    var user_id Id = 42
+    print(origin)
+    print(user_id)
+}

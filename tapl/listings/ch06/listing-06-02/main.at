@@ -1,0 +1,10 @@
+fn main() {
+    var count int = 0
+    let name String = "Alice"
+    var pi float = 3.14159
+    let active bool = true
+    print(count)
+    print(name)
+    print(pi)
+    print(active)
+}

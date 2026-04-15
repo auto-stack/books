@@ -1,0 +1,11 @@
+type User {
+    name String
+    age int
+    active bool
+}
+
+fn main() {
+    var alice = User { name: "Alice", age: 30, active: true }
+    print(alice.name)
+    print(alice.age)
+}

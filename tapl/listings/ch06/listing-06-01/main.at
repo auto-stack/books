@@ -1,0 +1,8 @@
+fn main() {
+    var x = 5
+    x = 6        // OK — var is mutable
+    let y = 10
+    // y = 11    // ERROR — let is immutable
+    print(x)
+    print(y)
+}

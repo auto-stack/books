@@ -1,0 +1,13 @@
+type Rectangle {
+    width float
+    height float
+}
+
+fn area(r Rectangle) {
+    r.width * r.height
+}
+
+fn main() {
+    var rect = Rectangle { width: 10.0, height: 5.0 }
+    print(area(rect))
+}
