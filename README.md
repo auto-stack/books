@@ -8,9 +8,10 @@ we also provide a Markdown format generated from AutoDown.
 
 ## Book Collection
 
-This repository contains **seven** companion books, each adapting a well-known programming
-book for the Auto language. Every book provides paired **English** (`.md`) and **Chinese**
-(`.cn.md`) chapters with runnable code listings.
+This repository contains the original **"The Auto Programming Language"** book,
+plus **seven** companion reference books that show how Auto maps to other languages.
+Every book provides paired **English** (`.md`) and **Chinese** (`.cn.md`) chapters
+with runnable code listings.
 
 | # | Book | Directory | Source | Chapters | Transpiler | Focus |
 |---|------|-----------|--------|----------|------------|-------|
@@ -21,8 +22,75 @@ book for the Auto language. Every book provides paired **English** (`.md`) and *
 | 5 | [Auto vs Modern C](#auto-vs-modern-c) | [`modern-c/`](modern-c/) | [*Modern C* by Jens Gustedt](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
 | 6 | [A Byte of Auto (Python)](#a-byte-of-auto-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17 (ch00-16) | `a2p` → Python | Python basics: functions, OOP, exceptions, stdlib |
 | 7 | [Think Python 3e — Auto Edition](#think-python-3e--auto-edition) | [`think-python/`](think-python/) | [*Think Python, 3rd Edition*](https://greenteapress.com/wp/think-python-3rd-edition/) (Allen B. Downey) | 20 (ch00-19) | `a2p` → Python | Programming thinking: recursion, OOP, data structures, text analysis |
+| 8 | [The Auto Programming Language](#the-auto-programming-language) | [`tapl/`](tapl/) | Original | 22 (ch00-21) + 4 appendices | All 5 languages | The definitive guide to Auto: scripting → systems → AIOS |
 
-**Total: 117 chapters, ~113 code listings with transpiler output, all EN + CN.**
+**Total: 143 chapters, ~148 code listings with transpiler output, all EN + CN.**
+
+## The Auto Programming Language
+
+The [`tapl/`](tapl/) directory contains the original "The Auto Programming Language" book — the
+definitive guide to Auto, written from scratch. Every code example is shown in **five languages**
+(Auto, Rust, Python, C, TypeScript) so developers from any background can learn by comparison.
+
+The book is organized in three progressive phases:
+
+- **Phase 1 — Auto as Script** (Ch 1–5): Variables, functions, control flow, collections, guessing game project
+- **Phase 2 — Auto as System** (Ch 6–14): Types, enums, OOP, error handling, modules, references, memory, generics, file processor project
+- **Phase 3 — Auto as AIOS** (Ch 15–22): Actor concurrency, async, smart casts, testing, closures, comptime, stdlib, chat server project
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | Phase | English | Chinese |
+|----|-------|---------|---------|
+| 00 | — | [Introduction](tapl/ch00-introduction.md) | [简介](tapl/ch00-introduction.cn.md) |
+| 01 | Script | [Getting Started](tapl/ch01-getting-started.md) | [入门](tapl/ch01-getting-started.cn.md) |
+| 02 | Script | [Variables & Operators](tapl/ch02-variables-operators.md) | [变量与运算符](tapl/ch02-variables-operators.cn.md) |
+| 03 | Script | [Functions & Control Flow](tapl/ch03-functions.md) | [函数与控制流](tapl/ch03-functions.cn.md) |
+| 04 | Script | [Collections & Nodes](tapl/ch04-collections.md) | [集合与节点](tapl/ch04-collections.cn.md) |
+| 05 | Script | [Project: Guessing Game](tapl/ch05-guessing-game.md) | [项目：猜数游戏](tapl/ch05-guessing-game.cn.md) |
+| 06 | System | [Types & `let`](tapl/ch06-types.md) | [类型与 `let`](tapl/ch06-types.cn.md) |
+| 07 | System | [Enums & Pattern Matching](tapl/ch07-enums.md) | [枚举与模式匹配](tapl/ch07-enums.cn.md) |
+| 08 | System | [OOP Reshaped](tapl/ch08-oop.md) | [重塑面向对象](tapl/ch08-oop.cn.md) |
+| 09 | System | [Error Handling](tapl/ch09-error-handling.md) | [错误处理](tapl/ch09-error-handling.cn.md) |
+| 10 | System | [Packages & Modules](tapl/ch10-modules.md) | [包与模块](tapl/ch10-modules.cn.md) |
+| 11 | System | [References & Pointers](tapl/ch11-references.md) | [引用与指针](tapl/ch11-references.cn.md) |
+| 12 | System | [Memory & Ownership](tapl/ch12-memory.md) | [内存与所有权](tapl/ch12-memory.cn.md) |
+| 13 | System | [Generics](tapl/ch13-generics.md) | [泛型](tapl/ch13-generics.cn.md) |
+| 14 | System | [Project: File Processor](tapl/ch14-file-processor.md) | [项目：文件处理器](tapl/ch14-file-processor.cn.md) |
+| 15 | AIOS | [Actor Concurrency](tapl/ch15-actors.md) | [Actor 并发](tapl/ch15-actors.cn.md) |
+| 16 | AIOS | [Async with `~T`](tapl/ch16-async.md) | [异步编程 `~T`](tapl/ch16-async.cn.md) |
+| 17 | AIOS | [Smart Casts & Flow Typing](tapl/ch17-smart-casts.md) | [智能转型与流式类型](tapl/ch17-smart-casts.cn.md) |
+| 18 | AIOS | [Testing](tapl/ch18-testing.md) | [测试](tapl/ch18-testing.cn.md) |
+| 19 | AIOS | [Closures & Iterators](tapl/ch19-closures.md) | [闭包与迭代器](tapl/ch19-closures.cn.md) |
+| 20 | AIOS | [Comptime & Metaprogramming](tapl/ch20-comptime.md) | [编译期计算与元编程](tapl/ch20-comptime.cn.md) |
+| 21 | AIOS | [Standard Library Tour](tapl/ch21-stdlib.md) | [标准库概览](tapl/ch21-stdlib.cn.md) |
+| 22 | AIOS | [Project: Multi-user Chat Server](tapl/ch22-chat-server.md) | [项目：多人聊天服务器](tapl/ch22-chat-server.cn.md) |
+
+### Appendices
+
+| Appendix | English | Chinese |
+|----------|---------|---------|
+| A | [Keyword Reference](tapl/appendix-a-keywords.md) | [关键字参考](tapl/appendix-a-keywords.cn.md) |
+| B | [Operator Table](tapl/appendix-b-operators.md) | [运算符表](tapl/appendix-b-operators.cn.md) |
+| C | [Transpiler Quick-Ref](tapl/appendix-c-transpiler-quick-ref.md) | [转译器速查](tapl/appendix-c-transpiler-quick-ref.cn.md) |
+| D | [Standard Library Index](tapl/appendix-d-stdlib-index.md) | [标准库索引](tapl/appendix-d-stdlib-index.cn.md) |
+
+### Key Concept Mappings (Auto vs All 5 Languages)
+
+| Auto | Rust | Python | C | TypeScript | Description |
+|------|------|--------|---|-----------|-------------|
+| `type` | `struct` | `@dataclass` | `struct` | `interface`/`class` | Data type definition |
+| `enum` | `enum` | `Union` | `enum` + tag | `type` union | Sum type |
+| `spec` | `trait` | `Protocol`/`ABC` | vtable | `interface` | Behavioral contract |
+| `is` | `match` | `match`/`isinstance` | `switch` | `switch` | Pattern matching |
+| `ext` | `impl` | methods on class | functions | methods | Extension methods |
+| `has` | composition | composition | nested struct | composition | Auto-delegation |
+| `?T` | `Option<T>` | `T \| None` | tagged ptr | `T \| null` | Optional value |
+| `!T` | `Result<T,E>` | `raise`/`try` | error codes | `try`/`catch` | Error result |
+| `spawn`/`send` | `thread::spawn`/`mpsc` | `Thread`/`Queue` | `pthread`/pipe | `Worker`/`postMessage` | Actor concurrency |
+| `~T` | `async fn` | `async def` | callbacks | `Promise<T>` | Async blueprint |
+| `#[comptime]` | `const fn`/macros | decorators | preprocessor | decorators | Compile-time eval |
+| `automan` | `cargo` | `pip`/`poetry` | `make`/`cmake` | `npm`/`pnpm` | Package manager |
 
 ## Auto vs The Rust Programming Language
 
