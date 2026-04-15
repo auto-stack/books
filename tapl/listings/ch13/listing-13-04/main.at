@@ -1,0 +1,16 @@
+spec Display {
+    fn display(&self) String
+}
+
+spec Clone {
+    fn clone(&self) Self
+}
+
+fn show_and_copy<T>(item T) where T: Display, T: Clone {
+    print(item.display())
+    item.clone()
+}
+
+fn main() {
+    // example usage
+}

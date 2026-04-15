@@ -1,0 +1,8 @@
+fn identity<T>(x T) T {
+    x
+}
+
+fn main() {
+    print(identity(42))      // compiler generates: fn identity_int(x int) int
+    print(identity("hello")) // compiler generates: fn identity_str(x String) String
+}

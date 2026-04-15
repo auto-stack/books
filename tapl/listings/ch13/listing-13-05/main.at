@@ -1,0 +1,17 @@
+type Pair<T> {
+    first T
+    second T
+}
+
+ext Pair<T> {
+    fn swap(&self) Pair<T> {
+        Pair { first: self.second, second: self.first }
+    }
+}
+
+fn main() {
+    var p = Pair { first: 1, second: 2 }
+    var p2 = p.swap()
+    print(p2.first)
+    print(p2.second)
+}

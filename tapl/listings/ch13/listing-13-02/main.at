@@ -1,0 +1,19 @@
+type Box<T> {
+    value T
+}
+
+ext Box<T> {
+    fn new(v T) Box<T> {
+        Box { value: v }
+    }
+    fn get(&self) T {
+        self.value
+    }
+}
+
+fn main() {
+    var i = Box.new(42)
+    print(i.get())
+    var s = Box.new("hello")
+    print(s.get())
+}

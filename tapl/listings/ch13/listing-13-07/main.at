@@ -1,0 +1,25 @@
+enum Result<T, E> {
+    Ok(T),
+    Err(E)
+}
+
+fn divide(a float, b float) Result<float, String> {
+    if b == 0.0 {
+        Result.Err("division by zero")
+    } else {
+        Result.Ok(a / b)
+    }
+}
+
+fn main() {
+    var r1 = divide(10.0, 3.0)
+    is r1 {
+        Ok(v) => print("Result: " + v),
+        Err(e) => print("Error: " + e)
+    }
+    var r2 = divide(10.0, 0.0)
+    is r2 {
+        Ok(v) => print("Result: " + v),
+        Err(e) => print("Error: " + e)
+    }
+}

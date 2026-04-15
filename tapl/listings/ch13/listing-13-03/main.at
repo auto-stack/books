@@ -1,0 +1,23 @@
+spec Printable {
+    fn to_string(&self) String
+}
+
+fn print_it<T>(item T) where T: Printable {
+    print(item.to_string())
+}
+
+type Point {
+    x float
+    y float
+}
+
+ext Point as Printable {
+    fn to_string(&self) String {
+        "(" + self.x + ", " + self.y + ")"
+    }
+}
+
+fn main() {
+    var p = Point { x: 3.0, y: 4.0 }
+    print_it(p)
+}
