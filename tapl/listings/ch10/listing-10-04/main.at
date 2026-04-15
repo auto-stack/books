@@ -1,0 +1,14 @@
+mod utils {
+    pub fn helper() {
+        print("public helper")
+    }
+
+    fn internal() {
+        print("internal only")
+    }
+}
+
+fn main() {
+    utils.helper()
+    // utils.internal()  // ERROR: private
+}

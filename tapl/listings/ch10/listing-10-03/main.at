@@ -1,0 +1,16 @@
+mod server {
+    fn start(port int) {
+        print("Server started on port " + port)
+    }
+}
+
+mod client {
+    fn connect(host String) {
+        print("Connecting to " + host)
+    }
+}
+
+fn main() {
+    server.start(8080)
+    client.connect("localhost")
+}

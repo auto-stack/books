@@ -1,0 +1,7 @@
+use utils
+use network.server
+
+fn main() {
+    utils.helper()
+    server.start(8080)
+}

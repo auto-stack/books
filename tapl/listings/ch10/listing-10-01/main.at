@@ -1,0 +1,14 @@
+// auto.toml
+// [package]
+// name = "my_project"
+// version = "0.1.0"
+//
+// Project structure:
+// my_project/
+// ├── auto.toml
+// └── src/
+//     └── main.auto
+
+fn main() {
+    print("Hello from my_project!")
+}

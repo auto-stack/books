@@ -1,0 +1,11 @@
+// auto.toml
+// [package]
+// name = "my_project"
+// version = "0.1.0"
+//
+// [dependencies]
+// serde = "1.0"
+
+fn main() {
+    print("Project with dependencies")
+}
