@@ -8,19 +8,20 @@ we also provide a Markdown format generated from AutoDown.
 
 ## Book Collection
 
-This repository contains **five** companion books, each adapting a well-known programming
+This repository contains **six** companion books, each adapting a well-known programming
 book for the Auto language. Every book provides paired **English** (`.md`) and **Chinese**
 (`.cn.md`) chapters with runnable code listings.
 
 | # | Book | Directory | Source | Chapters | Transpiler | Focus |
 |---|------|-----------|--------|----------|------------|-------|
-| 1 | [Auto vs Rust](#rust-version--auto-vs-rust-bilingual-reference) | [`rust/`](rust/) | [*The Rust Programming Language*](https://doc.rust-lang.org/book/) | 22 (ch00-21 + appendix) | `a2r` → Rust | Systems programming, ownership, actors, async |
-| 2 | [Auto vs TypeScript](#typescript-version--auto-vs-typescript-bilingual-reference) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10 (ch00-09) | `a2ts` → TypeScript | Web development, types, classes, modules |
+| 1 | [Auto vs The Rust Programming Language](#rust-version--auto-vs-rust-bilingual-reference) | [`rust/`](rust/) | [*The Rust Programming Language*](https://doc.rust-lang.org/book/) | 22 (ch00-21 + appendix) | `a2r` → Rust | Systems programming, ownership, actors, async |
+| 2 | [Auto vs TypeScript Handbook](#typescript-version--auto-vs-typescript-bilingual-reference) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10 (ch00-09) | `a2ts` → TypeScript | Web development, types, classes, modules |
 | 3 | [Auto vs TypeScript DeepDive](#typescript-deepdive--auto-vs-typescript-in-depth) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16 (ch00-15) | `a2ts` → TypeScript | Advanced type system, generics, pattern matching |
-| 4 | [Auto vs Little C](#little-c--auto-vs-c-systems-programming) | [`little-c/`](little-c/) | [*The Little Book of C*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
+| 4 | [Auto vs Little Book of C](#little-c--auto-vs-c-systems-programming) | [`little-c/`](little-c/) | [*The Little Book of C*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
 | 5 | [Auto vs Modern C](#modern-c--auto-vs-modern-c-deep-reference) | [`modern-c/`](modern-c/) | [*Modern C* by Jens Gustedt](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
+| 6 | [A Byte of Auto (Python)](#a-byte-of-auto-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17 (ch00-16) | `a2p` → Python | Python basics: functions, OOP, exceptions, stdlib |
 
-**Total: 80 chapters, ~45 code listings with transpiler output, all EN + CN.**
+**Total: 97 chapters, ~55 code listings with transpiler output, all EN + CN.**
 
 ## Auto vs The Rust Programming Language
 
@@ -218,3 +219,52 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | actors | `thrd_*` / `mtx_*` | Concurrency model |
 | `!T` error type | `errno` / `setjmp` | Error handling |
 | AutoFree | `malloc`/`free` | Memory management |
+
+## A Byte of Auto (Python)
+
+The [`byte-of-python/`](byte-of-python/) directory contains an adaptation of "A Byte of Python" (Swaroop C H)
+for the Auto programming language, with paired Auto/Python code examples in every chapter.
+This is a beginner-friendly introduction to programming through Auto, which transpiles to Python.
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | English | Chinese |
+|----|---------|---------|
+| 00 | [Preface](byte-of-python/ch00-preface.md) | [序言](byte-of-python/ch00-preface.cn.md) |
+| 01 | [About Auto](byte-of-python/ch01-about-python.md) | [关于 Auto](byte-of-python/ch01-about-python.cn.md) |
+| 02 | [Installation](byte-of-python/ch02-installation.md) | [安装](byte-of-python/ch02-installation.cn.md) |
+| 03 | [First Steps](byte-of-python/ch03-first-steps.md) | [第一步](byte-of-python/ch03-first-steps.cn.md) |
+| 04 | [Basics](byte-of-python/ch04-basics.md) | [基础](byte-of-python/ch04-basics.cn.md) |
+| 05 | [Operators and Expressions](byte-of-python/ch05-operators-expressions.md) | [运算符与表达式](byte-of-python/ch05-operators-expressions.cn.md) |
+| 06 | [Control Flow](byte-of-python/ch06-control-flow.md) | [控制流](byte-of-python/ch06-control-flow.cn.md) |
+| 07 | [Functions](byte-of-python/ch07-functions.md) | [函数](byte-of-python/ch07-functions.cn.md) |
+| 08 | [Modules](byte-of-python/ch08-modules.md) | [模块](byte-of-python/ch08-modules.cn.md) |
+| 09 | [Data Structures](byte-of-python/ch09-data-structures.md) | [数据结构](byte-of-python/ch09-data-structures.cn.md) |
+| 10 | [Problem Solving](byte-of-python/ch10-problem-solving.md) | [问题解决](byte-of-python/ch10-problem-solving.cn.md) |
+| 11 | [OOP](byte-of-python/ch11-oop.md) | [面向对象编程](byte-of-python/ch11-oop.cn.md) |
+| 12 | [Input and Output](byte-of-python/ch12-input-output.md) | [输入与输出](byte-of-python/ch12-input-output.cn.md) |
+| 13 | [Exceptions](byte-of-python/ch13-exceptions.md) | [异常](byte-of-python/ch13-exceptions.cn.md) |
+| 14 | [Standard Library](byte-of-python/ch14-stdlib.md) | [标准库](byte-of-python/ch14-stdlib.cn.md) |
+| 15 | [More](byte-of-python/ch15-more.md) | [更多](byte-of-python/ch15-more.cn.md) |
+| 16 | [What Next](byte-of-python/ch16-what-next.md) | [下一步](byte-of-python/ch16-what-next.cn.md) |
+
+### Key Concept Mappings (Auto → Python)
+
+| Auto | Python | Description |
+|------|--------|-------------|
+| `fn main()` | `def main():` + `if __name__` | Entry point |
+| `let x = 5` | `x = 5` | Variable declaration |
+| `let mut x = 5` | `x = 5` | Mutable variable |
+| `// comment` | `# comment` | Comments |
+| `f"$name"` | `f"{name}"` | F-string interpolation |
+| `type Name { ... }` | `class Name:` / `@dataclass` | Class/struct definition |
+| `fn init(&self, ...)` | `def __init__(self, ...)` | Constructor |
+| `.field` | `self.field` | Member access |
+| `type Sub: Super {}` | `class Sub(Super):` | Inheritance |
+| `for cond { ... }` | `while cond:` | While loop |
+| `for i in 0..10 {}` | `for i in range(0, 10):` | For loop |
+| `true`/`false` | `True`/`False` | Boolean values |
+| `&&`/`||`/`!` | `and`/`or`/`not` | Logical operators |
+| `List` | `list` | Ordered mutable collection |
+| `HashMap` | `dict` | Key-value mapping |
+| `HashSet` | `set` | Unique value collection |

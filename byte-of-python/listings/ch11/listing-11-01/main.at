@@ -1,0 +1,6 @@
+type Person {}
+
+fn main() {
+    let p = Person{}
+    print(p)
+}

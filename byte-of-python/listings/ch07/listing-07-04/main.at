@@ -1,0 +1,10 @@
+fn say(message: str, times: int = 1) {
+    for i in 0..times {
+        print(message)
+    }
+}
+
+fn main() {
+    say("Hello")
+    say("World", 5)
+}

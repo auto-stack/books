@@ -1,0 +1,12 @@
+fn total(numbers: [int]) {
+    let mut sum = 0
+    for n in numbers {
+        sum += n
+    }
+    print(f"The sum is $sum")
+}
+
+fn main() {
+    total([1, 2])
+    total([1, 2, 3, 4])
+}

@@ -1,0 +1,22 @@
+fn main() {
+    // Single and double quotes
+    let name = "Swaroop"
+    let greeting = 'Hello'
+
+    // Multiline string
+    let story = """This is a multi-line string.
+This is the second line.
+"What's your name?" I asked.
+He said "Bond, James Bond."
+"""
+
+    // f-string with $ interpolation
+    let age = 20
+    print(f"$name was $age years old when he wrote this book")
+    print(f"Why is $name playing with that python?")
+
+    // String concatenation
+    print(name + " is " + "awesome")
+
+    print(story)
+}

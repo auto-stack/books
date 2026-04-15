@@ -1,0 +1,12 @@
+fn main() {
+    let mut running = true
+    let mut count = 0
+
+    for running {
+        print(count)
+        count += 1
+        if count >= 5 {
+            running = false
+        }
+    }
+}

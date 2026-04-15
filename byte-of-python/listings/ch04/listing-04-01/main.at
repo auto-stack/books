@@ -1,0 +1,6 @@
+// This is a comment
+// and so is this
+
+fn main() {
+    print("Hello, World!") // This is also a comment
+}

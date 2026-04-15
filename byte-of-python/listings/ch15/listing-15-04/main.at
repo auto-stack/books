@@ -1,0 +1,12 @@
+fn main() {
+    let list_one = [2, 3, 4]
+
+    // Auto uses a for loop instead of list comprehension
+    let mut list_two: list = []
+    for item in list_one {
+        if item > 2 {
+            list_two.append(2 * item)
+        }
+    }
+    print(list_two)
+}

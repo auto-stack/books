@@ -1,0 +1,58 @@
+type SchoolMember {
+    name: str
+    age: int
+
+    fn init(&self, name: str, age: int) {
+        .name = name
+        .age = age
+        print(f"(Initialized SchoolMember: $.name)")
+    }
+
+    fn tell(&self) {
+        print(f"Name:\"$.name\" Age:\"$.age\"", end = " ")
+    }
+}
+
+type Teacher: SchoolMember {
+    salary: int
+
+    fn init(&self, name: str, age: int, salary: int) {
+        SchoolMember.init(self, name, age)
+        .salary = salary
+        print(f"(Initialized Teacher: $.name)")
+    }
+
+    fn tell(&self) {
+        SchoolMember.tell(self)
+        print(f"Salary: \"$.salary\"")
+    }
+}
+
+type Student: SchoolMember {
+    marks: int
+
+    fn init(&self, name: str, age: int, marks: int) {
+        SchoolMember.init(self, name, age)
+        .marks = marks
+        print(f"(Initialized Student: $.name)")
+    }
+
+    fn tell(&self) {
+        SchoolMember.tell(self)
+        print(f"Marks: \"$.marks\"")
+    }
+}
+
+fn main() {
+    let t = Teacher{"Mrs. Shrividya", 40, 30000}
+    let s = Student{"Swaroop", 25, 75}
+
+    // prints a blank line
+    print()
+
+    let members = [t, s]
+    for member in members {
+        // Works for both Teachers and Students
+        member.tell()
+    }
+}

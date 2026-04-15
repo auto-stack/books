@@ -1,0 +1,10 @@
+type Person {
+    fn say_hi(&self) {
+        print("Hello, how are you?")
+    }
+}
+
+fn main() {
+    let p = Person{}
+    p.say_hi()
+}

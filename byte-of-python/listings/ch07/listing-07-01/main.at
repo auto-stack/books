@@ -1,0 +1,20 @@
+fn print_max(a: int, b: int) {
+    if a > b {
+        print(f"$a is maximum")
+    } else if a < b {
+        print(f"$b is maximum")
+    } else {
+        print("Both are equal")
+    }
+}
+
+fn main() {
+    // directly pass literal values
+    print_max(3, 4)
+
+    let x = 5
+    let y = 7
+
+    // pass variables as arguments
+    print_max(x, y)
+}

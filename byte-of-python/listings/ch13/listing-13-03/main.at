@@ -1,0 +1,30 @@
+type ShortInputException {
+    length: int
+    atleast: int
+
+    fn init(&self, length: int, atleast: int) {
+        .length = length
+        .atleast = atleast
+    }
+
+    fn to_string(&self) -> str {
+        f"ShortInputException: The input was ${.length} long, expected at least ${.atleast}"
+    }
+}
+
+fn main() {
+    try {
+        let text = input("Enter something: ")
+        if text.len() < 3 {
+            raise ShortInputException{text.len(), 3}
+        } else {
+            print("No exception was raised.")
+        }
+    } except ShortInputException as e {
+        print(e.to_string())
+    } except EOFError {
+        print("Why did you do an EOF on me?")
+    } else {
+        print("OK")
+    }
+}

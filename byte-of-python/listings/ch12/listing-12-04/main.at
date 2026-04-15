@@ -1,0 +1,13 @@
+use io
+
+fn main() {
+    // Write Unicode content
+    let f = open("unicode.txt", "w", encoding = "utf-8")
+    f.write("Imagine non-English language here")
+    f.close()
+
+    // Read Unicode content
+    let f = open("unicode.txt", encoding = "utf-8")
+    print(f.read())
+    f.close()
+}

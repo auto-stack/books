@@ -1,0 +1,8 @@
+use sys
+
+fn main() {
+    print("The command line arguments are:")
+    for arg in sys.argv {
+        print(arg)
+    }
+}

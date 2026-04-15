@@ -8,7 +8,7 @@
 
 ## 书籍集合
 
-本仓库包含**五本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
+本仓库包含**六本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
 每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
 
 | # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
@@ -18,8 +18,9 @@
 | 3 | [Auto版《TypeScript DeepDive》](#typescript-深入篇--auto-与-typescript-深度对照) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
 | 4 | [Auto版《Little Book of C》](#c-语言小书--auto-与-c-系统编程对照) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
 | 5 | [Auto版《Modern C》](#modern-c--auto-与-modern-c-深度对照) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
+| 6 | [Auto版《A Byte of Python》](#auto版a-byte-of-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17（ch00-16）| `a2p` → Python | Python 入门：函数、面向对象、异常、标准库 |
 
-**共计：80 个章节、约 45 个代码示例（含转译器输出），全部提供英中双语版本。**
+**共计：97 个章节、约 55 个代码示例（含转译器输出），全部提供英中双语版本。**
 
 ## Auto版《Rust程序设计语言》
 
@@ -216,3 +217,52 @@
 | Actor | `thrd_*` / `mtx_*` | 并发模型 |
 | `!T` 错误类型 | `errno` / `setjmp` | 错误处理 |
 | AutoFree | `malloc`/`free` | 内存管理 |
+
+## Auto版《A Byte of Python》
+
+[`byte-of-python/`](byte-of-python/) 目录包含了对《A Byte of Python》（Swaroop C H 著）的完整 Auto 适配版本，
+通过 a2p 转译器将 Auto 代码转译为 Python，每章都包含配对的 Auto/Python 代码示例。
+这是一本面向初学者的 Auto 编程入门教程。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 英文版 | 中文版 |
+|----|-------|--------|
+| 00 | [Preface](byte-of-python/ch00-preface.md) | [序言](byte-of-python/ch00-preface.cn.md) |
+| 01 | [About Auto](byte-of-python/ch01-about-python.md) | [关于 Auto](byte-of-python/ch01-about-python.cn.md) |
+| 02 | [Installation](byte-of-python/ch02-installation.md) | [安装](byte-of-python/ch02-installation.cn.md) |
+| 03 | [First Steps](byte-of-python/ch03-first-steps.md) | [第一步](byte-of-python/ch03-first-steps.cn.md) |
+| 04 | [Basics](byte-of-python/ch04-basics.md) | [基础](byte-of-python/ch04-basics.cn.md) |
+| 05 | [Operators and Expressions](byte-of-python/ch05-operators-expressions.md) | [运算符与表达式](byte-of-python/ch05-operators-expressions.cn.md) |
+| 06 | [Control Flow](byte-of-python/ch06-control-flow.md) | [控制流](byte-of-python/ch06-control-flow.cn.md) |
+| 07 | [Functions](byte-of-python/ch07-functions.md) | [函数](byte-of-python/ch07-functions.cn.md) |
+| 08 | [Modules](byte-of-python/ch08-modules.md) | [模块](byte-of-python/ch08-modules.cn.md) |
+| 09 | [Data Structures](byte-of-python/ch09-data-structures.md) | [数据结构](byte-of-python/ch09-data-structures.cn.md) |
+| 10 | [Problem Solving](byte-of-python/ch10-problem-solving.md) | [问题解决](byte-of-python/ch10-problem-solving.cn.md) |
+| 11 | [OOP](byte-of-python/ch11-oop.md) | [面向对象编程](byte-of-python/ch11-oop.cn.md) |
+| 12 | [Input and Output](byte-of-python/ch12-input-output.md) | [输入与输出](byte-of-python/ch12-input-output.cn.md) |
+| 13 | [Exceptions](byte-of-python/ch13-exceptions.md) | [异常](byte-of-python/ch13-exceptions.cn.md) |
+| 14 | [Standard Library](byte-of-python/ch14-stdlib.md) | [标准库](byte-of-python/ch14-stdlib.cn.md) |
+| 15 | [More](byte-of-python/ch15-more.md) | [更多](byte-of-python/ch15-more.cn.md) |
+| 16 | [What Next](byte-of-python/ch16-what-next.md) | [下一步](byte-of-python/ch16-what-next.cn.md) |
+
+### 核心概念映射（Auto → Python）
+
+| Auto | Python | 说明 |
+|------|--------|------|
+| `fn main()` | `def main():` + `if __name__` | 入口函数 |
+| `let x = 5` | `x = 5` | 变量声明 |
+| `let mut x = 5` | `x = 5` | 可变变量 |
+| `// 注释` | `# 注释` | 注释 |
+| `f"$name"` | `f"{name}"` | f-string 插值 |
+| `type Name { ... }` | `class Name:` / `@dataclass` | 类/结构体定义 |
+| `fn init(&self, ...)` | `def __init__(self, ...)` | 构造函数 |
+| `.field` | `self.field` | 成员访问 |
+| `type Sub: Super {}` | `class Sub(Super):` | 继承 |
+| `for cond { ... }` | `while cond:` | while 循环 |
+| `for i in 0..10 {}` | `for i in range(0, 10):` | for 循环 |
+| `true`/`false` | `True`/`False` | 布尔值 |
+| `&&`/`||`/`!` | `and`/`or`/`not` | 逻辑运算符 |
+| `List` | `list` | 有序可变集合 |
+| `HashMap` | `dict` | 键值映射 |
+| `HashSet` | `set` | 唯一值集合 |

@@ -1,0 +1,25 @@
+fn main() {
+    let name: str = "Swaroop"
+
+    if name.startswith("Swa") {
+        print("Yes, the string starts with 'Swa'")
+    }
+
+    if name.contains("war") {
+        print("Yes, it contains the string 'war'")
+    }
+
+    if name.contains("xyz") {
+        print("Yes, it contains the string 'xyz'")
+    } else {
+        print("No, it does not contain 'xyz'")
+    }
+
+    let delim = "-*-"
+    let mylist: [str] = ["Brazil", "Russia", "India", "China"]
+    print(delim.join(mylist))
+
+    print(name.replace("oo", "aa"))
+
+    print("This is a sentence".split())
+}

@@ -1,0 +1,26 @@
+fn main() {
+    // Operator precedence demonstration
+    let result = 2 + 3 * 4
+    print(result)
+
+    // Parentheses change the order
+    let result2 = (2 + 3) * 4
+    print(result2)
+
+    // Mixed operations
+    let a = 2 + 3 * 4 - 10 / 2
+    print(a)
+
+    // Power has higher precedence than multiplication
+    let b = 2 * 3 ** 2
+    print(b)
+
+    // Boolean operators and comparison
+    let x = 5
+    let y = 10
+    let z = x > 3 && y < 20
+    print(z)
+
+    let w = !(x == 5) || y > 15
+    print(w)
+}

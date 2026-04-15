@@ -1,0 +1,21 @@
+type Student {
+    name: str
+    age: int
+
+    fn init(&self, name: str, age: int) {
+        .name = name
+        .age = age
+    }
+
+    fn to_string(&self) -> str {
+        f"Student($.name, $.age)"
+    }
+}
+
+fn main() {
+    let s1 = Student{"Alice", 20}
+    let s2 = Student{"Bob", 22}
+
+    print(s1.to_string())
+    print(s2.to_string())
+}

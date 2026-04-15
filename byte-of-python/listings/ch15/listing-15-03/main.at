@@ -1,0 +1,16 @@
+fn sort_by_y(points: list) -> list {
+    // Auto uses a named function instead of lambda
+    fn compare_y(a: dict, b: dict) -> bool {
+        a["y"] < b["y"]
+    }
+
+    let mut result = points
+    result.sort(key = fn(item) { item["y"] })
+    return result
+}
+
+fn main() {
+    let points = [{"x": 2, "y": 3}, {"x": 4, "y": 1}]
+    let sorted = sort_by_y(points)
+    print(sorted)
+}

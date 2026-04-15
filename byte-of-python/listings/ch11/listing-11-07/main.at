@@ -1,0 +1,30 @@
+type Animal {
+    name: str
+
+    fn init(&self, name: str) {
+        .name = name
+    }
+
+    fn speak(&self) {
+        print(f"$.name makes a sound")
+    }
+}
+
+type Dog: Animal {
+    fn speak(&self) {
+        print(f"$.name says Woof!")
+    }
+}
+
+type Cat: Animal {
+    fn speak(&self) {
+        print(f"$.name says Meow!")
+    }
+}
+
+fn main() {
+    let animals = [Dog{"Rex"}, Cat{"Whiskers"}, Animal("Creature")]
+    for animal in animals {
+        animal.speak()
+    }
+}

@@ -1,0 +1,21 @@
+use logging
+
+fn main() {
+    // Auto: explicit function composition
+    let safe_save = with_retry(save_to_database)
+
+    safe_save("hello")
+}
+
+fn with_retry(fn_to_wrap: fn) -> fn {
+    fn(arg: str) {
+        let max_attempts = 3
+        for attempt in 1..=max_attempts {
+            fn_to_wrap(arg)
+        }
+    }
+}
+
+fn save_to_database(arg: str) {
+    print(f"Saving: $arg")
+}

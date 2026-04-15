@@ -1,0 +1,13 @@
+fn maximum(x: int, y: int) -> str {
+    if x > y {
+        return f"$x"
+    } else if x == y {
+        return "The numbers are equal"
+    } else {
+        return f"$y"
+    }
+}
+
+fn main() {
+    print(maximum(2, 3))
+}

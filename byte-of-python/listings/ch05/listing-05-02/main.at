@@ -1,0 +1,26 @@
+fn main() {
+    // Calculate rectangle area and perimeter
+    let length = 5
+    let breadth = 2
+
+    let area = length * breadth
+    print(f"Area is $area")
+
+    let perimeter = 2 * (length + breadth)
+    print(f"Perimeter is $perimeter")
+
+    // Calculate circle area
+    let radius = 5.0
+    let pi = 3.14159
+    let circle_area = pi * radius ** 2
+    print(f"Circle area is $circle_area")
+
+    // Using compound assignment
+    let total = 10
+    total += 5
+    print(total)
+    total -= 3
+    print(total)
+    total *= 2
+    print(total)
+}

@@ -1,0 +1,22 @@
+fn main() {
+    // Variable declarations with let
+    let i = 5
+    print(i)
+
+    i = i + 1
+    print(i)
+
+    // Variables can hold different types
+    let name = "Alice"
+    let score = 98.5
+    let is_passing = true
+
+    // Multi-line string in a variable
+    let s = """This is a multi-line string.
+This is the second line."""
+
+    print(name)
+    print(score)
+    print(is_passing)
+    print(s)
+}

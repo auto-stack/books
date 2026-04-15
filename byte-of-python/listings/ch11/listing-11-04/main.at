@@ -1,0 +1,30 @@
+type Robot {
+    name: str
+
+    fn init(&self, name: str) {
+        .name = name
+        print(f"(Initializing $.name)")
+    }
+
+    fn say_hi(&self) {
+        print(f"Greetings, my masters call me $.name.")
+    }
+
+    fn die(&self) {
+        print(f"$.name is being destroyed!")
+    }
+}
+
+fn main() {
+    let droid1 = Robot{"R2-D2"}
+    droid1.say_hi()
+
+    let droid2 = Robot{"C-3PO"}
+    droid2.say_hi()
+
+    print("\nRobots can do some work here.\n")
+
+    print("Robots have finished their work. So let's destroy them.")
+    droid1.die()
+    droid2.die()
+}

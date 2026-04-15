@@ -1,0 +1,11 @@
+fn main() {
+    let number = 23
+
+    if number < 0 {
+        print("Negative")
+    } else if number == 0 {
+        print("Zero")
+    } else {
+        print("Positive")
+    }
+}

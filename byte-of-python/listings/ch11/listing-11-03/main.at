@@ -1,0 +1,16 @@
+type Person {
+    name: str
+
+    fn init(&self, name: str) {
+        .name = name
+    }
+
+    fn say_hi(&self) {
+        print("Hello, my name is", .name)
+    }
+}
+
+fn main() {
+    let p = Person{"Swaroop"}
+    p.say_hi()
+}

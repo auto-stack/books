@@ -1,0 +1,16 @@
+use pickle
+
+fn main() {
+    let shoplist = ["apple", "mango", "carrot"]
+
+    // Write to file
+    let f = open("shoplist.data", "wb")
+    pickle.dump(shoplist, f)
+    f.close()
+
+    // Read back from the storage
+    let f = open("shoplist.data", "rb")
+    let storedlist = pickle.load(f)
+    print(storedlist)
+    f.close()
+}

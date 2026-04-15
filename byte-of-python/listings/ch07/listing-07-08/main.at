@@ -1,0 +1,18 @@
+fn print_max(x: int, y: int) {
+    // Prints the maximum of two numbers.
+    // The two values must be integers.
+    let a = x
+    let b = y
+    if a > b {
+        print(f"$a is maximum")
+    } else {
+        print(f"$b is maximum")
+    }
+}
+
+fn main() {
+    print_max(3, 5)
+    // In Python, you can access docstrings via print_max.__doc__
+    // Auto does not support runtime docstring access.
+    print("Documentation: Use // comments at the top of a function body.")
+}

@@ -1,0 +1,14 @@
+fn main() {
+    print("Making a copy of a list")
+    let mylist: [str] = ["a", "b", "c", "d"]
+    print("mylist:", mylist)
+
+    // Make a copy by doing a full slice
+    let mylist_copy: [str] = mylist[:]
+    print("mylist_copy:", mylist_copy)
+
+    // Remove an item from the copy
+    mylist_copy.remove(0)
+    print("mylist after removing first item:", mylist)
+    print("mylist_copy after removing first item:", mylist_copy)
+}

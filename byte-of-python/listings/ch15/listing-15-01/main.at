@@ -1,0 +1,23 @@
+fn main() {
+    let a = 5
+    let b = 8
+    print(f"Before: a=$a, b=$b")
+
+    // Swap using a temporary variable
+    let temp = a
+    a = b
+    b = temp
+    print(f"After: a=$a, b=$b")
+
+    // Tuple destructuring
+    let (x, y) = (10, 20)
+    print(f"x=$x, y=$y")
+
+    // Returning multiple values from a function
+    let (error_num, error_msg) = get_error_details()
+    print(f"Error $error_num: $error_msg")
+}
+
+fn get_error_details() -> (int, str) {
+    (2, "details")
+}

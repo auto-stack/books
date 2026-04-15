@@ -1,0 +1,13 @@
+let mut x = 50
+
+fn func() {
+    global x
+    print(f"x is $x")
+    x = 2
+    print(f"Changed global x to $x")
+}
+
+fn main() {
+    func()
+    print(f"Value of x is $x")
+}
