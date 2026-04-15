@@ -8,20 +8,87 @@
 
 ## 书籍集合
 
-本仓库包含**七本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
-每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
+本仓库包含原创的**《Auto 编程语言》**主书，以及**七本**配套参考书，
+展示 Auto 如何映射到其他编程语言。每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
 
 | # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
 |---|------|------|------|--------|--------|------|
-| 1 | [Auto版《Rust程序设计语言》](#auto版rust程序设计语言) | [`rust/`](rust/) | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
-| 2 | [Auto版《TypeScript Handbook》](#auto版typescript-handbook) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
-| 3 | [Auto版《TypeScript DeepDive》](#auto版typescript-deepdive) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
-| 4 | [Auto版《Little Book of C》](#auto版little-book-of-c) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
-| 5 | [Auto版《Modern C》](#auto版modern-c) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
-| 6 | [Auto版《A Byte of Python》](#auto版a-byte-of-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17（ch00-16）| `a2p` → Python | Python 入门：函数、面向对象、异常、标准库 |
-| 7 | [Auto版《Think Python》](#auto版think-python) | [`think-python/`](think-python/) | [*Think Python, 3rd Edition*](https://greenteapress.com/wp/think-python-3rd-edition/)（Allen B. Downey） | 20（ch00-19）| `a2p` → Python | 编程思维：递归、面向对象、数据结构、文本分析 |
+| 1 | [《Auto 编程语言》](#auto-编程语言) | [`tapl/`](tapl/) | 原创 | 22（ch00-21）+ 4 个附录 | 全部 5 种语言 | Auto 权威指南：脚本 → 系统 → AIOS |
+| 2 | [Auto版《Rust程序设计语言》](#auto版rust程序设计语言) | [`rust/`](rust/) | [*Rust 程序设计语言*](https://doc.rust-lang.org/book/) | 22（ch00-21 + 附录）| `a2r` → Rust | 系统编程、所有权、Actor、异步 |
+| 3 | [Auto版《TypeScript Handbook》](#auto版typescript-handbook) | [`typescript/`](typescript/) | [*TypeScript Handbook*](https://www.typescriptlang.org/docs/handbook/) · [GitHub](https://github.com/microsoft/TypeScript-New-Handbook) | 10（ch00-09）| `a2ts` → TypeScript | Web 开发、类型、类、模块 |
+| 4 | [Auto版《TypeScript DeepDive》](#auto版typescript-deepdive) | [`typescript-deepdive/`](typescript-deepdive/) | [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/) · [GitHub](https://github.com/basarat/typescript-book) | 16（ch00-15）| `a2ts` → TypeScript | 高级类型系统、泛型、模式匹配 |
+| 5 | [Auto版《Little Book of C》](#auto版little-book-of-c) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
+| 6 | [Auto版《Modern C》](#auto版modern-c) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
+| 7 | [Auto版《A Byte of Python》](#auto版a-byte-of-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17（ch00-16）| `a2p` → Python | Python 入门：函数、面向对象、异常、标准库 |
+| 8 | [Auto版《Think Python》](#auto版think-python) | [`think-python/`](think-python/) | [*Think Python, 3rd Edition*](https://greenteapress.com/wp/think-python-3rd-edition/)（Allen B. Downey） | 20（ch00-19）| `a2p` → Python | 编程思维：递归、面向对象、数据结构、文本分析 |
 
-**共计：117 个章节、约 113 个代码示例（含转译器输出），全部提供英中双语版本。**
+**共计：143 个章节、约 148 个代码示例（含转译器输出），全部提供英中双语版本。**
+
+## Auto 编程语言
+
+[`tapl/`](tapl/) 目录包含原创的《Auto 编程语言》一书——Auto 语言的权威指南。
+每个代码示例均展示**五种语言**（Auto、Rust、Python、C、TypeScript），
+让来自不同语言背景的开发者都能通过对比学习。
+
+全书分为三个渐进式阶段：
+
+- **第一阶段——Auto 作为脚本**（第 1–5 章）：变量、函数、控制流、集合、猜数游戏项目
+- **第二阶段——Auto 作为系统**（第 6–14 章）：类型、枚举、面向对象、错误处理、模块、引用、内存、泛型、文件处理器项目
+- **第三阶段——Auto 作为 AIOS**（第 15–22 章）：Actor 并发、异步、智能转型、测试、闭包、编译期计算、标准库、聊天服务器项目
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 阶段 | 英文版 | 中文版 |
+|----|------|-------|--------|
+| 00 | — | [Introduction](tapl/ch00-introduction.md) | [简介](tapl/ch00-introduction.cn.md) |
+| 01 | 脚本 | [Getting Started](tapl/ch01-getting-started.md) | [入门](tapl/ch01-getting-started.cn.md) |
+| 02 | 脚本 | [Variables & Operators](tapl/ch02-variables-operators.md) | [变量与运算符](tapl/ch02-variables-operators.cn.md) |
+| 03 | 脚本 | [Functions & Control Flow](tapl/ch03-functions.md) | [函数与控制流](tapl/ch03-functions.cn.md) |
+| 04 | 脚本 | [Collections & Nodes](tapl/ch04-collections.md) | [集合与节点](tapl/ch04-collections.cn.md) |
+| 05 | 脚本 | [Project: Guessing Game](tapl/ch05-guessing-game.md) | [项目：猜数游戏](tapl/ch05-guessing-game.cn.md) |
+| 06 | 系统 | [Types & `let`](tapl/ch06-types.md) | [类型与 `let`](tapl/ch06-types.cn.md) |
+| 07 | 系统 | [Enums & Pattern Matching](tapl/ch07-enums.md) | [枚举与模式匹配](tapl/ch07-enums.cn.md) |
+| 08 | 系统 | [OOP Reshaped](tapl/ch08-oop.md) | [重塑面向对象](tapl/ch08-oop.cn.md) |
+| 09 | 系统 | [Error Handling](tapl/ch09-error-handling.md) | [错误处理](tapl/ch09-error-handling.cn.md) |
+| 10 | 系统 | [Packages & Modules](tapl/ch10-modules.md) | [包与模块](tapl/ch10-modules.cn.md) |
+| 11 | 系统 | [References & Pointers](tapl/ch11-references.md) | [引用与指针](tapl/ch11-references.cn.md) |
+| 12 | 系统 | [Memory & Ownership](tapl/ch12-memory.md) | [内存与所有权](tapl/ch12-memory.cn.md) |
+| 13 | 系统 | [Generics](tapl/ch13-generics.md) | [泛型](tapl/ch13-generics.cn.md) |
+| 14 | 系统 | [Project: File Processor](tapl/ch14-file-processor.md) | [项目：文件处理器](tapl/ch14-file-processor.cn.md) |
+| 15 | AIOS | [Actor Concurrency](tapl/ch15-actors.md) | [Actor 并发](tapl/ch15-actors.cn.md) |
+| 16 | AIOS | [Async with `~T`](tapl/ch16-async.md) | [异步编程 `~T`](tapl/ch16-async.cn.md) |
+| 17 | AIOS | [Smart Casts & Flow Typing](tapl/ch17-smart-casts.md) | [智能转型与流式类型](tapl/ch17-smart-casts.cn.md) |
+| 18 | AIOS | [Testing](tapl/ch18-testing.md) | [测试](tapl/ch18-testing.cn.md) |
+| 19 | AIOS | [Closures & Iterators](tapl/ch19-closures.md) | [闭包与迭代器](tapl/ch19-closures.cn.md) |
+| 20 | AIOS | [Comptime & Metaprogramming](tapl/ch20-comptime.md) | [编译期计算与元编程](tapl/ch20-comptime.cn.md) |
+| 21 | AIOS | [Standard Library Tour](tapl/ch21-stdlib.md) | [标准库概览](tapl/ch21-stdlib.cn.md) |
+| 22 | AIOS | [Project: Multi-user Chat Server](tapl/ch22-chat-server.md) | [项目：多人聊天服务器](tapl/ch22-chat-server.cn.md) |
+
+### 附录
+
+| 附录 | 英文版 | 中文版 |
+|------|-------|--------|
+| A | [Keyword Reference](tapl/appendix-a-keywords.md) | [关键字参考](tapl/appendix-a-keywords.cn.md) |
+| B | [Operator Table](tapl/appendix-b-operators.md) | [运算符表](tapl/appendix-b-operators.cn.md) |
+| C | [Transpiler Quick-Ref](tapl/appendix-c-transpiler-quick-ref.md) | [转译器速查](tapl/appendix-c-transpiler-quick-ref.cn.md) |
+| D | [Standard Library Index](tapl/appendix-d-stdlib-index.md) | [标准库索引](tapl/appendix-d-stdlib-index.cn.md) |
+
+### 核心概念映射（Auto vs 五种语言）
+
+| Auto | Rust | Python | C | TypeScript | 说明 |
+|------|------|--------|---|-----------|------|
+| `type` | `struct` | `@dataclass` | `struct` | `interface`/`class` | 数据类型定义 |
+| `enum` | `enum` | `Union` | `enum` + tag | `type` union | 和类型 |
+| `spec` | `trait` | `Protocol`/`ABC` | vtable | `interface` | 行为契约 |
+| `is` | `match` | `match`/`isinstance` | `switch` | `switch` | 模式匹配 |
+| `ext` | `impl` | 类方法 | 函数 | 方法 | 扩展方法 |
+| `has` | 组合 | 组合 | 嵌套结构体 | 组合 | 自动委托 |
+| `?T` | `Option<T>` | `T \| None` | 标记指针 | `T \| null` | 可选值 |
+| `!T` | `Result<T,E>` | `raise`/`try` | 错误码 | `try`/`catch` | 错误结果 |
+| `spawn`/`send` | `thread::spawn`/`mpsc` | `Thread`/`Queue` | `pthread`/pipe | `Worker`/`postMessage` | Actor 并发 |
+| `~T` | `async fn` | `async def` | 回调 | `Promise<T>` | 异步蓝图 |
+| `#[comptime]` | `const fn`/宏 | 装饰器 | 预处理器 | 装饰器 | 编译期计算 |
+| `automan` | `cargo` | `pip`/`poetry` | `make`/`cmake` | `npm`/`pnpm` | 包管理器 |
 
 ## Auto版《Rust程序设计语言》
 
