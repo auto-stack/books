@@ -1,0 +1,12 @@
+fn describe(value int | String) {
+    if value is int {
+        print("Integer: " + value)
+    } else {
+        print("String: " + value)
+    }
+}
+
+fn main() {
+    describe(42)
+    describe("hello")
+}

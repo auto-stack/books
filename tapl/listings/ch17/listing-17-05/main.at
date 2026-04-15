@@ -1,0 +1,35 @@
+spec Renderable {
+    fn render(&self) String
+}
+
+type Button {
+    label String
+}
+
+ext Button as Renderable {
+    fn render(&self) String {
+        "[Button: " + self.label + "]"
+    }
+}
+
+type TextField {
+    text String
+}
+
+ext TextField as Renderable {
+    fn render(&self) String {
+        "[TextField: " + self.text + "]"
+    }
+}
+
+fn render_all(items []Renderable) {
+    for item in items {
+        print(item.render())
+    }
+}
+
+fn main() {
+    var b = Button { label: "Click me" }
+    var t = TextField { text: "Type here" }
+    render_all([b, t])
+}

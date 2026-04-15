@@ -1,0 +1,12 @@
+fn format_value(v int | String | float) {
+    if v is String {
+        v.to_upper()
+    } else {
+        "Not a string"
+    }
+}
+
+fn main() {
+    print(format_value("hello"))
+    print(format_value(42))
+}
