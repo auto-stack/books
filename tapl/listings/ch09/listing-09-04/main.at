@@ -1,0 +1,9 @@
+fn read_config(path String) !String {
+    var content = read_file(path)!
+    content
+}
+
+fn main() {
+    var config = read_config("config.txt")!
+    print(config)
+}

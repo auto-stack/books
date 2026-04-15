@@ -1,0 +1,17 @@
+type ParseError {
+    message String
+    line int
+}
+
+fn parse(s String) !int {
+    if s == "" {
+        ParseError { message: "empty input", line: 0 }
+    } else {
+        42
+    }
+}
+
+fn main() {
+    var result = parse("hello")!
+    print(result)
+}

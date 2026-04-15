@@ -1,0 +1,22 @@
+fn divide(a float, b float) !float {
+    if b == 0.0 {
+        "division by zero"
+    } else {
+        a / b
+    }
+}
+
+fn safe_divide(a float, b float) ?float {
+    var result = try divide(a, b)
+    is result {
+        Ok(v) => v,
+        Err(_) => none
+    }
+}
+
+fn main() {
+    var r1 = safe_divide(10.0, 3.0)
+    print(r1)
+    var r2 = safe_divide(10.0, 0.0)
+    print(r2)
+}

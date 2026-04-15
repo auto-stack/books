@@ -1,0 +1,9 @@
+fn parse_int(s String) !int {
+    // returns int on success, error on failure
+    42  // simplified for example
+}
+
+fn main() {
+    var result = parse_int("42")
+    print(result)
+}

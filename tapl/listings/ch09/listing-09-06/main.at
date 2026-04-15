@@ -1,0 +1,11 @@
+fn risky() !int {
+    42
+}
+
+fn main() {
+    var result = try risky()
+    is result {
+        Ok(v) => print("Got: " + v),
+        Err(e) => print("Error: " + e)
+    }
+}

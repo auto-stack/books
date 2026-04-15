@@ -1,0 +1,19 @@
+type User {
+    name String
+    age int
+}
+
+fn find_user(id int) ?User {
+    if id == 1 {
+        User { name: "Alice", age: 30 }
+    } else {
+        none
+    }
+}
+
+fn main() {
+    var user = find_user(1)
+    print(user.name)
+    var missing = find_user(2)
+    print(missing)
+}

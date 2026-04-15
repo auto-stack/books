@@ -1,0 +1,14 @@
+type User {
+    address ?Address
+}
+
+type Address {
+    city String
+}
+
+fn main() {
+    var alice = User { address: Address { city: "Shanghai" } }
+    var bob = User { address: none }
+    print(alice.address?.city)
+    print(bob.address?.city)
+}
