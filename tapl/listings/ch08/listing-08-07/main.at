@@ -1,0 +1,18 @@
+spec Reader {
+    fn read(&self) String
+}
+
+type File {
+    path String
+}
+
+ext File as Reader {
+    fn read(&self) {
+        "Contents of " + self.path
+    }
+}
+
+fn main() {
+    var f = File { path: "hello.txt" }
+    print(f.read())
+}

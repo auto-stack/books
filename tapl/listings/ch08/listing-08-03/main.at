@@ -1,0 +1,19 @@
+type Engine {
+    horsepower int
+}
+
+ext Engine {
+    fn start(&self) {
+        print("Engine (" + self.horsepower + "hp) started")
+    }
+}
+
+type Car has Engine {
+    brand String
+}
+
+fn main() {
+    var c = Car { brand: "Tesla", Engine { horsepower: 400 } }
+    print(c.brand)
+    c.start()    // Auto-delegated to Engine!
+}

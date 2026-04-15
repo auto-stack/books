@@ -1,0 +1,21 @@
+type Point {
+    x float
+    y float
+}
+
+ext Point {
+    fn new(x float, y float) Point {
+        Point { x, y }
+    }
+    fn distance(&self, other Point) float {
+        var dx = self.x - other.x
+        var dy = self.y - other.y
+        (dx * dx + dy * dy).sqrt()
+    }
+}
+
+fn main() {
+    var a = Point.new(0.0, 0.0)
+    var b = Point.new(3.0, 4.0)
+    print(a.distance(b))
+}

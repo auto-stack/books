@@ -1,0 +1,39 @@
+spec Vehicle {
+    fn start(&self)
+    fn stop(&self)
+}
+
+type Engine {
+    power int
+}
+
+ext Engine {
+    fn ignite(&self) {
+        print("Engine ignited: " + self.power + "hp")
+    }
+}
+
+type Car has Engine {
+    model String
+}
+
+ext Car as Vehicle {
+    fn start(&self) {
+        self.ignite()
+        print(self.model + " started")
+    }
+    fn stop(&self) {
+        print(self.model + " stopped")
+    }
+}
+
+type Truck is Car {
+    payload float
+}
+
+fn main() {
+    var t = Truck { model: "BigRig", Engine { power: 500 }, payload: 10.0 }
+    t.start()
+    t.stop()
+    print("Payload: " + t.payload + " tons")
+}

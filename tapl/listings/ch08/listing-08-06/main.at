@@ -1,0 +1,11 @@
+type String  // built-in type
+
+ext String {
+    fn shout(&self) {
+        self.to_upper() + "!"
+    }
+}
+
+fn main() {
+    print("hello".shout())
+}

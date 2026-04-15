@@ -1,0 +1,34 @@
+spec Drawable {
+    fn draw(&self)
+}
+
+type Circle {
+    radius float
+}
+
+ext Circle {
+    fn draw(&self) {
+        print("Drawing circle with radius " + self.radius)
+    }
+}
+
+type Square {
+    side float
+}
+
+ext Square {
+    fn draw(&self) {
+        print("Drawing square with side " + self.side)
+    }
+}
+
+fn render(d Drawable) {
+    d.draw()
+}
+
+fn main() {
+    var c = Circle { radius: 5.0 }
+    var s = Square { side: 3.0 }
+    render(c)
+    render(s)
+}

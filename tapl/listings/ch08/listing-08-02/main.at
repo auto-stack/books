@@ -1,0 +1,24 @@
+type Animal {
+    name String
+}
+
+ext Animal {
+    fn speak(&self) {
+        print(self.name + " makes a sound")
+    }
+}
+
+type Dog is Animal {
+    breed String
+}
+
+ext Dog {
+    fn speak(&self) {
+        print(self.name + " barks!")
+    }
+}
+
+fn main() {
+    var d = Dog { name: "Rex", breed: "Labrador" }
+    d.speak()
+}

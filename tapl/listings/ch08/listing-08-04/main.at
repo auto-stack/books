@@ -1,0 +1,13 @@
+spec Drawable {
+    fn draw(&self)
+}
+
+type Circle {
+    radius float
+}
+
+ext Circle {
+    fn draw(&self) {
+        print("Drawing circle with radius " + self.radius)
+    }
+}
