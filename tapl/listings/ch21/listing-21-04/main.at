@@ -1,0 +1,29 @@
+// Auto
+fn main() {
+    var nums = [3, 1, 4, 1, 5, 9, 2, 6]
+    var sorted = nums.sort()
+    for n in sorted {
+        print(n)
+    }
+
+    var rev = [1, 2, 3, 4, 5].reverse()
+    println(rev)
+
+    var uniq = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3].unique()
+    println(uniq)
+
+    var flat = [[1, 2], [3, 4], [5, 6]].flatten()
+    println(flat)
+
+    var names = ["Alice", "Bob", "Carol"]
+    var scores = [95, 87, 92]
+    var pairs = names.zip(scores)
+    for pair in pairs {
+        println(pair)
+    }
+
+    var chunked = [1, 2, 3, 4, 5, 6, 7].chunk(3)
+    for c in chunked {
+        println(c)
+    }
+}

@@ -1,0 +1,12 @@
+// Auto
+fn main() {
+    println(min(3, 7))
+    println(max(3, 7))
+    println(abs(-42))
+    println(round(3.7))
+    println(floor(3.9))
+    println(ceil(3.1))
+    println(clamp(15, 0, 10))
+    println(pow(2.0, 10.0))
+    println(sqrt(144.0))
+}

@@ -1,0 +1,25 @@
+// Auto
+fn main() {
+    var raw = "  Hello, World!  "
+    var trimmed = raw.trim()
+    println(trimmed)
+
+    var greeting = format!("Hello, {}!", "Auto")
+    println(greeting)
+
+    var csv = "one,two,three,four"
+    var parts = csv.split(",")
+    for part in parts {
+        println(part)
+    }
+
+    var joined = ["Hello", "World"].join(" ")
+    println(joined)
+
+    var msg = "Hello, World!"
+    println(msg.contains("World"))
+    println(msg.starts_with("Hello"))
+    println(msg.ends_with("!"))
+    println(msg.to_upper())
+    println(msg.replace("World", "Auto"))
+}

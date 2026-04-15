@@ -1,0 +1,24 @@
+// Auto
+type User {
+    name: String
+    age: Int
+    email: String
+}
+
+fn main() {
+    var alice = User { name: "Alice", age: 30, email: "alice@example.com" }
+    var json = to_json(alice)
+    println(json)
+
+    var parsed = from_json!(json, User)
+    println(parsed.name)
+    println(parsed.age)
+
+    var pretty = to_json_pretty(alice)
+    println(pretty)
+
+    var bob = User { name: "Bob", age: 25, email: "bob@example.com" }
+    var users = [alice, bob]
+    var users_json = to_json(users)
+    println(users_json)
+}

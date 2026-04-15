@@ -1,0 +1,18 @@
+// Auto
+fn main() {
+    var path = path_join("data", "output.txt")
+    println(path)
+
+    write_file(path, "Hello from Auto!")
+    var content = read_file(path)
+    println(content)
+
+    println(exists(path))
+    println(exists("nonexistent.txt"))
+
+    mkdir("data/backup")
+    var entries = list_dir("data")
+    for entry in entries {
+        println(entry)
+    }
+}
