@@ -1,0 +1,17 @@
+// In src/lib.auto
+spec MathUtils {
+    fn add(a int, b int) int
+}
+
+ext MathUtils {
+    fn add(a int, b int) int { a + b }
+}
+
+#[test]
+fn test_add() {
+    assert_eq(MathUtils.add(2, 3), 5)
+}
+
+fn main() {
+    print("Run tests with: automan test")
+}

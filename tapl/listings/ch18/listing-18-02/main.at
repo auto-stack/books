@@ -1,0 +1,7 @@
+#[test]
+fn test_string_operations() {
+    var s = "hello"
+    assert_eq(s.len(), 5)
+    assert_ne(s, "world")
+    assert!(s.contains("ell"))
+}

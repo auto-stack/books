@@ -1,0 +1,5 @@
+#[test]
+fn test_addition() {
+    var result = 2 + 2
+    assert_eq(result, 4)
+}

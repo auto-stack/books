@@ -1,0 +1,21 @@
+fn divide(a float, b float) !float {
+    if b == 0.0 { "division by zero" } else { a / b }
+}
+
+#[test]
+fn test_divide_by_zero() {
+    var result = try divide(10.0, 0.0)
+    is result {
+        Ok(_) => assert!(false),
+        Err(e) => assert!(true)
+    }
+}
+
+#[test]
+fn test_divide_success() {
+    var result = try divide(10.0, 2.0)
+    is result {
+        Ok(v) => assert_eq(v, 5.0),
+        Err(_) => assert!(false)
+    }
+}
