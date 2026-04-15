@@ -1,0 +1,76 @@
+fn main() {
+    // Conditional expressions (ternary operator)
+    let age = 20
+    let category = if age < 13 { "child" } else if age < 18 { "teenager" } else { "adult" }
+    print(f"Age {age}: {category}")
+
+    let score = 85
+    let grade = if score >= 90 { "A" } else if score >= 80 { "B" } else if score >= 70 { "C" } else if score >= 60 { "D" } else { "F" }
+    print(f"Score {score}: Grade {grade}")
+
+    // any: at least one element is truthy
+    let numbers = [0, 0, 0, 1, 0]
+    print(any(numbers))
+
+    let empty: [int] = []
+    print(any(empty))
+
+    let all_zeros = [0, 0, 0]
+    print(any(all_zeros))
+
+    // all: all elements are truthy
+    let positives = [1, 2, 3, 4]
+    print(all(positives))
+
+    let mixed = [1, 2, 0, 4]
+    print(all(mixed))
+
+    // Practical example: checking if all strings are non-empty
+    let words = ["hello", "world", "auto"]
+    let mut all_nonempty = true
+    for word in words {
+        if word.len() == 0 {
+            all_nonempty = false
+            break
+        }
+    }
+    print(all_nonempty)
+
+    // Practical example: checking if any string contains a digit
+    let inputs = ["hello", "test123", "world"]
+    let mut has_digit = false
+    for s in inputs {
+        for c in s {
+            if c.isdigit() {
+                has_digit = true
+                break
+            }
+        }
+        if has_digit {
+            break
+        }
+    }
+    print(has_digit)
+
+    // Combining conditional expressions with any/all
+    let scores = [65, 72, 88, 91, 45]
+
+    let mut filtered: [int] = []
+    for s in scores {
+        if s >= 60 {
+            filtered.append(s)
+        }
+    }
+    print(filtered)
+    print(all(filtered))
+
+    // Using any with a generator-like pattern
+    let mut any_failing = false
+    for s in scores {
+        if s < 60 {
+            any_failing = true
+            break
+        }
+    }
+    print(any_failing)
+}

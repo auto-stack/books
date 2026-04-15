@@ -1,0 +1,45 @@
+type Point {
+    x: float,
+    y: float,
+}
+
+type Date {
+    year: int,
+    month: int,
+    day: int,
+}
+
+fn main() {
+    // Creating a Point (equivalent to a named tuple)
+    let p = Point(3.0, 4.0)
+    print(p.x)
+    print(p.y)
+
+    // Points are comparable by their fields
+    let p2 = Point(1.0, 2.0)
+    let p3 = Point(3.0, 4.0)
+    print(p == p3)
+    print(p == p2)
+
+    // You can also convert to a tuple for unpacking
+    let (a, b) = (p.x, p.y)
+    print(f"Unpacked: a={a}, b={b}")
+
+    // Computing distance
+    let distance = (p.x ** 2 + p.y ** 2) ** 0.5
+    print(f"Distance from origin: {distance}")
+
+    // Using as dictionary keys (via tuple conversion)
+    let mut grid: HashMap<(float, float), str> = {}
+    grid[(1.0, 2.0)] = "A"
+    grid[(3.0, 4.0)] = "B"
+    print(grid)
+
+    // A more complex named tuple: representing a date
+    let birthday = Date(2000, 1, 15)
+    print(f"Year: {birthday.year}, Month: {birthday.month}, Day: {birthday.day}")
+
+    // Comparing dates (lexicographic comparison)
+    let today = Date(2025, 4, 15)
+    print(today > birthday)
+}

@@ -1,0 +1,47 @@
+fn main() {
+    // List comprehension equivalent: Auto uses for loops
+    let squares: [int] = []
+    for i in 0..10 {
+        squares.append(i * i)
+    }
+    print(squares)
+
+    // Filtering with a for loop
+    let even_squares: [int] = []
+    for i in 0..10 {
+        if i % 2 == 0 {
+            even_squares.append(i * i)
+        }
+    }
+    print(even_squares)
+
+    // Counter pattern: counting word frequencies
+    let words = ["the", "cat", "in", "the", "hat", "in", "the"]
+    let mut counts: HashMap<str, int> = {}
+    for word in words {
+        counts[word] = counts.get(word, 0) + 1
+    }
+    print(counts)
+
+    // Finding the most common
+    let mut max_word = ""
+    let mut max_count = 0
+    for (word, count) in counts {
+        if count > max_count {
+            max_word = word
+            max_count = count
+        }
+    }
+    print(f"Most common: '{max_word}' appears {max_count} times")
+
+    // Grouping with a dictionary (defaultdict pattern)
+    let letters = "abracadabra"
+    let mut positions: HashMap<str, [int]> = {}
+    for (i, letter) in enumerate(letters) {
+        if letter not in positions {
+            positions[letter] = []
+        }
+        positions[letter].append(i)
+    }
+    print(positions)
+}

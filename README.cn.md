@@ -8,7 +8,7 @@
 
 ## 书籍集合
 
-本仓库包含**六本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
+本仓库包含**七本**配套书籍，每本都将一本知名开源编程书籍适配为Auto语言版本。
 每本书都提供配对的**英文**（`.md`）和**中文**（`.cn.md`）章节，并附带可运行的代码示例。
 
 | # | 书籍 | 目录 | 原著 | 章节数 | 转译器 | 重点 |
@@ -19,8 +19,9 @@
 | 4 | [Auto版《Little Book of C》](#auto版little-book-of-c) | [`little-c/`](little-c/) | [*C 语言小书*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10（ch00-09）| `a2c` → C | C 入门：内存、指针、结构体、I/O |
 | 5 | [Auto版《Modern C》](#auto版modern-c) | [`modern-c/`](modern-c/) | [*Modern C*（Jens Gustedt）](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22（ch00-21）| `a2c` → C | 严谨 C：内存模型、线程、原子操作 |
 | 6 | [Auto版《A Byte of Python》](#auto版a-byte-of-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17（ch00-16）| `a2p` → Python | Python 入门：函数、面向对象、异常、标准库 |
+| 7 | [Auto版《Think Python》](#auto版think-python) | [`think-python/`](think-python/) | [*Think Python, 3rd Edition*](https://greenteapress.com/wp/think-python-3rd-edition/)（Allen B. Downey） | 20（ch00-19）| `a2p` → Python | 编程思维：递归、面向对象、数据结构、文本分析 |
 
-**共计：97 个章节、约 55 个代码示例（含转译器输出），全部提供英中双语版本。**
+**共计：117 个章节、约 113 个代码示例（含转译器输出），全部提供英中双语版本。**
 
 ## Auto版《Rust程序设计语言》
 
@@ -266,3 +267,47 @@
 | `List` | `list` | 有序可变集合 |
 | `HashMap` | `dict` | 键值映射 |
 | `HashSet` | `set` | 唯一值集合 |
+
+## Auto版《Think Python》
+
+[`think-python/`](think-python/) 目录包含了对《Think Python, 3rd Edition》（Allen B. Downey 著）的完整 Auto 适配版本，
+通过 a2p 转译器将 Auto 代码转译为 Python，每章都包含配对的 Auto/Python 代码示例。
+本书以编程思维为核心，涵盖递归、面向对象编程、数据结构和文本分析。
+
+每个章节提供**英文**（`.md`）和**中文**（`.cn.md`）两个版本：
+
+| 章 | 英文版 | 中文版 |
+|----|-------|--------|
+| 00 | [Preface](think-python/ch00-preface.md) | [序言](think-python/ch00-preface.cn.md) |
+| 01 | [Programming as a Way of Thinking](think-python/ch01-thinking.md) | [编程是一种思维方式](think-python/ch01-thinking.cn.md) |
+| 02 | [Variables and Statements](think-python/ch02-variables.md) | [变量与语句](think-python/ch02-variables.cn.md) |
+| 03 | [Functions](think-python/ch03-functions.md) | [函数](think-python/ch03-functions.cn.md) |
+| 04 | [Functions and Interfaces](think-python/ch04-interfaces.md) | [函数与接口](think-python/ch04-interfaces.cn.md) |
+| 05 | [Conditionals and Recursion](think-python/ch05-conditionals.md) | [条件与递归](think-python/ch05-conditionals.cn.md) |
+| 06 | [Return Values](think-python/ch06-return-values.md) | [返回值](think-python/ch06-return-values.cn.md) |
+| 07 | [Iteration and Search](think-python/ch07-iteration.md) | [迭代与搜索](think-python/ch07-iteration.cn.md) |
+| 08 | [Strings and Regular Expressions](think-python/ch08-strings.md) | [字符串与正则表达式](think-python/ch08-strings.cn.md) |
+| 09 | [Lists](think-python/ch09-lists.md) | [列表](think-python/ch09-lists.cn.md) |
+| 10 | [Dictionaries](think-python/ch10-dictionaries.md) | [字典](think-python/ch10-dictionaries.cn.md) |
+| 11 | [Tuples](think-python/ch11-tuples.md) | [元组](think-python/ch11-tuples.cn.md) |
+| 12 | [Text Analysis and Generation](think-python/ch12-text-analysis.md) | [文本分析与生成](think-python/ch12-text-analysis.cn.md) |
+| 13 | [Files and Databases](think-python/ch13-files-databases.md) | [文件与数据库](think-python/ch13-files-databases.cn.md) |
+| 14 | [Classes and Functions](think-python/ch14-classes-functions.md) | [类与函数](think-python/ch14-classes-functions.cn.md) |
+| 15 | [Classes and Methods](think-python/ch15-classes-methods.md) | [类与方法](think-python/ch15-classes-methods.cn.md) |
+| 16 | [Classes and Objects](think-python/ch16-classes-objects.md) | [类与对象](think-python/ch16-classes-objects.cn.md) |
+| 17 | [Inheritance](think-python/ch17-inheritance.md) | [继承](think-python/ch17-inheritance.cn.md) |
+| 18 | [Python Extras](think-python/ch18-extras.md) | [Python 附加特性](think-python/ch18-extras.cn.md) |
+| 19 | [Final Thoughts](think-python/ch19-final-thoughts.md) | [最后的话](think-python/ch19-final-thoughts.cn.md) |
+
+### 核心概念映射（Auto → Python）
+
+| Auto | Python | 说明 |
+|------|--------|------|
+| `type Name { ... }` | `class Name:` | 类/结构体定义 |
+| `fn init(&self, ...)` | `def __init__(self, ...)` | 构造函数 |
+| `fn to_string(&self)` | `def __str__(self)` | 字符串表示 |
+| `fn __add__(&self, other)` | `def __add__(self, other)` | 运算符重载 |
+| `type Sub: Super {}` | `class Sub(Super):` | 继承 |
+| `HashSet<T>` | `set` | 唯一值集合 |
+| `HashMap<K, V>` | `dict` | 键值映射 |
+| `if cond { a } else { b }` | `a if cond else b` | 条件表达式 |

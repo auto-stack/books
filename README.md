@@ -8,7 +8,7 @@ we also provide a Markdown format generated from AutoDown.
 
 ## Book Collection
 
-This repository contains **six** companion books, each adapting a well-known programming
+This repository contains **seven** companion books, each adapting a well-known programming
 book for the Auto language. Every book provides paired **English** (`.md`) and **Chinese**
 (`.cn.md`) chapters with runnable code listings.
 
@@ -20,8 +20,9 @@ book for the Auto language. Every book provides paired **English** (`.md`) and *
 | 4 | [Auto vs Little Book of C](#auto-vs-the-little-book-of-c) | [`little-c/`](little-c/) | [*The Little Book of C*](https://little-book-of-c.github.io/) · [GitHub](https://github.com/little-book-of/c) | 10 (ch00-09) | `a2c` → C | Intro to C: memory, pointers, structs, I/O |
 | 5 | [Auto vs Modern C](#auto-vs-modern-c) | [`modern-c/`](modern-c/) | [*Modern C* by Jens Gustedt](https://gustedt.gitlabpages.inria.fr/modern-c/) | 22 (ch00-21) | `a2c` → C | Rigorous C: memory model, threads, atomics |
 | 6 | [A Byte of Auto (Python)](#a-byte-of-auto-python) | [`byte-of-python/`](byte-of-python/) | [*A Byte of Python*](https://python.swaroopch.com/) · [GitHub](https://github.com/swaroopch/byte-of-python) | 17 (ch00-16) | `a2p` → Python | Python basics: functions, OOP, exceptions, stdlib |
+| 7 | [Think Python 3e — Auto Edition](#think-python-3e--auto-edition) | [`think-python/`](think-python/) | [*Think Python, 3rd Edition*](https://greenteapress.com/wp/think-python-3rd-edition/) (Allen B. Downey) | 20 (ch00-19) | `a2p` → Python | Programming thinking: recursion, OOP, data structures, text analysis |
 
-**Total: 97 chapters, ~55 code listings with transpiler output, all EN + CN.**
+**Total: 117 chapters, ~113 code listings with transpiler output, all EN + CN.**
 
 ## Auto vs The Rust Programming Language
 
@@ -268,3 +269,48 @@ Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
 | `List` | `list` | Ordered mutable collection |
 | `HashMap` | `dict` | Key-value mapping |
 | `HashSet` | `set` | Unique value collection |
+
+## Think Python 3e — Auto Edition
+
+The [`think-python/`](think-python/) directory contains an adaptation of "Think Python, 3rd Edition" (Allen B. Downey)
+for the Auto programming language, with paired Auto/Python code examples in every chapter.
+This book teaches programming as a way of thinking, covering recursion, object-oriented programming,
+data structures, and text analysis through Auto code that transpiles to Python.
+
+Each chapter is provided in **English** (`.md`) and **Chinese** (`.cn.md`):
+
+| Ch | English | Chinese |
+|----|---------|---------|
+| 00 | [Preface](think-python/ch00-preface.md) | [序言](think-python/ch00-preface.cn.md) |
+| 01 | [Programming as a Way of Thinking](think-python/ch01-thinking.md) | [编程是一种思维方式](think-python/ch01-thinking.cn.md) |
+| 02 | [Variables and Statements](think-python/ch02-variables.md) | [变量与语句](think-python/ch02-variables.cn.md) |
+| 03 | [Functions](think-python/ch03-functions.md) | [函数](think-python/ch03-functions.cn.md) |
+| 04 | [Functions and Interfaces](think-python/ch04-interfaces.md) | [函数与接口](think-python/ch04-interfaces.cn.md) |
+| 05 | [Conditionals and Recursion](think-python/ch05-conditionals.md) | [条件与递归](think-python/ch05-conditionals.cn.md) |
+| 06 | [Return Values](think-python/ch06-return-values.md) | [返回值](think-python/ch06-return-values.cn.md) |
+| 07 | [Iteration and Search](think-python/ch07-iteration.md) | [迭代与搜索](think-python/ch07-iteration.cn.md) |
+| 08 | [Strings and Regular Expressions](think-python/ch08-strings.md) | [字符串与正则表达式](think-python/ch08-strings.cn.md) |
+| 09 | [Lists](think-python/ch09-lists.md) | [列表](think-python/ch09-lists.cn.md) |
+| 10 | [Dictionaries](think-python/ch10-dictionaries.md) | [字典](think-python/ch10-dictionaries.cn.md) |
+| 11 | [Tuples](think-python/ch11-tuples.md) | [元组](think-python/ch11-tuples.cn.md) |
+| 12 | [Text Analysis and Generation](think-python/ch12-text-analysis.md) | [文本分析与生成](think-python/ch12-text-analysis.cn.md) |
+| 13 | [Files and Databases](think-python/ch13-files-databases.md) | [文件与数据库](think-python/ch13-files-databases.cn.md) |
+| 14 | [Classes and Functions](think-python/ch14-classes-functions.md) | [类与函数](think-python/ch14-classes-functions.cn.md) |
+| 15 | [Classes and Methods](think-python/ch15-classes-methods.md) | [类与方法](think-python/ch15-classes-methods.cn.md) |
+| 16 | [Classes and Objects](think-python/ch16-classes-objects.md) | [类与对象](think-python/ch16-classes-objects.cn.md) |
+| 17 | [Inheritance](think-python/ch17-inheritance.md) | [继承](think-python/ch17-inheritance.cn.md) |
+| 18 | [Python Extras](think-python/ch18-extras.md) | [Python 附加特性](think-python/ch18-extras.cn.md) |
+| 19 | [Final Thoughts](think-python/ch19-final-thoughts.md) | [最后的话](think-python/ch19-final-thoughts.cn.md) |
+
+### Key Concept Mappings (Auto → Python)
+
+| Auto | Python | Description |
+|------|--------|-------------|
+| `type Name { ... }` | `class Name:` | Class/struct definition |
+| `fn init(&self, ...)` | `def __init__(self, ...)` | Constructor |
+| `fn to_string(&self)` | `def __str__(self)` | String representation |
+| `fn __add__(&self, other)` | `def __add__(self, other)` | Operator overloading |
+| `type Sub: Super {}` | `class Sub(Super):` | Inheritance |
+| `HashSet<T>` | `set` | Unique value collection |
+| `HashMap<K, V>` | `dict` | Key-value mapping |
+| `if cond { a } else { b }` | `a if cond else b` | Conditional expression |

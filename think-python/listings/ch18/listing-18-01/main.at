@@ -1,0 +1,38 @@
+use std::collections::HashSet
+
+fn main() {
+    // Creating a HashSet from a list
+    let languages: HashSet<str> = ["Python", "Auto", "Java", "C++", "Python"]
+    print(languages)
+
+    // Adding elements
+    languages.add("Rust")
+    print(languages)
+
+    // Checking membership
+    print("Auto" in languages)
+    print("Go" in languages)
+
+    // Removing elements
+    languages.remove("C++")
+    print(languages)
+
+    // Set size
+    print(languages.len())
+
+    // Set operations
+    let a: HashSet<int> = [1, 2, 3, 4]
+    let b: HashSet<int> = [3, 4, 5, 6]
+
+    // Union
+    print(a | b)
+
+    // Intersection
+    print(a & b)
+
+    // Difference
+    print(a - b)
+
+    // Symmetric difference
+    print(a ^ b)
+}
