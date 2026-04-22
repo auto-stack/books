@@ -1,9 +1,19 @@
-# Build artifacts in listings
-rust/listings/**/.am/
-rust/listings/**/rust/
-rust/listings/**/*.wrong.rs
-typescript/listings/**/.am/
+# Build artifacts
+target/
+
+# Auto compiler working directory
 .am/
+
+# Test artifacts
+**/*.wrong.rs
+**/*.wrong.py
+**/*.wrong.c
+**/*.wrong.h
+**/*.wrong.ts
+**/*.wrong.out
+
+# Generated Rust output from listings
+rust/listings/**/rust/
 
 # Claude Code
 .claude/settings.local.json

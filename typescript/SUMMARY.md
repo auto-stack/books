@@ -11,4 +11,3 @@
 - [Type Operators](ch07-type-operators.md)
 - [Classes](ch08-classes.md)
 - [Modules](ch09-modules.md)
-- [Understanding Errors](ch10-errors.md)

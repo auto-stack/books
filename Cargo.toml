@@ -1,0 +1,11 @@
+[package]
+name = "book-listing-tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+auto-lang = { path = "../auto-lang/crates/auto-lang" }
+
+[[test]]
+name = "listings"
+harness = true

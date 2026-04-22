@@ -4,12 +4,14 @@
 #[allow(unused_imports)]
 use auto_lang::a2r_std::*;
 
+#[derive(Clone, Debug, PartialEq)]
 struct Color {
     red: i32,
     green: i32,
     blue: i32,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 struct Point {
     x: i32,
     y: i32,

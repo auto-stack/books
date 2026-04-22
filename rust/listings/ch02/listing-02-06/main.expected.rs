@@ -11,8 +11,5 @@ fn main() {
     loop {
         println!("Please input your guess.");
         let guess: i32 = 7;
-                if guess < secret_number { println!("Too small!"); }
-        if guess > secret_number { println!("Too big!"); }
-        if guess == secret_number { println!("You win!"); break; }
-    }
+                                    }
 }
