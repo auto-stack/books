@@ -8,7 +8,10 @@ fn first_word(s: String) -> i32 {
     let bytes = s.bytes();
     let mut i: i32 = 0;
     for b in bytes {
-                i = i + 1;
+        if b == 32 {
+            return i;
+        }
+        i = i + 1;
     }
     return s.len();
 }

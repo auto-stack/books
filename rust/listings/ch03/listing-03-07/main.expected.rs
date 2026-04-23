@@ -8,7 +8,10 @@ fn main() {
 
     let mut counter: i32 = 0;
     loop {
-                counter = counter + 1;
+        if counter == 10 {
+            break;
+        }
+        counter = counter + 1;
     }
     println!("counter reached {}", counter);
 
@@ -17,7 +20,10 @@ fn main() {
     loop {
         println!("{}", number);
         number = number - 1;
-            }
+        if number == 0 {
+            break;
+        }
+    }
     println!("LIFTOFF!");
 
 

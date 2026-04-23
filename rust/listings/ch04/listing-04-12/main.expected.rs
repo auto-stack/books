@@ -8,7 +8,10 @@ fn first_word_slice(s: String) -> String {
     let bytes = s.bytes();
     let mut i: i32 = 0;
     for b in bytes {
-                i = i + 1;
+        if b == 32 {
+            return s[0..i];
+        }
+        i = i + 1;
     }
     return s[0..s.len()];
 }
