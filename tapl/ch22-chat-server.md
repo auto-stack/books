@@ -2856,6 +2856,206 @@ patterns you have learned here will serve you well.
 
 Thank you for reading. Now go build something amazing.
 
+## Practical Network Patterns
+
+Beyond the chat server, here are three common network utility patterns: parsing
+URLs, extracting query parameters, and collecting process output.
+
+<Listing number="22-7" file-name="main.at" caption="Parsing a URL into components">
+
+```auto
+// Auto — URL Parsing Basics
+fn main() {
+    let u = url.parse("https://example.com/path?query=1")
+    let scheme = u.scheme()
+    let host = u.host()
+    let path = u.path()
+
+    println(f"Scheme: $scheme")
+    println(f"Host:   $host")
+    println(f"Path:   $path")
+}
+```
+
+```rust
+// Rust
+use url::Url;
+
+fn main() {
+    let u = Url::parse("https://example.com/path?query=1").unwrap();
+    println!("Scheme: {}", u.scheme());
+    println!("Host:   {}", u.host_str().unwrap_or(""));
+    println!("Path:   {}", u.path());
+}
+```
+
+```python
+# Python
+from urllib.parse import urlparse
+
+u = urlparse("https://example.com/path?query=1")
+print(f"Scheme: {u.scheme}")
+print(f"Host:   {u.hostname}")
+print(f"Path:   {u.path}")
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("Scheme: https\n");
+    printf("Host:   example.com\n");
+    printf("Path:   /path\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const url = new URL("https://example.com/path?query=1");
+console.log(`Scheme: ${url.protocol.replace(":", "")}`);
+console.log(`Host:   ${url.hostname}`);
+console.log(`Path:   ${url.pathname}`);
+```
+
+</Listing>
+
+<Listing number="22-8" file-name="main.at" caption="Extracting query parameters from a URL">
+
+```auto
+// Auto — URL Query Parameter Parsing
+dep url
+use.rust url::Url
+
+fn main() {
+    let url = Url.parse("https://example.com/rust?name=hello&age=20").unwrap()
+    let query = url.query()
+    println(f"Query string: $query")
+
+    var pair_count = 0
+    for pair in url.query_pairs() {
+        pair_count += 1
+    }
+    println(f"Parameter count: $pair_count")
+}
+```
+
+```rust
+// Rust
+use url::Url;
+
+fn main() {
+    let url = Url::parse("https://example.com/rust?name=hello&age=20").unwrap();
+    let query = url.query().unwrap_or("");
+    println!("Query string: {}", query);
+    let mut pair_count = 0;
+    for pair in url.query_pairs() { pair_count += 1; }
+    println!("Parameter count: {}", pair_count);
+}
+```
+
+```python
+# Python
+from urllib.parse import urlparse, parse_qs
+
+u = urlparse("https://example.com/rust?name=hello&age=20")
+print(f"Query string: {u.query}")
+params = parse_qs(u.query)
+print(f"Parameter count: {len(params)}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *query = "name=hello&age=20";
+    printf("Query string: %s\n", query);
+    int pair_count = 0;
+    char q[64];
+    strncpy(q, query, 64);
+    char *token = strtok(q, "&");
+    while (token != NULL) { pair_count++; token = strtok(NULL, "&"); }
+    printf("Parameter count: %d\n", pair_count);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const url = new URL("https://example.com/rust?name=hello&age=20");
+console.log(`Query string: ${url.searchParams.toString()}`);
+let pairCount = 0;
+url.searchParams.forEach(() => pairCount++);
+console.log(`Parameter count: ${pairCount}`);
+```
+
+</Listing>
+
+<Listing number="22-9" file-name="main.at" caption="Collecting process output with a List">
+
+```auto
+// Auto — Collecting Process Output with List
+fn main() {
+    var output_lines List<Str> = List.new()
+    output_lines.push("Building project...")
+    output_lines.push("Compiling src/main.at")
+    output_lines.push("Done: 2 files compiled")
+
+    println(f"Captured {output_lines.len()} lines:")
+    for line in output_lines {
+        println(f"  $line")
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let mut output_lines: Vec<String> = Vec::new();
+    output_lines.push("Building project...".to_string());
+    output_lines.push("Compiling src/main.at".to_string());
+    output_lines.push("Done: 2 files compiled".to_string());
+    println!("Captured {} lines:", output_lines.len());
+    for line in &output_lines { println!("  {}", line); }
+}
+```
+
+```python
+# Python
+output_lines = []
+output_lines.append("Building project...")
+output_lines.append("Compiling src/main.at")
+output_lines.append("Done: 2 files compiled")
+print(f"Captured {len(output_lines)} lines:")
+for line in output_lines: print(f"  {line}")
+```
+
+```c
+// C
+#include <stdio.h>
+int main() {
+    const char *lines[] = {"Building project...", "Compiling src/main.at", "Done: 2 files compiled"};
+    printf("Captured 3 lines:\n");
+    for (int i = 0; i < 3; i++) printf("  %s\n", lines[i]);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const outputLines: string[] = [];
+outputLines.push("Building project...");
+outputLines.push("Compiling src/main.at");
+outputLines.push("Done: 2 files compiled");
+console.log(`Captured ${outputLines.length} lines:`);
+for (const line of outputLines) console.log(`  ${line}`);
+```
+
+</Listing>
+
 ## Summary
 
 This capstone project brought together every concept from Phase 3 and the

@@ -1230,6 +1230,159 @@ needs rich error information; the high-level API just needs to know success or f
 - You want to convert `!T` to `?T`
 - You need to log or transform errors
 
+## Practical Error Patterns
+
+Two common patterns you will encounter: propagating errors with the `?` operator,
+and handling environment variables that may be missing.
+
+<Listing number="9-8" file-name="main.at" caption="Error propagation with the ? operator">
+
+```auto
+// Auto — Error Propagation with ?
+use.rust std::error::Error
+
+fn main() ! {
+    let msg = "hello"
+    let result = Ok(msg.to_string())
+    let val = result.?
+    println(f"Got: $val")
+
+    let fail = Err("something went wrong")
+    let recover = fail.?
+    println(recover)
+}
+```
+
+```rust
+// Rust
+use std::error::Error;
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let msg = "hello";
+    let result: Result<String, &str> = Ok(msg.to_string());
+    let val = result?;
+    println!("Got: {}", val);
+
+    let fail: Result<String, &str> = Err("something went wrong");
+    let recover = fail?;
+    println!("{}", recover);
+    Ok(())
+}
+```
+
+```python
+# Python
+def main():
+    msg = "hello"
+    try:
+        result = msg
+        val = result
+        print(f"Got: {val}")
+        raise Exception("something went wrong")
+    except Exception as e:
+        print(e)
+
+if __name__ == "__main__":
+    main()
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    const char *msg = "hello";
+    const char *val = msg;
+    printf("Got: %s\n", val);
+    printf("something went wrong\n");
+    return 1;
+}
+```
+
+```typescript
+// TypeScript
+function main(): void {
+    const msg = "hello";
+    try {
+        const result: string = msg;
+        const val: string = result;
+        console.log(`Got: ${val}`);
+        throw new Error("something went wrong");
+    } catch (e) {
+        console.log((e as Error).message);
+    }
+}
+
+main();
+```
+
+</Listing>
+
+<Listing number="9-9" file-name="main.at" caption="Environment variables with safe defaults">
+
+```auto
+// Auto — Environment Variables
+fn main() {
+    env.set("AUTO_GREETING", "Hello from Auto")
+
+    let val = env.get_or("AUTO_GREETING", "default")
+    println(f"Greeting: $val")
+
+    let missing = env.get_or("NONEXISTENT_VAR", "not set")
+    println(f"Missing: $missing")
+}
+```
+
+```rust
+// Rust
+use std::env;
+
+fn main() {
+    env::set_var("AUTO_GREETING", "Hello from Auto");
+    let val = env::var("AUTO_GREETING").unwrap_or("default".to_string());
+    println!("Greeting: {}", val);
+    let missing = env::var("NONEXISTENT_VAR").unwrap_or("not set".to_string());
+    println!("Missing: {}", missing);
+}
+```
+
+```python
+# Python
+import os
+
+os.environ["AUTO_GREETING"] = "Hello from Auto"
+val = os.environ.get("AUTO_GREETING", "default")
+print(f"Greeting: {val}")
+missing = os.environ.get("NONEXISTENT_VAR", "not set")
+print(f"Missing: {missing}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    setenv("AUTO_GREETING", "Hello from Auto", 1);
+    const char *val = getenv("AUTO_GREETING");
+    printf("Greeting: %s\n", val ? val : "default");
+    const char *missing = getenv("NONEXISTENT_VAR");
+    printf("Missing: %s\n", missing ? missing : "not set");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+process.env["AUTO_GREETING"] = "Hello from Auto";
+const val: string = process.env["AUTO_GREETING"] || "default";
+console.log(`Greeting: ${val}`);
+const missing: string = process.env["NONEXISTENT_VAR"] || "not set";
+console.log(`Missing: ${missing}`);
+```
+
+</Listing>
+
 ## Summary
 
 Auto's error handling is built on two type-level constructs that make errors visible

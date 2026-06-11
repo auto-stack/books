@@ -1,0 +1,18 @@
+// Auto — Sorting Integers
+fn main() {
+    var nums = [15, 3, 8, 1, 12, 7]
+
+    println("Before sort:")
+    for n in nums {
+        print(f"$n ")
+    }
+    println("")
+
+    nums.sort()
+
+    println("After sort:")
+    for n in nums {
+        print(f"$n ")
+    }
+    println("")
+}

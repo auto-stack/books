@@ -1,0 +1,13 @@
+// Auto — Error Propagation with ?
+use.rust std::error::Error
+
+fn main() ! {
+    let msg = "hello"
+    let result = Ok(msg.to_string())
+    let val = result.?
+    println(f"Got: $val")
+
+    let fail = Err("something went wrong")
+    let recover = fail.?
+    println(recover)
+}

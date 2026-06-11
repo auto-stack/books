@@ -1,0 +1,13 @@
+// Auto — Collecting Process Output with List
+fn main() {
+    // Simulate capturing process output lines
+    var output_lines List<Str> = List.new()
+    output_lines.push("Building project...")
+    output_lines.push("Compiling src/main.at")
+    output_lines.push("Done: 2 files compiled")
+
+    println(f"Captured {output_lines.len()} lines:")
+    for line in output_lines {
+        println(f"  $line")
+    }
+}

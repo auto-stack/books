@@ -1,0 +1,15 @@
+// Auto — Sorting Structs by Key
+type Person {
+    name str
+    age int
+}
+
+fn main() {
+    var people = [Person("Zoe", 25), Person("Al", 60), Person("John", 1)]
+
+    println("Sorted by age:")
+    people.sort_by_key((p) => p.age)
+    for p in people {
+        println(f"  $p.name ($p.age)")
+    }
+}

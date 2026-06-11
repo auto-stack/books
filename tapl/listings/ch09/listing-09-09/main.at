@@ -1,0 +1,13 @@
+// Auto — Environment Variables
+fn main() {
+    // Set an environment variable
+    env.set("AUTO_GREETING", "Hello from Auto")
+
+    // Read with a default fallback
+    let val = env.get_or("AUTO_GREETING", "default")
+    println(f"Greeting: $val")
+
+    // Missing variable returns the fallback
+    let missing = env.get_or("NONEXISTENT_VAR", "not set")
+    println(f"Missing: $missing")
+}

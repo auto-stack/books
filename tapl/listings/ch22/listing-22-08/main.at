@@ -1,0 +1,16 @@
+// Auto — URL Query Parameter Parsing
+dep url
+use.rust url::Url
+
+fn main() {
+    let url = Url.parse("https://example.com/rust?name=hello&age=20").unwrap()
+    let query = url.query()
+    println(f"Query string: $query")
+
+    // Count query parameter pairs
+    var pair_count = 0
+    for pair in url.query_pairs() {
+        pair_count += 1
+    }
+    println(f"Parameter count: $pair_count")
+}

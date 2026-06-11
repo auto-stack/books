@@ -1,0 +1,11 @@
+// Auto — URL Parsing Basics
+fn main() {
+    let u = url.parse("https://example.com/path?query=1")
+    let scheme = u.scheme()
+    let host = u.host()
+    let path = u.path()
+
+    println(f"Scheme: $scheme")
+    println(f"Host:   $host")
+    println(f"Path:   $path")
+}

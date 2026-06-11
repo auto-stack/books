@@ -1144,6 +1144,220 @@ main();
 | C | `current != NULL` | `NULL` |
 | TypeScript | `current !== null` | `null` |
 
+## 实用排序与矩阵操作
+
+上面的集合演示了基本构建块。以下是三种常用操作：排序基本类型、按键排序结构体和矩阵运算。
+
+<Listing number="4-9" file-name="main.at" caption="对整数进行升序排序">
+
+```auto
+// Auto — Sorting Integers
+fn main() {
+    var nums = [15, 3, 8, 1, 12, 7]
+    println("Before sort:")
+    for n in nums { print(f"$n ") }
+    println("")
+    nums.sort()
+    println("After sort:")
+    for n in nums { print(f"$n ") }
+    println("")
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let mut nums = vec![15, 3, 8, 1, 12, 7];
+    println!("Before sort:");
+    for n in &nums { print!("{} ", n); }
+    println!();
+    nums.sort();
+    println!("After sort:");
+    for n in &nums { print!("{} ", n); }
+    println!();
+}
+```
+
+```python
+# Python
+nums = [15, 3, 8, 1, 12, 7]
+print("Before sort:")
+for n in nums: print(n, end=" ")
+print()
+nums.sort()
+print("After sort:")
+for n in nums: print(n, end=" ")
+print()
+```
+
+```c
+// C
+#include <stdio.h>
+#include <stdlib.h>
+int cmp(const void *a, const void *b) { return *(int*)a - *(int*)b; }
+int main() {
+    int nums[] = {15, 3, 8, 1, 12, 7};
+    int len = 6;
+    printf("Before sort:\n");
+    for (int i = 0; i < len; i++) printf("%d ", nums[i]);
+    printf("\n");
+    qsort(nums, len, sizeof(int), cmp);
+    printf("After sort:\n");
+    for (int i = 0; i < len; i++) printf("%d ", nums[i]);
+    printf("\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+let nums: number[] = [15, 3, 8, 1, 12, 7];
+console.log("Before sort:");
+console.log(nums.join(" "));
+nums.sort((a, b) => a - b);
+console.log("After sort:");
+console.log(nums.join(" "));
+```
+
+</Listing>
+
+<Listing number="4-10" file-name="main.at" caption="使用 sort_by_key 按字段排序结构体">
+
+```auto
+// Auto — Sorting Structs by Key
+type Person {
+    name str
+    age int
+}
+
+fn main() {
+    var people = [Person("Zoe", 25), Person("Al", 60), Person("John", 1)]
+    println("Sorted by age:")
+    people.sort_by_key((p) => p.age)
+    for p in people {
+        println(f"  $p.name ($p.age)")
+    }
+}
+```
+
+```rust
+// Rust
+#[derive(Clone, Debug)]
+struct Person { name: String, age: i32 }
+fn main() {
+    let mut people = vec![
+        Person { name: "Zoe".to_string(), age: 25 },
+        Person { name: "Al".to_string(), age: 60 },
+        Person { name: "John".to_string(), age: 1 },
+    ];
+    println!("Sorted by age:");
+    people.sort_by_key(|p| p.age);
+    for p in &people { println!("  {} ({})", p.name, p.age); }
+}
+```
+
+```python
+# Python
+people = [{"name": "Zoe", "age": 25}, {"name": "Al", "age": 60}, {"name": "John", "age": 1}]
+print("Sorted by age:")
+people.sort(key=lambda p: p["age"])
+for p in people: print(f"  {p['name']} ({p['age']})")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct { char name[32]; int age; } Person;
+int cmp_age(const void *a, const void *b) { return ((Person*)a)->age - ((Person*)b)->age; }
+int main() {
+    Person people[] = {{"Zoe", 25}, {"Al", 60}, {"John", 1}};
+    qsort(people, 3, sizeof(Person), cmp_age);
+    printf("Sorted by age:\n");
+    for (int i = 0; i < 3; i++) printf("  %s (%d)\n", people[i].name, people[i].age);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+interface Person { name: string; age: number; }
+let people: Person[] = [{ name: "Zoe", age: 25 }, { name: "Al", age: 60 }, { name: "John", age: 1 }];
+console.log("Sorted by age:");
+people.sort((a, b) => a.age - b.age);
+for (const p of people) console.log(`  ${p.name} (${p.age})`);
+```
+
+</Listing>
+
+<Listing number="4-11" file-name="main.at" caption="使用嵌套数组进行二维矩阵加法">
+
+```auto
+// Auto — Matrix Addition
+fn main() {
+    let a = [[1, 2], [3, 4]]
+    let b = [[5, 6], [7, 8]]
+    var c = [[0, 0], [0, 0]]
+    for i in 0..2 {
+        for j in 0..2 {
+            c[i][j] = a[i][j] + b[i][j]
+        }
+    }
+    println("Result matrix:")
+    for i in 0..2 {
+        println(f"  {c[i][0]} {c[i][1]}")
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let a = vec![vec![1, 2], vec![3, 4]];
+    let b = vec![vec![5, 6], vec![7, 8]];
+    let mut c = vec![vec![0, 0], vec![0, 0]];
+    for i in 0..2 { for j in 0..2 { c[i][j] = a[i][j] + b[i][j]; } }
+    println!("Result matrix:");
+    for i in 0..2 { println!("  {} {}", c[i][0], c[i][1]); }
+}
+```
+
+```python
+# Python
+a = [[1, 2], [3, 4]]
+b = [[5, 6], [7, 8]]
+c = [[0, 0], [0, 0]]
+for i in range(2):
+    for j in range(2):
+        c[i][j] = a[i][j] + b[i][j]
+print("Result matrix:")
+for i in range(2): print(f"  {c[i][0]} {c[i][1]}")
+```
+
+```c
+// C
+#include <stdio.h>
+int main() {
+    int a[2][2] = {{1,2},{3,4}}, b[2][2] = {{5,6},{7,8}}, c[2][2] = {{0,0},{0,0}};
+    for (int i = 0; i < 2; i++) for (int j = 0; j < 2; j++) c[i][j] = a[i][j] + b[i][j];
+    printf("Result matrix:\n");
+    for (int i = 0; i < 2; i++) printf("  %d %d\n", c[i][0], c[i][1]);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const a: number[][] = [[1, 2], [3, 4]];
+const b: number[][] = [[5, 6], [7, 8]];
+const c: number[][] = [[0, 0], [0, 0]];
+for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) c[i][j] = a[i][j] + b[i][j];
+console.log("Result matrix:");
+for (let i = 0; i < 2; i++) console.log(`  ${c[i][0]} ${c[i][1]}`);
+```
+
+</Listing>
+
 ## 总结
 
 在本章中，你学习了如何在 Auto 中使用集合和链式结构：

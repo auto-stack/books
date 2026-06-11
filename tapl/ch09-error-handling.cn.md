@@ -1162,6 +1162,141 @@ None
 - 你想将 `!T` 转换为 `?T`
 - 你需要记录或转换错误
 
+## 实用错误处理模式
+
+两种常见模式：使用 `?` 运算符传播错误，以及处理可能缺失的环境变量。
+
+<Listing number="9-8" file-name="main.at" caption="使用 ? 运算符进行错误传播">
+
+```auto
+// Auto — Error Propagation with ?
+use.rust std::error::Error
+
+fn main() ! {
+    let msg = "hello"
+    let result = Ok(msg.to_string())
+    let val = result.?
+    println(f"Got: $val")
+
+    let fail = Err("something went wrong")
+    let recover = fail.?
+    println(recover)
+}
+```
+
+```rust
+// Rust
+use std::error::Error;
+fn main() -> Result<(), Box<dyn Error>> {
+    let msg = "hello";
+    let result: Result<String, &str> = Ok(msg.to_string());
+    let val = result?;
+    println!("Got: {}", val);
+    let fail: Result<String, &str> = Err("something went wrong");
+    let recover = fail?;
+    println!("{}", recover);
+    Ok(())
+}
+```
+
+```python
+# Python
+def main():
+    msg = "hello"
+    try:
+        result = msg
+        val = result
+        print(f"Got: {val}")
+        raise Exception("something went wrong")
+    except Exception as e:
+        print(e)
+if __name__ == "__main__":
+    main()
+```
+
+```c
+// C
+#include <stdio.h>
+int main() {
+    const char *val = "hello";
+    printf("Got: %s\n", val);
+    printf("something went wrong\n");
+    return 1;
+}
+```
+
+```typescript
+// TypeScript
+function main(): void {
+    try {
+        const val: string = "hello";
+        console.log(`Got: ${val}`);
+        throw new Error("something went wrong");
+    } catch (e) {
+        console.log((e as Error).message);
+    }
+}
+main();
+```
+
+</Listing>
+
+<Listing number="9-9" file-name="main.at" caption="带安全默认值的环境变量">
+
+```auto
+// Auto — Environment Variables
+fn main() {
+    env.set("AUTO_GREETING", "Hello from Auto")
+    let val = env.get_or("AUTO_GREETING", "default")
+    println(f"Greeting: $val")
+    let missing = env.get_or("NONEXISTENT_VAR", "not set")
+    println(f"Missing: $missing")
+}
+```
+
+```rust
+// Rust
+use std::env;
+fn main() {
+    env::set_var("AUTO_GREETING", "Hello from Auto");
+    let val = env::var("AUTO_GREETING").unwrap_or("default".to_string());
+    println!("Greeting: {}", val);
+    let missing = env::var("NONEXISTENT_VAR").unwrap_or("not set".to_string());
+    println!("Missing: {}", missing);
+}
+```
+
+```python
+# Python
+import os
+os.environ["AUTO_GREETING"] = "Hello from Auto"
+print(f"Greeting: {os.environ.get('AUTO_GREETING', 'default')}")
+print(f"Missing: {os.environ.get('NONEXISTENT_VAR', 'not set')}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+    setenv("AUTO_GREETING", "Hello from Auto", 1);
+    const char *val = getenv("AUTO_GREETING");
+    printf("Greeting: %s\n", val ? val : "default");
+    const char *missing = getenv("NONEXISTENT_VAR");
+    printf("Missing: %s\n", missing ? missing : "not set");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+process.env["AUTO_GREETING"] = "Hello from Auto";
+console.log(`Greeting: ${process.env["AUTO_GREETING"] || "default"}`);
+console.log(`Missing: ${process.env["NONEXISTENT_VAR"] || "not set"}`);
+```
+
+</Listing>
+
 ## 总结
 
 Auto 的错误处理建立在两个类型级构造上，使错误可见并强制你处理它们：
