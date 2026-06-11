@@ -1,0 +1,20 @@
+// Auto — Counting Lines in a Temporary File
+fn main() {
+    let content = "line1\nline2\nline3"
+    let path = "test_temp.txt"
+
+    // Write to temp file
+    File.write_text(path, content)
+
+    // Read back and count lines
+    let text = File.read_text(path)
+    var line_count = 0
+    for line in text.lines() {
+        line_count += 1
+        println(f"  [$line_count] $line")
+    }
+    println(f"Total lines: $line_count")
+
+    // Clean up
+    File.delete(path)
+}

@@ -965,6 +965,458 @@ is read_file("data.txt") {
 This is the same `Result` pattern from [Chapter 12][ch12], now applied in a
 real project context.
 
+## Practical File I/O Patterns
+
+The file processor above demonstrated structured file processing with error
+handling. Here are four common file I/O patterns you will encounter in practice.
+
+### Reading Lines from a File
+
+The most basic file operation: write content, read it back, and iterate over
+lines.
+
+<Listing number="14-6" file-name="main.at" caption="Reading lines from a file">
+
+```auto
+// Auto — Reading Lines from a File
+fn main() {
+    // Write content to a file
+    File.write_text("lines.txt", "Rust\nFun\nAuto")
+
+    // Read the entire file as a string
+    let data = File.read_text("lines.txt")
+    println(f"Content: $data")
+    println(f"Length: {data.len()}")
+
+    // Split into lines
+    var lines = data.split("\n")
+    for line in lines {
+        println(f"  Line: $line")
+    }
+
+    // Clean up
+    File.delete("lines.txt")
+}
+```
+
+```rust
+// Rust
+use std::fs;
+
+fn main() {
+    fs::write("lines.txt", "Rust\nFun\nAuto").unwrap();
+
+    let data = fs::read_to_string("lines.txt").unwrap();
+    println!("Content: {}", data);
+    println!("Length: {}", data.len());
+
+    for line in data.lines() {
+        println!("  Line: {}", line);
+    }
+
+    fs::remove_file("lines.txt").unwrap();
+}
+```
+
+```python
+# Python
+import os
+
+with open("lines.txt", "w") as f:
+    f.write("Rust\nFun\nAuto")
+
+with open("lines.txt", "r") as f:
+    data = f.read()
+
+print(f"Content: {data}")
+print(f"Length: {len(data)}")
+
+for line in data.split("\n"):
+    print(f"  Line: {line}")
+
+os.remove("lines.txt")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    FILE *f = fopen("lines.txt", "w");
+    fprintf(f, "Rust\nFun\nAuto");
+    fclose(f);
+
+    f = fopen("lines.txt", "r");
+    char buf[256];
+    int n = fread(buf, 1, sizeof(buf) - 1, f);
+    buf[n] = '\0';
+    fclose(f);
+
+    printf("Content: %s\n", buf);
+    printf("Length: %d\n", n);
+
+    char *line = strtok(buf, "\n");
+    while (line != NULL) {
+        printf("  Line: %s\n", line);
+        line = strtok(NULL, "\n");
+    }
+
+    remove("lines.txt");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as fs from "fs";
+
+fs.writeFileSync("lines.txt", "Rust\nFun\nAuto");
+
+const data: string = fs.readFileSync("lines.txt", "utf-8");
+console.log(`Content: ${data}`);
+console.log(`Length: ${data.length}`);
+
+for (const line of data.split("\n")) {
+    console.log(`  Line: ${line}`);
+}
+
+fs.unlinkSync("lines.txt");
+```
+
+</Listing>
+
+### Counting Lines in a Temporary File
+
+A common pattern for testing: create a temporary file, process it, then clean
+up.
+
+<Listing number="14-7" file-name="main.at" caption="Counting lines in a temporary file">
+
+```auto
+// Auto — Counting Lines in a Temporary File
+fn main() {
+    let content = "line1\nline2\nline3"
+    let path = "test_temp.txt"
+
+    // Write to temp file
+    File.write_text(path, content)
+
+    // Read back and count lines
+    let text = File.read_text(path)
+    var line_count = 0
+    for line in text.lines() {
+        line_count += 1
+        println(f"  [$line_count] $line")
+    }
+    println(f"Total lines: $line_count")
+
+    // Clean up
+    File.delete(path)
+}
+```
+
+```rust
+// Rust
+use std::fs;
+
+fn main() {
+    let content = "line1\nline2\nline3";
+    let path = "test_temp.txt";
+
+    fs::write(path, content).unwrap();
+
+    let text = fs::read_to_string(path).unwrap();
+    let mut line_count = 0;
+    for line in text.lines() {
+        line_count += 1;
+        println!("  [{}] {}", line_count, line);
+    }
+    println!("Total lines: {}", line_count);
+
+    fs::remove_file(path).unwrap();
+}
+```
+
+```python
+# Python
+import os
+
+content = "line1\nline2\nline3"
+path = "test_temp.txt"
+
+with open(path, "w") as f:
+    f.write(content)
+
+with open(path, "r") as f:
+    text = f.read()
+
+line_count = 0
+for line in text.split("\n"):
+    line_count += 1
+    print(f"  [{line_count}] {line}")
+print(f"Total lines: {line_count}")
+
+os.remove(path)
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *path = "test_temp.txt";
+
+    FILE *f = fopen(path, "w");
+    fprintf(f, "line1\nline2\nline3");
+    fclose(f);
+
+    f = fopen(path, "r");
+    char buf[256];
+    int n = fread(buf, 1, sizeof(buf) - 1, f);
+    buf[n] = '\0';
+    fclose(f);
+
+    int line_count = 0;
+    char *line = strtok(buf, "\n");
+    while (line != NULL) {
+        line_count++;
+        printf("  [%d] %s\n", line_count, line);
+        line = strtok(NULL, "\n");
+    }
+    printf("Total lines: %d\n", line_count);
+
+    remove(path);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as fs from "fs";
+
+const content = "line1\nline2\nline3";
+const path = "test_temp.txt";
+
+fs.writeFileSync(path, content);
+
+const text: string = fs.readFileSync(path, "utf-8");
+let lineCount = 0;
+for (const line of text.split("\n")) {
+    lineCount++;
+    console.log(`  [${lineCount}] ${line}`);
+}
+console.log(`Total lines: ${lineCount}`);
+
+fs.unlinkSync(path);
+```
+
+</Listing>
+
+### Reading CSV Data
+
+CSV (Comma-Separated Values) is the simplest structured data format. In Auto,
+you can parse it with `split` on newlines and commas.
+
+<Listing number="14-8" file-name="main.at" caption="Reading CSV data with string splitting">
+
+```auto
+// Auto — Reading CSV Data
+fn main() {
+    let csv_str = "name,age\nAlice,30\nBob,25"
+
+    // Split into lines
+    var lines = csv_str.split("\n")
+
+    // Skip header (first line)
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = fields[1]
+        println(f"Name: $name, Age: $age")
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let csv_str = "name,age\nAlice,30\nBob,25";
+
+    let lines: Vec<&str> = csv_str.split("\n").collect();
+
+    for i in 1..lines.len() {
+        let line = lines[i];
+        let fields: Vec<&str> = line.split(",").collect();
+        let name = fields[0];
+        let age = fields[1];
+        println!("Name: {}, Age: {}", name, age);
+    }
+}
+```
+
+```python
+# Python
+import csv
+from io import StringIO
+
+csv_str = "name,age\nAlice,30\nBob,25"
+reader = csv.DictReader(StringIO(csv_str))
+
+for row in reader:
+    print(f"Name: {row['name']}, Age: {row['age']}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *lines[] = {"name,age", "Alice,30", "Bob,25"};
+    int num_lines = 3;
+
+    for (int i = 1; i < num_lines; i++) {
+        char line[64];
+        strncpy(line, lines[i], 64);
+        char *name = strtok(line, ",");
+        char *age = strtok(NULL, ",");
+        printf("Name: %s, Age: %s\n", name, age);
+    }
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const csvStr = "name,age\nAlice,30\nBob,25";
+
+const lines: string[] = csvStr.split("\n");
+const header: string[] = lines[0].split(",");
+
+for (let i = 1; i < lines.length; i++) {
+    const fields: string[] = lines[i].split(",");
+    const name: string = fields[0];
+    const age: string = fields[1];
+    console.log(`Name: ${name}, Age: ${age}`);
+}
+```
+
+</Listing>
+
+### Filtering CSV Data
+
+Combining CSV parsing with conditional logic lets you filter rows based on
+field values.
+
+<Listing number="14-9" file-name="main.at" caption="Filtering CSV rows by condition">
+
+```auto
+// Auto — Filtering CSV Data
+fn main() {
+    let data = "name,age\nAlice,30\nBob,25\nCharlie,35"
+    var lines = data.split("\n")
+
+    println("People over 28:")
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = int(fields[1])
+        if age > 28 {
+            println(f"  $name ($age)")
+        }
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let data = "name,age\nAlice,30\nBob,25\nCharlie,35";
+    let lines: Vec<&str> = data.split("\n").collect();
+
+    println!("People over 28:");
+    for i in 1..lines.len() {
+        let line = lines[i];
+        let fields: Vec<&str> = line.split(",").collect();
+        let name = fields[0];
+        let age: i32 = fields[1].parse().unwrap();
+        if age > 28 {
+            println!("  {} ({})", name, age);
+        }
+    }
+}
+```
+
+```python
+# Python
+import csv
+from io import StringIO
+
+data = "name,age\nAlice,30\nBob,25\nCharlie,35"
+reader = csv.DictReader(StringIO(data))
+
+print("People over 28:")
+for row in reader:
+    name = row["name"]
+    age = int(row["age"])
+    if age > 28:
+        print(f"  {name} ({age})")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    const char *lines[] = {"name,age", "Alice,30", "Bob,25", "Charlie,35"};
+    int num_lines = 4;
+
+    printf("People over 28:\n");
+    for (int i = 1; i < num_lines; i++) {
+        char line[64];
+        strncpy(line, lines[i], 64);
+        char *name = strtok(line, ",");
+        char *age_str = strtok(NULL, ",");
+        int age = atoi(age_str);
+        if (age > 28) {
+            printf("  %s (%d)\n", name, age);
+        }
+    }
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const data = "name,age\nAlice,30\nBob,25\nCharlie,35";
+const lines: string[] = data.split("\n");
+
+console.log("People over 28:");
+for (let i = 1; i < lines.length; i++) {
+    const fields: string[] = lines[i].split(",");
+    const name: string = fields[0];
+    const age: number = parseInt(fields[1], 10);
+    if (age > 28) {
+        console.log(`  ${name} (${age})`);
+    }
+}
+```
+
+</Listing>
+
+These four patterns cover the most common file I/O scenarios:
+
+1. **Read lines** -- The foundation: write, read, split, iterate.
+2. **Temp files** -- Create-process-delete is the standard testing pattern.
+3. **CSV parsing** -- Split on newlines then commas to extract fields.
+4. **CSV filtering** -- Combine parsing with conditional logic for data queries.
+
 ## Summary
 
 This capstone project brought together every concept from Phase 2:

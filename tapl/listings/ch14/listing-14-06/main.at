@@ -1,0 +1,19 @@
+// Auto — Reading Lines from a File
+fn main() {
+    // Write content to a file
+    File.write_text("lines.txt", "Rust\nFun\nAuto")
+
+    // Read the entire file as a string
+    let data = File.read_text("lines.txt")
+    println(f"Content: $data")
+    println(f"Length: {data.len()}")
+
+    // Split into lines
+    var lines = data.split("\n")
+    for line in lines {
+        println(f"  Line: $line")
+    }
+
+    // Clean up
+    File.delete("lines.txt")
+}

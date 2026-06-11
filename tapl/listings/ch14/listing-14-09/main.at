@@ -1,0 +1,16 @@
+// Auto — Filtering CSV Data
+fn main() {
+    let data = "name,age\nAlice,30\nBob,25\nCharlie,35"
+    var lines = data.split("\n")
+
+    println("People over 28:")
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = int(fields[1])
+        if age > 28 {
+            println(f"  $name ($age)")
+        }
+    }
+}

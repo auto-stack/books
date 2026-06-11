@@ -948,6 +948,400 @@ is read_file("data.txt") {
 
 这与[第 12 章][ch12]中的相同 `Result` 模式，现在应用于真实项目场景。
 
+## 实用文件 I/O 模式
+
+上面的文件处理器演示了带有错误处理的结构化文件处理。以下是你在实践中常见的
+四种文件 I/O 模式。
+
+### 从文件中读取行
+
+最基本的文件操作：写入内容、读回并逐行迭代。
+
+<Listing number="14-6" file-name="main.at" caption="从文件中读取行">
+
+```auto
+// Auto — Reading Lines from a File
+fn main() {
+    File.write_text("lines.txt", "Rust\nFun\nAuto")
+    let data = File.read_text("lines.txt")
+    println(f"Content: $data")
+    println(f"Length: {data.len()}")
+
+    var lines = data.split("\n")
+    for line in lines {
+        println(f"  Line: $line")
+    }
+
+    File.delete("lines.txt")
+}
+```
+
+```rust
+// Rust
+use std::fs;
+
+fn main() {
+    fs::write("lines.txt", "Rust\nFun\nAuto").unwrap();
+    let data = fs::read_to_string("lines.txt").unwrap();
+    println!("Content: {}", data);
+    println!("Length: {}", data.len());
+    for line in data.lines() {
+        println!("  Line: {}", line);
+    }
+    fs::remove_file("lines.txt").unwrap();
+}
+```
+
+```python
+# Python
+import os
+
+with open("lines.txt", "w") as f:
+    f.write("Rust\nFun\nAuto")
+with open("lines.txt", "r") as f:
+    data = f.read()
+print(f"Content: {data}")
+print(f"Length: {len(data)}")
+for line in data.split("\n"):
+    print(f"  Line: {line}")
+os.remove("lines.txt")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    FILE *f = fopen("lines.txt", "w");
+    fprintf(f, "Rust\nFun\nAuto");
+    fclose(f);
+    f = fopen("lines.txt", "r");
+    char buf[256];
+    int n = fread(buf, 1, sizeof(buf) - 1, f);
+    buf[n] = '\0';
+    fclose(f);
+    printf("Content: %s\n", buf);
+    printf("Length: %d\n", n);
+    char *line = strtok(buf, "\n");
+    while (line != NULL) {
+        printf("  Line: %s\n", line);
+        line = strtok(NULL, "\n");
+    }
+    remove("lines.txt");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as fs from "fs";
+
+fs.writeFileSync("lines.txt", "Rust\nFun\nAuto");
+const data: string = fs.readFileSync("lines.txt", "utf-8");
+console.log(`Content: ${data}`);
+console.log(`Length: ${data.length}`);
+for (const line of data.split("\n")) {
+    console.log(`  Line: ${line}`);
+}
+fs.unlinkSync("lines.txt");
+```
+
+</Listing>
+
+### 统计临时文件中的行数
+
+一种常见的测试模式：创建临时文件，处理后清理。
+
+<Listing number="14-7" file-name="main.at" caption="统计临时文件中的行数">
+
+```auto
+// Auto — Counting Lines in a Temporary File
+fn main() {
+    let content = "line1\nline2\nline3"
+    let path = "test_temp.txt"
+    File.write_text(path, content)
+    let text = File.read_text(path)
+    var line_count = 0
+    for line in text.lines() {
+        line_count += 1
+        println(f"  [$line_count] $line")
+    }
+    println(f"Total lines: $line_count")
+    File.delete(path)
+}
+```
+
+```rust
+// Rust
+use std::fs;
+
+fn main() {
+    let content = "line1\nline2\nline3";
+    let path = "test_temp.txt";
+    fs::write(path, content).unwrap();
+    let text = fs::read_to_string(path).unwrap();
+    let mut line_count = 0;
+    for line in text.lines() {
+        line_count += 1;
+        println!("  [{}] {}", line_count, line);
+    }
+    println!("Total lines: {}", line_count);
+    fs::remove_file(path).unwrap();
+}
+```
+
+```python
+# Python
+import os
+
+content = "line1\nline2\nline3"
+path = "test_temp.txt"
+with open(path, "w") as f:
+    f.write(content)
+with open(path, "r") as f:
+    text = f.read()
+line_count = 0
+for line in text.split("\n"):
+    line_count += 1
+    print(f"  [{line_count}] {line}")
+print(f"Total lines: {line_count}")
+os.remove(path)
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *path = "test_temp.txt";
+    FILE *f = fopen(path, "w");
+    fprintf(f, "line1\nline2\nline3");
+    fclose(f);
+    f = fopen(path, "r");
+    char buf[256];
+    int n = fread(buf, 1, sizeof(buf) - 1, f);
+    buf[n] = '\0';
+    fclose(f);
+    int line_count = 0;
+    char *line = strtok(buf, "\n");
+    while (line != NULL) {
+        line_count++;
+        printf("  [%d] %s\n", line_count, line);
+        line = strtok(NULL, "\n");
+    }
+    printf("Total lines: %d\n", line_count);
+    remove(path);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as fs from "fs";
+
+const content = "line1\nline2\nline3";
+const path = "test_temp.txt";
+fs.writeFileSync(path, content);
+const text: string = fs.readFileSync(path, "utf-8");
+let lineCount = 0;
+for (const line of text.split("\n")) {
+    lineCount++;
+    console.log(`  [${lineCount}] ${line}`);
+}
+console.log(`Total lines: ${lineCount}`);
+fs.unlinkSync(path);
+```
+
+</Listing>
+
+### 读取 CSV 数据
+
+CSV（逗号分隔值）是最简单的结构化数据格式。在 Auto 中，你可以用 `split`
+按换行符和逗号进行解析。
+
+<Listing number="14-8" file-name="main.at" caption="使用字符串分割读取 CSV 数据">
+
+```auto
+// Auto — Reading CSV Data
+fn main() {
+    let csv_str = "name,age\nAlice,30\nBob,25"
+    var lines = csv_str.split("\n")
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = fields[1]
+        println(f"Name: $name, Age: $age")
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let csv_str = "name,age\nAlice,30\nBob,25";
+    let lines: Vec<&str> = csv_str.split("\n").collect();
+    for i in 1..lines.len() {
+        let line = lines[i];
+        let fields: Vec<&str> = line.split(",").collect();
+        let name = fields[0];
+        let age = fields[1];
+        println!("Name: {}, Age: {}", name, age);
+    }
+}
+```
+
+```python
+# Python
+import csv
+from io import StringIO
+
+csv_str = "name,age\nAlice,30\nBob,25"
+reader = csv.DictReader(StringIO(csv_str))
+for row in reader:
+    print(f"Name: {row['name']}, Age: {row['age']}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *lines[] = {"name,age", "Alice,30", "Bob,25"};
+    int num_lines = 3;
+    for (int i = 1; i < num_lines; i++) {
+        char line[64];
+        strncpy(line, lines[i], 64);
+        char *name = strtok(line, ",");
+        char *age = strtok(NULL, ",");
+        printf("Name: %s, Age: %s\n", name, age);
+    }
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const csvStr = "name,age\nAlice,30\nBob,25";
+const lines: string[] = csvStr.split("\n");
+for (let i = 1; i < lines.length; i++) {
+    const fields: string[] = lines[i].split(",");
+    const name: string = fields[0];
+    const age: string = fields[1];
+    console.log(`Name: ${name}, Age: ${age}`);
+}
+```
+
+</Listing>
+
+### 过滤 CSV 数据
+
+将 CSV 解析与条件逻辑结合，可以根据字段值筛选行。
+
+<Listing number="14-9" file-name="main.at" caption="按条件过滤 CSV 行">
+
+```auto
+// Auto — Filtering CSV Data
+fn main() {
+    let data = "name,age\nAlice,30\nBob,25\nCharlie,35"
+    var lines = data.split("\n")
+    println("People over 28:")
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = int(fields[1])
+        if age > 28 {
+            println(f"  $name ($age)")
+        }
+    }
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let data = "name,age\nAlice,30\nBob,25\nCharlie,35";
+    let lines: Vec<&str> = data.split("\n").collect();
+    println!("People over 28:");
+    for i in 1..lines.len() {
+        let line = lines[i];
+        let fields: Vec<&str> = line.split(",").collect();
+        let name = fields[0];
+        let age: i32 = fields[1].parse().unwrap();
+        if age > 28 {
+            println!("  {} ({})", name, age);
+        }
+    }
+}
+```
+
+```python
+# Python
+import csv
+from io import StringIO
+
+data = "name,age\nAlice,30\nBob,25\nCharlie,35"
+reader = csv.DictReader(StringIO(data))
+print("People over 28:")
+for row in reader:
+    name = row["name"]
+    age = int(row["age"])
+    if age > 28:
+        print(f"  {name} ({age})")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    const char *lines[] = {"name,age", "Alice,30", "Bob,25", "Charlie,35"};
+    int num_lines = 4;
+    printf("People over 28:\n");
+    for (int i = 1; i < num_lines; i++) {
+        char line[64];
+        strncpy(line, lines[i], 64);
+        char *name = strtok(line, ",");
+        char *age_str = strtok(NULL, ",");
+        int age = atoi(age_str);
+        if (age > 28) {
+            printf("  %s (%d)\n", name, age);
+        }
+    }
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const data = "name,age\nAlice,30\nBob,25\nCharlie,35";
+const lines: string[] = data.split("\n");
+console.log("People over 28:");
+for (let i = 1; i < lines.length; i++) {
+    const fields: string[] = lines[i].split(",");
+    const name: string = fields[0];
+    const age: number = parseInt(fields[1], 10);
+    if (age > 28) {
+        console.log(`  ${name} (${age})`);
+    }
+}
+```
+
+</Listing>
+
+这四种模式涵盖了最常见的文件 I/O 场景：
+
+1. **读取行** -- 基础操作：写入、读取、分割、迭代。
+2. **临时文件** -- 创建-处理-删除是标准的测试模式。
+3. **CSV 解析** -- 先按换行符分割，再按逗号分割来提取字段。
+4. **CSV 过滤** -- 将解析与条件逻辑结合进行数据查询。
+
 ## 总结
 
 这个高潮项目综合了第二阶段的每个概念：

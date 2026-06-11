@@ -1,0 +1,16 @@
+// Auto — Reading CSV Data
+fn main() {
+    let csv_str = "name,age\nAlice,30\nBob,25"
+
+    // Split into lines
+    var lines = csv_str.split("\n")
+
+    // Skip header (first line)
+    for i in 1..lines.len() {
+        let line = lines[i]
+        var fields = line.split(",")
+        let name = fields[0]
+        let age = fields[1]
+        println(f"Name: $name, Age: $age")
+    }
+}
