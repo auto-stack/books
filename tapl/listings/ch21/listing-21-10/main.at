@@ -1,0 +1,13 @@
+// Auto — Hexadecimal Encoding
+fn main() {
+    let data = b"hello world"
+    let hex_str = hex(data)
+    println(hex_str)
+
+    let original = unhex(hex_str)
+    println(original)
+
+    // Format integers as hex
+    let num = 255
+    println(f"0x${hex(num)}")
+}

@@ -1,0 +1,18 @@
+// Auto — Elapsed Time Measurement
+fn main() {
+    let start = now()
+
+    // Simulate work
+    var sum = 0
+    for i in 0..1000 {
+        sum = sum + i
+    }
+
+    let elapsed = now() - start
+    println(f"Sum: $sum")
+    println(f"Elapsed: $elapsed ms")
+
+    // Sleep for demonstration
+    sleep(100)
+    println("Slept 100ms")
+}

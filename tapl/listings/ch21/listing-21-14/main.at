@@ -1,0 +1,23 @@
+// Auto — Math Functions
+fn main() {
+    let x = 2.0
+    let y = 3.0
+
+    // Power and square root
+    let power = x.powf(y)
+    let sqrt_val = x.sqrt()
+    println(f"$x ^ $y = $power")
+    println(f"sqrt($x) = $sqrt_val")
+
+    // Absolute value
+    let neg = -5.0
+    let abs_result = neg.abs()
+    println(f"|$neg| = $abs_result")
+
+    // Trigonometry
+    let pi = 3.14159265
+    let sin_val = pi.sin()
+    let cos_val = pi.cos()
+    println(f"sin(pi) = $sin_val")
+    println(f"cos(pi) = $cos_val")
+}

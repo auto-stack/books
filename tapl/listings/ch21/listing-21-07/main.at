@@ -1,0 +1,23 @@
+// Auto — JSON Serialization
+dep serde_json
+use.rust serde_json
+
+type User {
+    name str
+    age int
+}
+
+fn main() {
+    let alice = User { name: "Alice", age: 30 }
+    let json = to_json(alice)
+    println(json)
+
+    let parsed = from_json(json)
+    println(parsed["name"])
+    println(parsed["age"])
+
+    let bob = User { name: "Bob", age: 25 }
+    let users = [alice, bob]
+    let array_json = to_json(users)
+    println(array_json)
+}

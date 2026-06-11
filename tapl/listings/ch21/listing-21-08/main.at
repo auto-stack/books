@@ -1,0 +1,15 @@
+// Auto — TOML Configuration Parsing
+fn main() {
+    let config = parse_toml("
+        [server]
+        host = \"localhost\"
+        port = 8080
+
+        [database]
+        url = \"postgres://localhost/mydb\"
+    ")
+
+    println(config["server"]["host"])
+    println(config["server"]["port"])
+    println(config["database"]["url"])
+}

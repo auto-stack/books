@@ -1,0 +1,13 @@
+// Auto — Base64 Encoding and Decoding
+fn main() {
+    let original = "hello world"
+    let encoded = base64_encode(original)
+    println(encoded)
+
+    let decoded = base64_decode(encoded)
+    println(decoded)
+
+    let binary = b"\x00\x01\x02\x03"
+    let b64 = base64_encode(binary)
+    println(b64)
+}

@@ -1,0 +1,14 @@
+// Auto — SHA-256 Digest
+dep sha2
+use.rust sha2::Sha256
+use.rust sha2::Digest
+
+fn main() {
+    var hasher = Sha256.new()
+    hasher.update(b"hello world")
+    let result = hasher.finalize()
+
+    // Convert to hex string
+    let hex = result.hex()
+    println(f"SHA-256: $hex")
+}

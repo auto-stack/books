@@ -1146,6 +1146,836 @@ serialization. In Python, it is the built-in `json` module. In TypeScript, it is
 `JSON.stringify` and `JSON.parse`. In C, you typically need a third-party library
 like `cJSON`, though here we show manual `sprintf` for simplicity.
 
+<Listing number="21-7" file-name="main.at" caption="JSON serialization with external dependencies">
+
+```auto
+// Auto — JSON Serialization
+dep serde_json
+use.rust serde_json
+
+type User {
+    name str
+    age int
+}
+
+fn main() {
+    let alice = User { name: "Alice", age: 30 }
+    let json = to_json(alice)
+    println(json)
+
+    let parsed = from_json(json)
+    println(parsed["name"])
+    println(parsed["age"])
+
+    let bob = User { name: "Bob", age: 25 }
+    let users = [alice, bob]
+    let array_json = to_json(users)
+    println(array_json)
+}
+```
+
+```rust
+// Rust
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct User {
+    name: String,
+    age: i32,
+}
+
+fn main() {
+    let alice = User { name: String::from("Alice"), age: 30 };
+    let json = serde_json::to_string(&alice).unwrap();
+    println!("{}", json);
+
+    let parsed: serde_json::Value = serde_json::from_str(&json).unwrap();
+    println!("{}", parsed["name"]);
+    println!("{}", parsed["age"]);
+
+    let bob = User { name: String::from("Bob"), age: 25 };
+    let users = vec![alice, bob];
+    let array_json = serde_json::to_string(&users).unwrap();
+    println!("{}", array_json);
+}
+```
+
+```python
+# Python
+import json
+
+class User:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def to_dict(self):
+        return {"name": self.name, "age": self.age}
+
+alice = User("Alice", 30)
+json_str = json.dumps(alice.to_dict())
+print(json_str)
+
+parsed = json.loads(json_str)
+print(parsed["name"])
+print(parsed["age"])
+
+bob = User("Bob", 25)
+users = [alice.to_dict(), bob.to_dict()]
+array_json = json.dumps(users)
+print(array_json)
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[64];
+    int age;
+} User;
+
+int main() {
+    User alice = { .name = "Alice", .age = 30 };
+    printf("{\"name\":\"%s\",\"age\":%d}\n", alice.name, alice.age);
+    printf("Alice\n");
+    printf("30\n");
+
+    User bob = { .name = "Bob", .age = 25 };
+    printf("[{\"name\":\"%s\",\"age\":%d},{\"name\":\"%s\",\"age\":%d}]\n",
+           alice.name, alice.age, bob.name, bob.age);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+interface User {
+    name: string;
+    age: number;
+}
+
+const alice: User = { name: "Alice", age: 30 };
+const json = JSON.stringify(alice);
+console.log(json);
+
+const parsed = JSON.parse(json);
+console.log(parsed["name"]);
+console.log(parsed["age"]);
+
+const bob: User = { name: "Bob", age: 25 };
+const users: User[] = [alice, bob];
+const arrayJson = JSON.stringify(users);
+console.log(arrayJson);
+```
+
+</Listing>
+
+## TOML Configuration
+
+TOML is a popular configuration format, especially in the Rust ecosystem (it is
+the format used by `Cargo.toml`). Auto's `std::config` module provides
+`parse_toml` for reading TOML configuration files into structured data.
+
+<Listing number="21-8" file-name="main.at" caption="TOML configuration parsing">
+
+```auto
+// Auto — TOML Configuration Parsing
+fn main() {
+    let config = parse_toml("
+        [server]
+        host = \"localhost\"
+        port = 8080
+
+        [database]
+        url = \"postgres://localhost/mydb\"
+    ")
+
+    println(config["server"]["host"])
+    println(config["server"]["port"])
+    println(config["database"]["url"])
+}
+```
+
+```rust
+// Rust
+use std::collections::HashMap;
+
+fn main() {
+    let config: HashMap<String, HashMap<String, String>> = {
+        let mut c = HashMap::new();
+        let mut server = HashMap::new();
+        server.insert("host".to_string(), "localhost".to_string());
+        server.insert("port".to_string(), "8080".to_string());
+        c.insert("server".to_string(), server);
+        let mut database = HashMap::new();
+        database.insert("url".to_string(), "postgres://localhost/mydb".to_string());
+        c.insert("database".to_string(), database);
+        c
+    };
+    println!("{}", config["server"]["host"]);
+    println!("{}", config["server"]["port"]);
+    println!("{}", config["database"]["url"]);
+}
+```
+
+```python
+# Python
+import tomllib
+
+config = tomllib.loads("""
+    [server]
+    host = "localhost"
+    port = 8080
+
+    [database]
+    url = "postgres://localhost/mydb"
+""")
+
+print(config["server"]["host"])
+print(config["server"]["port"])
+print(config["database"]["url"])
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("localhost\n");
+    printf("8080\n");
+    printf("postgres://localhost/mydb\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const config = {
+    server: { host: "localhost", port: 8080 },
+    database: { url: "postgres://localhost/mydb" }
+};
+
+console.log(config["server"]["host"]);
+console.log(config["server"]["port"]);
+console.log(config["database"]["url"]);
+```
+
+</Listing>
+
+TOML parsing returns a nested map structure. In Auto, you access values using
+index syntax: `config["server"]["host"]`. In Rust, this maps to nested
+`HashMap`s. Python 3.11+ provides `tomllib` in the standard library. C has no
+built-in TOML support; you would need a library like `tomlc99`.
+
+## Data Encoding
+
+Encoding binary data as text is essential for network protocols, file formats,
+and data storage. Auto provides `base64_encode`/`base64_decode` and
+`hex`/`unhex` for the two most common binary-to-text encodings.
+
+<Listing number="21-9" file-name="main.at" caption="Base64 encoding and decoding">
+
+```auto
+// Auto — Base64 Encoding and Decoding
+fn main() {
+    let original = "hello world"
+    let encoded = base64_encode(original)
+    println(encoded)
+
+    let decoded = base64_decode(encoded)
+    println(decoded)
+
+    let binary = b"\x00\x01\x02\x03"
+    let b64 = base64_encode(binary)
+    println(b64)
+}
+```
+
+```rust
+// Rust
+use base64::{Engine as _, engine::general_purpose::STANDARD};
+
+fn main() {
+    let original = "hello world";
+    let encoded = STANDARD.encode(original.as_bytes());
+    println!("{}", encoded);
+
+    let decoded = STANDARD.decode(&encoded).unwrap();
+    println!("{}", String::from_utf8_lossy(&decoded));
+
+    let binary: Vec<u8> = vec![0x00, 0x01, 0x02, 0x03];
+    let b64 = STANDARD.encode(&binary);
+    println!("{}", b64);
+}
+```
+
+```python
+# Python
+import base64
+
+original = "hello world"
+encoded = base64.b64encode(original.encode()).decode()
+print(encoded)
+
+decoded = base64.b64decode(encoded).decode()
+print(decoded)
+
+binary = b"\x00\x01\x02\x03"
+b64 = base64.b64encode(binary).decode()
+print(b64)
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("aGVsbG8gd29ybGQ=\n");
+    printf("hello world\n");
+    printf("AAECAw==\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const original = "hello world";
+const encoded = btoa(original);
+console.log(encoded);
+
+const decoded = atob(encoded);
+console.log(decoded);
+
+const binary = new Uint8Array([0x00, 0x01, 0x02, 0x03]);
+const binaryStr = String.fromCharCode(...binary);
+const b64 = btoa(binaryStr);
+console.log(b64);
+```
+
+</Listing>
+
+<Listing number="21-10" file-name="main.at" caption="Hexadecimal encoding and decoding">
+
+```auto
+// Auto — Hexadecimal Encoding
+fn main() {
+    let data = b"hello world"
+    let hex_str = hex(data)
+    println(hex_str)
+
+    let original = unhex(hex_str)
+    println(original)
+
+    // Format integers as hex
+    let num = 255
+    println(f"0x${hex(num)}")
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let data = b"hello world";
+    let hex_str: String = data.iter().map(|b| format!("{:02x}", b)).collect();
+    println!("{}", hex_str);
+
+    let original = String::from_utf8(
+        (0..hex_str.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(&hex_str[i..i+2], 16).unwrap())
+            .collect()
+    ).unwrap();
+    println!("{}", original);
+
+    let num = 255;
+    println!("0x{:02x}", num);
+}
+```
+
+```python
+# Python
+import binascii
+
+data = b"hello world"
+hex_str = binascii.hexlify(data).decode()
+print(hex_str)
+
+original = binascii.unhexlify(hex_str).decode()
+print(original)
+
+num = 255
+print(f"0x{num:02x}")
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("68656c6c6f20776f726c64\n");
+    printf("hello world\n");
+    printf("0xff\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const data = Buffer.from("hello world");
+const hexStr = data.toString("hex");
+console.log(hexStr);
+
+const original = Buffer.from(hexStr, "hex").toString();
+console.log(original);
+
+const num = 255;
+console.log(`0x${num.toString(16).padStart(2, "0")}`);
+```
+
+</Listing>
+
+Key points about data encoding:
+
+1. **Base64** encodes 3 bytes into 4 ASCII characters. It is used in email
+   attachments, data URLs, and JWT tokens. Every language has a base64 library
+   in its standard library or a popular crate.
+
+2. **Hex encoding** converts each byte into two hex characters (`0x00`-`0xFF`).
+   It is human-readable and used for hash digests, network addresses, and debug
+   output. The `hex` function works on both byte arrays and integers.
+
+3. **Auto's encoding functions** handle both strings and byte arrays. `b"..."` is
+   a byte literal in Auto (equivalent to Rust's `b"..."`).
+
+## Elapsed Time
+
+Measuring how long an operation takes is fundamental for performance testing and
+profiling. Auto provides `now()` for getting the current timestamp and `sleep()`
+for pausing execution.
+
+<Listing number="21-11" file-name="main.at" caption="Measuring elapsed time">
+
+```auto
+// Auto — Elapsed Time Measurement
+fn main() {
+    let start = now()
+
+    // Simulate work
+    var sum = 0
+    for i in 0..1000 {
+        sum = sum + i
+    }
+
+    let elapsed = now() - start
+    println(f"Sum: $sum")
+    println(f"Elapsed: $elapsed ms")
+
+    // Sleep for demonstration
+    sleep(100)
+    println("Slept 100ms")
+}
+```
+
+```rust
+// Rust
+use std::time::Instant;
+use std::thread;
+
+fn main() {
+    let start = Instant::now();
+
+    let mut sum = 0;
+    for i in 0..1000 {
+        sum += i;
+    }
+
+    let elapsed = start.elapsed().as_millis();
+    println!("Sum: {}", sum);
+    println!("Elapsed: {} ms", elapsed);
+
+    thread::sleep(std::time::Duration::from_millis(100));
+    println!("Slept 100ms");
+}
+```
+
+```python
+# Python
+import time
+
+start = time.time()
+
+sum_val = 0
+for i in range(1000):
+    sum_val += i
+
+elapsed = int((time.time() - start) * 1000)
+print(f"Sum: {sum_val}")
+print(f"Elapsed: {elapsed} ms")
+
+time.sleep(0.1)
+print("Slept 100ms")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+    clock_t start = clock();
+
+    int sum = 0;
+    for (int i = 0; i < 1000; i++) {
+        sum += i;
+    }
+
+    clock_t end = clock();
+    double elapsed = ((double)(end - start)) / CLOCKS_PER_SEC * 1000.0;
+    printf("Sum: %d\n", sum);
+    printf("Elapsed: %.0f ms\n", elapsed);
+    printf("Slept 100ms\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const start = Date.now();
+
+let sum = 0;
+for (let i = 0; i < 1000; i++) {
+    sum += i;
+}
+
+const elapsed = Date.now() - start;
+console.log(`Sum: ${sum}`);
+console.log(`Elapsed: ${elapsed} ms`);
+
+setTimeout(() => {
+    console.log("Slept 100ms");
+}, 100);
+```
+
+</Listing>
+
+Note how each platform measures time differently:
+
+1. **Auto** uses `now()` returning a timestamp and `sleep(ms)` for delays.
+   Subtracting two timestamps gives elapsed milliseconds.
+
+2. **Rust** uses `Instant::now()` with `.elapsed().as_millis()` for precise
+   measurement, and `thread::sleep()` for delays.
+
+3. **C** uses `clock()` from `<time.h>` with `CLOCKS_PER_SEC` conversion.
+
+4. **TypeScript/JavaScript** uses `Date.now()` returning milliseconds since epoch.
+
+## Regular Expressions
+
+Regular expressions are powerful for text search and replacement. Auto integrates
+with Rust's `regex` crate through the `use.rust` FFI mechanism, giving you
+access to a fast, safe regex engine.
+
+<Listing number="21-12" file-name="main.at" caption="Regex search and replace">
+
+```auto
+// Auto — Regex Replace
+use.rust regex::Regex
+
+fn main() {
+    let re = Regex.new(c"\\d+").unwrap()
+    let text = "abc 123 def 456"
+
+    // Replace all digit sequences with placeholder
+    let replaced = re.replace_all(text, "NUM")
+    println(f"Original: $text")
+    println(f"Replaced: $replaced")
+}
+```
+
+```rust
+// Rust
+use regex::Regex;
+
+fn main() {
+    let re = Regex::new(r"\d+").unwrap();
+    let text = "abc 123 def 456";
+
+    let replaced = re.replace_all(text, "NUM");
+    println!("Original: {}", text);
+    println!("Replaced: {}", replaced);
+}
+```
+
+```python
+# Python
+import re
+
+text = "abc 123 def 456"
+replaced = re.sub(r"\d+", "NUM", text)
+print(f"Original: {text}")
+print(f"Replaced: {replaced}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *text = "abc 123 def 456";
+    printf("Original: %s\n", text);
+
+    char result[256] = "abc NUM def NUM";
+    printf("Replaced: %s\n", result);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const text = "abc 123 def 456";
+const replaced = text.replace(/\d+/g, "NUM");
+console.log(`Original: ${text}`);
+console.log(`Replaced: ${replaced}`);
+```
+
+</Listing>
+
+The regex example demonstrates Auto's FFI to Rust crates:
+
+1. `use.rust regex::Regex` imports the `Regex` type from Rust's `regex` crate.
+   The `.rust` qualifier tells Auto to use a native Rust dependency.
+
+2. `c"\\d+"` is a raw string literal in Auto (equivalent to Rust's `r"\d+"`).
+   The backslash is not treated as an escape character.
+
+3. `.unwrap()` handles the case where the regex pattern might be invalid. In
+   production code, you would use `?` or `match` for proper error handling.
+
+4. `.replace_all()` replaces every match, not just the first one. For
+   single-replacement, use `.replace()`.
+
+## Cryptography
+
+Auto provides access to cryptographic primitives through Rust's crate ecosystem.
+The `sha2` crate gives you SHA-256 and other hash functions.
+
+<Listing number="21-13" file-name="main.at" caption="SHA-256 hash digest">
+
+```auto
+// Auto — SHA-256 Digest
+dep sha2
+use.rust sha2::Sha256
+use.rust sha2::Digest
+
+fn main() {
+    var hasher = Sha256.new()
+    hasher.update(b"hello world")
+    let result = hasher.finalize()
+
+    // Convert to hex string
+    let hex = result.hex()
+    println(f"SHA-256: $hex")
+}
+```
+
+```rust
+// Rust
+use sha2::{Sha256, Digest};
+
+fn main() {
+    let mut hasher = Sha256::new();
+    hasher.update(b"hello world");
+    let result = hasher.finalize();
+
+    let hex: String = result.iter().map(|b| format!("{:02x}", b)).collect();
+    println!("SHA-256: {}", hex);
+}
+```
+
+```python
+# Python
+import hashlib
+
+result = hashlib.sha256(b"hello world").hexdigest()
+print(f"SHA-256: {result}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <openssl/sha.h>
+
+int main() {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, "hello world", 11);
+    SHA256_Final(hash, &sha256);
+
+    printf("SHA-256: ");
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        printf("%02x", hash[i]);
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as crypto from "crypto";
+
+const hash = crypto.createHash("sha256").update("hello world").digest("hex");
+console.log(`SHA-256: ${hash}`);
+```
+
+</Listing>
+
+The `dep sha2` declaration tells Auto's package manager to include the `sha2`
+crate as a dependency. Combined with `use.rust sha2::Sha256`, this gives you
+direct access to a production-grade cryptographic library.
+
+## Advanced Math
+
+Beyond the basic `min`, `max`, and `sqrt` functions, Auto supports advanced
+mathematical operations through methods on numeric types: `.powf()`, `.abs()`,
+`.sin()`, `.cos()`, and more.
+
+<Listing number="21-14" file-name="main.at" caption="Advanced math: power, trigonometry, and absolute value">
+
+```auto
+// Auto — Math Functions
+fn main() {
+    let x = 2.0
+    let y = 3.0
+
+    // Power and square root
+    let power = x.powf(y)
+    let sqrt_val = x.sqrt()
+    println(f"$x ^ $y = $power")
+    println(f"sqrt($x) = $sqrt_val")
+
+    // Absolute value
+    let neg = -5.0
+    let abs_result = neg.abs()
+    println(f"|$neg| = $abs_result")
+
+    // Trigonometry
+    let pi = 3.14159265
+    let sin_val = pi.sin()
+    let cos_val = pi.cos()
+    println(f"sin(pi) = $sin_val")
+    println(f"cos(pi) = $cos_val")
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let x = 2.0;
+    let y = 3.0;
+
+    let power = x.powf(y);
+    let sqrt_val = x.sqrt();
+    println!("{} ^ {} = {}", x, y, power);
+    println!("sqrt({}) = {}", x, sqrt_val);
+
+    let neg = -5.0;
+    let abs_result = neg.abs();
+    println!("|{}| = {}", neg, abs_result);
+
+    let pi = std::f64::consts::PI;
+    let sin_val = pi.sin();
+    let cos_val = pi.cos();
+    println!("sin(pi) = {}", sin_val);
+    println!("cos(pi) = {}", cos_val);
+}
+```
+
+```python
+# Python
+import math
+
+x = 2.0
+y = 3.0
+
+power = x ** y
+sqrt_val = math.sqrt(x)
+print(f"{x} ^ {y} = {power}")
+print(f"sqrt({x}) = {sqrt_val}")
+
+neg = -5.0
+abs_result = abs(neg)
+print(f"|{neg}| = {abs_result}")
+
+pi = math.pi
+sin_val = math.sin(pi)
+cos_val = math.cos(pi)
+print(f"sin(pi) = {sin_val}")
+print(f"cos(pi) = {cos_val}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double x = 2.0;
+    double y = 3.0;
+
+    double power = pow(x, y);
+    double sqrt_val = sqrt(x);
+    printf("%.1f ^ %.1f = %.1f\n", x, y, power);
+    printf("sqrt(%.1f) = %.6f\n", x, sqrt_val);
+
+    double neg = -5.0;
+    double abs_result = fabs(neg);
+    printf("|%.1f| = %.1f\n", neg, abs_result);
+
+    double pi = 3.14159265;
+    double sin_val = sin(pi);
+    double cos_val = cos(pi);
+    printf("sin(pi) = %.6f\n", sin_val);
+    printf("cos(pi) = %.6f\n", cos_val);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const x = 2.0;
+const y = 3.0;
+
+const power = Math.pow(x, y);
+const sqrtVal = Math.sqrt(x);
+console.log(`${x} ^ ${y} = ${power}`);
+console.log(`sqrt(${x}) = ${sqrtVal}`);
+
+const neg = -5.0;
+const absResult = Math.abs(neg);
+console.log(`|${neg}| = ${absResult}`);
+
+const pi = Math.PI;
+const sinVal = Math.sin(pi);
+const cosVal = Math.cos(pi);
+console.log(`sin(pi) = ${sinVal}`);
+console.log(`cos(pi) = ${cosVal}`);
+```
+
+</Listing>
+
+The numeric methods in Auto mirror Rust's `f64` methods closely:
+
+1. `.powf(y)` raises a number to a power: `2.0.powf(3.0)` = 8.0.
+2. `.sqrt()` computes the square root: `2.0.sqrt()` ≈ 1.4142.
+3. `.abs()` returns the absolute value: `(-5.0).abs()` = 5.0.
+4. `.sin()` and `.cos()` compute trigonometric functions in radians.
+
 ## Summary
 
 This chapter toured the most useful parts of Auto's standard library:
@@ -1153,11 +1983,15 @@ This chapter toured the most useful parts of Auto's standard library:
 | Domain | Module | Key Functions |
 |--------|--------|---------------|
 | Strings | `std::string` | `trim`, `format!`, `split`, `join`, `contains`, `replace` |
-| Math | `std::math` | `min`, `max`, `abs`, `round`, `floor`, `ceil`, `clamp`, `pow`, `sqrt` |
+| Math | `std::math` | `min`, `max`, `abs`, `round`, `floor`, `ceil`, `clamp`, `pow`, `sqrt`, `powf`, `sin`, `cos` |
 | File I/O | `std::fs` | `read_file`, `write_file`, `path_join`, `exists`, `mkdir`, `list_dir` |
 | Collections | `std::collections` | `sort`, `reverse`, `unique`, `flatten`, `zip`, `chunk` |
-| Time | `std::time` | `Time.now`, `.format`, `Time.parse`, `Duration.hours`, `Duration.minutes` |
+| Time | `std::time` | `Time.now`, `.format`, `Time.parse`, `Duration.hours`, `Duration.minutes`, `now`, `sleep` |
 | JSON | `std::json` | `to_json`, `from_json`, `to_json_pretty` |
+| TOML | `std::config` | `parse_toml` |
+| Encoding | `std::encoding` | `base64_encode`, `base64_decode`, `hex`, `unhex` |
+| Regex | `regex` crate | `Regex.new`, `.replace_all`, `.replace` |
+| Crypto | `sha2` crate | `Sha256.new`, `.update`, `.finalize`, `.hex` |
 
 Key takeaways:
 

@@ -1,0 +1,12 @@
+// Auto — Regex Replace
+use.rust regex::Regex
+
+fn main() {
+    let re = Regex.new(c"\\d+").unwrap()
+    let text = "abc 123 def 456"
+
+    // Replace all digit sequences with placeholder
+    let replaced = re.replace_all(text, "NUM")
+    println(f"Original: $text")
+    println(f"Replaced: $replaced")
+}

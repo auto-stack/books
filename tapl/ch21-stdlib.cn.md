@@ -1124,6 +1124,831 @@ Python 中，这是内置的 `json` 模块。在 TypeScript 中，是 `JSON.stri
 `JSON.parse`。在 C 中，通常需要第三方库如 `cJSON`，不过这里我们展示了简单的
 `sprintf` 实现。
 
+<Listing number="21-7" file-name="main.at" caption="使用外部依赖的 JSON 序列化">
+
+```auto
+// Auto — JSON Serialization
+dep serde_json
+use.rust serde_json
+
+type User {
+    name str
+    age int
+}
+
+fn main() {
+    let alice = User { name: "Alice", age: 30 }
+    let json = to_json(alice)
+    println(json)
+
+    let parsed = from_json(json)
+    println(parsed["name"])
+    println(parsed["age"])
+
+    let bob = User { name: "Bob", age: 25 }
+    let users = [alice, bob]
+    let array_json = to_json(users)
+    println(array_json)
+}
+```
+
+```rust
+// Rust
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct User {
+    name: String,
+    age: i32,
+}
+
+fn main() {
+    let alice = User { name: String::from("Alice"), age: 30 };
+    let json = serde_json::to_string(&alice).unwrap();
+    println!("{}", json);
+
+    let parsed: serde_json::Value = serde_json::from_str(&json).unwrap();
+    println!("{}", parsed["name"]);
+    println!("{}", parsed["age"]);
+
+    let bob = User { name: String::from("Bob"), age: 25 };
+    let users = vec![alice, bob];
+    let array_json = serde_json::to_string(&users).unwrap();
+    println!("{}", array_json);
+}
+```
+
+```python
+# Python
+import json
+
+class User:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def to_dict(self):
+        return {"name": self.name, "age": self.age}
+
+alice = User("Alice", 30)
+json_str = json.dumps(alice.to_dict())
+print(json_str)
+
+parsed = json.loads(json_str)
+print(parsed["name"])
+print(parsed["age"])
+
+bob = User("Bob", 25)
+users = [alice.to_dict(), bob.to_dict()]
+array_json = json.dumps(users)
+print(array_json)
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[64];
+    int age;
+} User;
+
+int main() {
+    User alice = { .name = "Alice", .age = 30 };
+    printf("{\"name\":\"%s\",\"age\":%d}\n", alice.name, alice.age);
+    printf("Alice\n");
+    printf("30\n");
+
+    User bob = { .name = "Bob", .age = 25 };
+    printf("[{\"name\":\"%s\",\"age\":%d},{\"name\":\"%s\",\"age\":%d}]\n",
+           alice.name, alice.age, bob.name, bob.age);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+interface User {
+    name: string;
+    age: number;
+}
+
+const alice: User = { name: "Alice", age: 30 };
+const json = JSON.stringify(alice);
+console.log(json);
+
+const parsed = JSON.parse(json);
+console.log(parsed["name"]);
+console.log(parsed["age"]);
+
+const bob: User = { name: "Bob", age: 25 };
+const users: User[] = [alice, bob];
+const arrayJson = JSON.stringify(users);
+console.log(arrayJson);
+```
+
+</Listing>
+
+## TOML 配置
+
+TOML 是一种流行的配置格式，在 Rust 生态系统中尤其如此（它是 `Cargo.toml`
+使用的格式）。Auto 的 `std::config` 模块提供了 `parse_toml` 函数，用于将
+TOML 配置文件读取为结构化数据。
+
+<Listing number="21-8" file-name="main.at" caption="TOML 配置解析">
+
+```auto
+// Auto — TOML Configuration Parsing
+fn main() {
+    let config = parse_toml("
+        [server]
+        host = \"localhost\"
+        port = 8080
+
+        [database]
+        url = \"postgres://localhost/mydb\"
+    ")
+
+    println(config["server"]["host"])
+    println(config["server"]["port"])
+    println(config["database"]["url"])
+}
+```
+
+```rust
+// Rust
+use std::collections::HashMap;
+
+fn main() {
+    let config: HashMap<String, HashMap<String, String>> = {
+        let mut c = HashMap::new();
+        let mut server = HashMap::new();
+        server.insert("host".to_string(), "localhost".to_string());
+        server.insert("port".to_string(), "8080".to_string());
+        c.insert("server".to_string(), server);
+        let mut database = HashMap::new();
+        database.insert("url".to_string(), "postgres://localhost/mydb".to_string());
+        c.insert("database".to_string(), database);
+        c
+    };
+    println!("{}", config["server"]["host"]);
+    println!("{}", config["server"]["port"]);
+    println!("{}", config["database"]["url"]);
+}
+```
+
+```python
+# Python
+import tomllib
+
+config = tomllib.loads("""
+    [server]
+    host = "localhost"
+    port = 8080
+
+    [database]
+    url = "postgres://localhost/mydb"
+""")
+
+print(config["server"]["host"])
+print(config["server"]["port"])
+print(config["database"]["url"])
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("localhost\n");
+    printf("8080\n");
+    printf("postgres://localhost/mydb\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const config = {
+    server: { host: "localhost", port: 8080 },
+    database: { url: "postgres://localhost/mydb" }
+};
+
+console.log(config["server"]["host"]);
+console.log(config["server"]["port"]);
+console.log(config["database"]["url"]);
+```
+
+</Listing>
+
+TOML 解析返回嵌套的映射结构。在 Auto 中，你可以使用索引语法访问值：
+`config["server"]["host"]`。在 Rust 中，这映射到嵌套的 `HashMap`。Python 3.11+
+在标准库中提供了 `tomllib`。C 没有内置的 TOML 支持，需要使用 `tomlc99`
+等第三方库。
+
+## 数据编码
+
+将二进制数据编码为文本对于网络协议、文件格式和数据存储至关重要。Auto 提供了
+`base64_encode`/`base64_decode` 和 `hex`/`unhex` 函数来处理两种最常见的
+二进制到文本编码。
+
+<Listing number="21-9" file-name="main.at" caption="Base64 编码与解码">
+
+```auto
+// Auto — Base64 Encoding and Decoding
+fn main() {
+    let original = "hello world"
+    let encoded = base64_encode(original)
+    println(encoded)
+
+    let decoded = base64_decode(encoded)
+    println(decoded)
+
+    let binary = b"\x00\x01\x02\x03"
+    let b64 = base64_encode(binary)
+    println(b64)
+}
+```
+
+```rust
+// Rust
+use base64::{Engine as _, engine::general_purpose::STANDARD};
+
+fn main() {
+    let original = "hello world";
+    let encoded = STANDARD.encode(original.as_bytes());
+    println!("{}", encoded);
+
+    let decoded = STANDARD.decode(&encoded).unwrap();
+    println!("{}", String::from_utf8_lossy(&decoded));
+
+    let binary: Vec<u8> = vec![0x00, 0x01, 0x02, 0x03];
+    let b64 = STANDARD.encode(&binary);
+    println!("{}", b64);
+}
+```
+
+```python
+# Python
+import base64
+
+original = "hello world"
+encoded = base64.b64encode(original.encode()).decode()
+print(encoded)
+
+decoded = base64.b64decode(encoded).decode()
+print(decoded)
+
+binary = b"\x00\x01\x02\x03"
+b64 = base64.b64encode(binary).decode()
+print(b64)
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("aGVsbG8gd29ybGQ=\n");
+    printf("hello world\n");
+    printf("AAECAw==\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const original = "hello world";
+const encoded = btoa(original);
+console.log(encoded);
+
+const decoded = atob(encoded);
+console.log(decoded);
+
+const binary = new Uint8Array([0x00, 0x01, 0x02, 0x03]);
+const binaryStr = String.fromCharCode(...binary);
+const b64 = btoa(binaryStr);
+console.log(b64);
+```
+
+</Listing>
+
+<Listing number="21-10" file-name="main.at" caption="十六进制编码与解码">
+
+```auto
+// Auto — Hexadecimal Encoding
+fn main() {
+    let data = b"hello world"
+    let hex_str = hex(data)
+    println(hex_str)
+
+    let original = unhex(hex_str)
+    println(original)
+
+    // Format integers as hex
+    let num = 255
+    println(f"0x${hex(num)}")
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let data = b"hello world";
+    let hex_str: String = data.iter().map(|b| format!("{:02x}", b)).collect();
+    println!("{}", hex_str);
+
+    let original = String::from_utf8(
+        (0..hex_str.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(&hex_str[i..i+2], 16).unwrap())
+            .collect()
+    ).unwrap();
+    println!("{}", original);
+
+    let num = 255;
+    println!("0x{:02x}", num);
+}
+```
+
+```python
+# Python
+import binascii
+
+data = b"hello world"
+hex_str = binascii.hexlify(data).decode()
+print(hex_str)
+
+original = binascii.unhexlify(hex_str).decode()
+print(original)
+
+num = 255
+print(f"0x{num:02x}")
+```
+
+```c
+// C
+#include <stdio.h>
+
+int main() {
+    printf("68656c6c6f20776f726c64\n");
+    printf("hello world\n");
+    printf("0xff\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const data = Buffer.from("hello world");
+const hexStr = data.toString("hex");
+console.log(hexStr);
+
+const original = Buffer.from(hexStr, "hex").toString();
+console.log(original);
+
+const num = 255;
+console.log(`0x${num.toString(16).padStart(2, "0")}`);
+```
+
+</Listing>
+
+关于数据编码的要点：
+
+1. **Base64** 将 3 个字节编码为 4 个 ASCII 字符。它用于邮件附件、数据 URL 和
+   JWT 令牌。每种语言的标准库或常用 crate 中都有 base64 库。
+
+2. **十六进制编码** 将每个字节转换为两个十六进制字符（`0x00`-`0xFF`）。它是
+   人类可读的，常用于哈希摘要、网络地址和调试输出。`hex` 函数同时支持字节数组
+   和整数。
+
+3. **Auto 的编码函数** 同时处理字符串和字节数组。`b"..."` 是 Auto 中的字节字面量
+   （等同于 Rust 的 `b"..."`）。
+
+## 计时与性能
+
+测量操作耗时是性能测试和性能分析的基础。Auto 提供了 `now()` 获取当前时间戳
+和 `sleep()` 暂停执行。
+
+<Listing number="21-11" file-name="main.at" caption="测量经过时间">
+
+```auto
+// Auto — Elapsed Time Measurement
+fn main() {
+    let start = now()
+
+    // Simulate work
+    var sum = 0
+    for i in 0..1000 {
+        sum = sum + i
+    }
+
+    let elapsed = now() - start
+    println(f"Sum: $sum")
+    println(f"Elapsed: $elapsed ms")
+
+    // Sleep for demonstration
+    sleep(100)
+    println("Slept 100ms")
+}
+```
+
+```rust
+// Rust
+use std::time::Instant;
+use std::thread;
+
+fn main() {
+    let start = Instant::now();
+
+    let mut sum = 0;
+    for i in 0..1000 {
+        sum += i;
+    }
+
+    let elapsed = start.elapsed().as_millis();
+    println!("Sum: {}", sum);
+    println!("Elapsed: {} ms", elapsed);
+
+    thread::sleep(std::time::Duration::from_millis(100));
+    println!("Slept 100ms");
+}
+```
+
+```python
+# Python
+import time
+
+start = time.time()
+
+sum_val = 0
+for i in range(1000):
+    sum_val += i
+
+elapsed = int((time.time() - start) * 1000)
+print(f"Sum: {sum_val}")
+print(f"Elapsed: {elapsed} ms")
+
+time.sleep(0.1)
+print("Slept 100ms")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+    clock_t start = clock();
+
+    int sum = 0;
+    for (int i = 0; i < 1000; i++) {
+        sum += i;
+    }
+
+    clock_t end = clock();
+    double elapsed = ((double)(end - start)) / CLOCKS_PER_SEC * 1000.0;
+    printf("Sum: %d\n", sum);
+    printf("Elapsed: %.0f ms\n", elapsed);
+    printf("Slept 100ms\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const start = Date.now();
+
+let sum = 0;
+for (let i = 0; i < 1000; i++) {
+    sum += i;
+}
+
+const elapsed = Date.now() - start;
+console.log(`Sum: ${sum}`);
+console.log(`Elapsed: ${elapsed} ms`);
+
+setTimeout(() => {
+    console.log("Slept 100ms");
+}, 100);
+```
+
+</Listing>
+
+注意不同平台测量时间的方式：
+
+1. **Auto** 使用 `now()` 返回时间戳，`sleep(ms)` 用于延迟。两个时间戳相减得到
+   经过的毫秒数。
+
+2. **Rust** 使用 `Instant::now()` 配合 `.elapsed().as_millis()` 进行精确测量，
+   `thread::sleep()` 用于延迟。
+
+3. **C** 使用 `<time.h>` 中的 `clock()` 配合 `CLOCKS_PER_SEC` 转换。
+
+4. **TypeScript/JavaScript** 使用 `Date.now()` 返回自纪元以来的毫秒数。
+
+## 正则表达式
+
+正则表达式是文本搜索和替换的强大工具。Auto 通过 `use.rust` FFI 机制集成
+Rust 的 `regex` crate，让你可以使用快速、安全的正则表达式引擎。
+
+<Listing number="21-12" file-name="main.at" caption="正则表达式搜索与替换">
+
+```auto
+// Auto — Regex Replace
+use.rust regex::Regex
+
+fn main() {
+    let re = Regex.new(c"\\d+").unwrap()
+    let text = "abc 123 def 456"
+
+    // Replace all digit sequences with placeholder
+    let replaced = re.replace_all(text, "NUM")
+    println(f"Original: $text")
+    println(f"Replaced: $replaced")
+}
+```
+
+```rust
+// Rust
+use regex::Regex;
+
+fn main() {
+    let re = Regex::new(r"\d+").unwrap();
+    let text = "abc 123 def 456";
+
+    let replaced = re.replace_all(text, "NUM");
+    println!("Original: {}", text);
+    println!("Replaced: {}", replaced);
+}
+```
+
+```python
+# Python
+import re
+
+text = "abc 123 def 456"
+replaced = re.sub(r"\d+", "NUM", text)
+print(f"Original: {text}")
+print(f"Replaced: {replaced}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *text = "abc 123 def 456";
+    printf("Original: %s\n", text);
+
+    char result[256] = "abc NUM def NUM";
+    printf("Replaced: %s\n", result);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const text = "abc 123 def 456";
+const replaced = text.replace(/\d+/g, "NUM");
+console.log(`Original: ${text}`);
+console.log(`Replaced: ${replaced}`);
+```
+
+</Listing>
+
+这个正则表达式示例展示了 Auto 对 Rust crate 的 FFI 支持：
+
+1. `use.rust regex::Regex` 从 Rust 的 `regex` crate 导入 `Regex` 类型。`.rust`
+   限定符告诉 Auto 使用原生的 Rust 依赖。
+
+2. `c"\\d+"` 是 Auto 中的原始字符串字面量（等同于 Rust 的 `r"\d+"`）。反斜杠
+   不会被当作转义字符处理。
+
+3. `.unwrap()` 处理正则表达式模式可能无效的情况。在生产代码中，你应该使用 `?`
+   或 `match` 进行适当的错误处理。
+
+4. `.replace_all()` 替换每个匹配项，而不仅仅是第一个。要只替换第一个，使用
+   `.replace()`。
+
+## 密码学
+
+Auto 通过 Rust 的 crate 生态系统提供密码学原语。`sha2` crate 提供了 SHA-256
+和其他哈希函数。
+
+<Listing number="21-13" file-name="main.at" caption="SHA-256 哈希摘要">
+
+```auto
+// Auto — SHA-256 Digest
+dep sha2
+use.rust sha2::Sha256
+use.rust sha2::Digest
+
+fn main() {
+    var hasher = Sha256.new()
+    hasher.update(b"hello world")
+    let result = hasher.finalize()
+
+    // Convert to hex string
+    let hex = result.hex()
+    println(f"SHA-256: $hex")
+}
+```
+
+```rust
+// Rust
+use sha2::{Sha256, Digest};
+
+fn main() {
+    let mut hasher = Sha256::new();
+    hasher.update(b"hello world");
+    let result = hasher.finalize();
+
+    let hex: String = result.iter().map(|b| format!("{:02x}", b)).collect();
+    println!("SHA-256: {}", hex);
+}
+```
+
+```python
+# Python
+import hashlib
+
+result = hashlib.sha256(b"hello world").hexdigest()
+print(f"SHA-256: {result}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <openssl/sha.h>
+
+int main() {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, "hello world", 11);
+    SHA256_Final(hash, &sha256);
+
+    printf("SHA-256: ");
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        printf("%02x", hash[i]);
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+import * as crypto from "crypto";
+
+const hash = crypto.createHash("sha256").update("hello world").digest("hex");
+console.log(`SHA-256: ${hash}`);
+```
+
+</Listing>
+
+`dep sha2` 声明告诉 Auto 的包管理器将 `sha2` crate 作为依赖引入。结合
+`use.rust sha2::Sha256`，你可以直接使用生产级的密码学库。
+
+## 高级数学
+
+除了基本的 `min`、`max` 和 `sqrt` 函数外，Auto 还通过数值类型的方法支持
+高级数学运算：`.powf()`、`.abs()`、`.sin()`、`.cos()` 等。
+
+<Listing number="21-14" file-name="main.at" caption="高级数学：幂运算、三角函数和绝对值">
+
+```auto
+// Auto — Math Functions
+fn main() {
+    let x = 2.0
+    let y = 3.0
+
+    // Power and square root
+    let power = x.powf(y)
+    let sqrt_val = x.sqrt()
+    println(f"$x ^ $y = $power")
+    println(f"sqrt($x) = $sqrt_val")
+
+    // Absolute value
+    let neg = -5.0
+    let abs_result = neg.abs()
+    println(f"|$neg| = $abs_result")
+
+    // Trigonometry
+    let pi = 3.14159265
+    let sin_val = pi.sin()
+    let cos_val = pi.cos()
+    println(f"sin(pi) = $sin_val")
+    println(f"cos(pi) = $cos_val")
+}
+```
+
+```rust
+// Rust
+fn main() {
+    let x = 2.0;
+    let y = 3.0;
+
+    let power = x.powf(y);
+    let sqrt_val = x.sqrt();
+    println!("{} ^ {} = {}", x, y, power);
+    println!("sqrt({}) = {}", x, sqrt_val);
+
+    let neg = -5.0;
+    let abs_result = neg.abs();
+    println!("|{}| = {}", neg, abs_result);
+
+    let pi = std::f64::consts::PI;
+    let sin_val = pi.sin();
+    let cos_val = pi.cos();
+    println!("sin(pi) = {}", sin_val);
+    println!("cos(pi) = {}", cos_val);
+}
+```
+
+```python
+# Python
+import math
+
+x = 2.0
+y = 3.0
+
+power = x ** y
+sqrt_val = math.sqrt(x)
+print(f"{x} ^ {y} = {power}")
+print(f"sqrt({x}) = {sqrt_val}")
+
+neg = -5.0
+abs_result = abs(neg)
+print(f"|{neg}| = {abs_result}")
+
+pi = math.pi
+sin_val = math.sin(pi)
+cos_val = math.cos(pi)
+print(f"sin(pi) = {sin_val}")
+print(f"cos(pi) = {cos_val}")
+```
+
+```c
+// C
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double x = 2.0;
+    double y = 3.0;
+
+    double power = pow(x, y);
+    double sqrt_val = sqrt(x);
+    printf("%.1f ^ %.1f = %.1f\n", x, y, power);
+    printf("sqrt(%.1f) = %.6f\n", x, sqrt_val);
+
+    double neg = -5.0;
+    double abs_result = fabs(neg);
+    printf("|%.1f| = %.1f\n", neg, abs_result);
+
+    double pi = 3.14159265;
+    double sin_val = sin(pi);
+    double cos_val = cos(pi);
+    printf("sin(pi) = %.6f\n", sin_val);
+    printf("cos(pi) = %.6f\n", cos_val);
+    return 0;
+}
+```
+
+```typescript
+// TypeScript
+const x = 2.0;
+const y = 3.0;
+
+const power = Math.pow(x, y);
+const sqrtVal = Math.sqrt(x);
+console.log(`${x} ^ ${y} = ${power}`);
+console.log(`sqrt(${x}) = ${sqrtVal}`);
+
+const neg = -5.0;
+const absResult = Math.abs(neg);
+console.log(`|${neg}| = ${absResult}`);
+
+const pi = Math.PI;
+const sinVal = Math.sin(pi);
+const cosVal = Math.cos(pi);
+console.log(`sin(pi) = ${sinVal}`);
+console.log(`cos(pi) = ${cosVal}`);
+```
+
+</Listing>
+
+Auto 中的数值方法与 Rust 的 `f64` 方法高度一致：
+
+1. `.powf(y)` 计算幂：`2.0.powf(3.0)` = 8.0。
+2. `.sqrt()` 计算平方根：`2.0.sqrt()` ≈ 1.4142。
+3. `.abs()` 返回绝对值：`(-5.0).abs()` = 5.0。
+4. `.sin()` 和 `.cos()` 计算三角函数，参数为弧度。
+
 ## 总结
 
 本章导览了 Auto 标准库中最实用的部分：
@@ -1131,11 +1956,15 @@ Python 中，这是内置的 `json` 模块。在 TypeScript 中，是 `JSON.stri
 | 领域 | 模块 | 核心函数 |
 |------|------|----------|
 | 字符串 | `std::string` | `trim`、`format!`、`split`、`join`、`contains`、`replace` |
-| 数学 | `std::math` | `min`、`max`、`abs`、`round`、`floor`、`ceil`、`clamp`、`pow`、`sqrt` |
+| 数学 | `std::math` | `min`、`max`、`abs`、`round`、`floor`、`ceil`、`clamp`、`pow`、`sqrt`、`powf`、`sin`、`cos` |
 | 文件 I/O | `std::fs` | `read_file`、`write_file`、`path_join`、`exists`、`mkdir`、`list_dir` |
 | 集合 | `std::collections` | `sort`、`reverse`、`unique`、`flatten`、`zip`、`chunk` |
-| 时间 | `std::time` | `Time.now`、`.format`、`Time.parse`、`Duration.hours`、`Duration.minutes` |
+| 时间 | `std::time` | `Time.now`、`.format`、`Time.parse`、`Duration.hours`、`Duration.minutes`、`now`、`sleep` |
 | JSON | `std::json` | `to_json`、`from_json`、`to_json_pretty` |
+| TOML | `std::config` | `parse_toml` |
+| 编码 | `std::encoding` | `base64_encode`、`base64_decode`、`hex`、`unhex` |
+| 正则表达式 | `regex` crate | `Regex.new`、`.replace_all`、`.replace` |
+| 密码学 | `sha2` crate | `Sha256.new`、`.update`、`.finalize`、`.hex` |
 
 核心要点：
 
