@@ -2,18 +2,19 @@
 
 // a2r Standard Library (from crate)
 #[allow(unused_imports)]
-use auto_lang::a2r_std::*;
+use a2r_std;
+use a2r_std::*;
 
-fn first_word_slice(s: String) -> String {
+fn first_word_slice(mut s: String) -> String {
     let bytes = s.bytes();
-    let mut i: i32 = 0;
-    for b in bytes {
+    let mut i: i64 = 0;
+    for b in &bytes {
         if b == 32 {
-            return s[0..i];
+            return s[0..(i) as usize];
         }
         i = i + 1;
     }
-    return s[0..s.len()];
+    return s[0..(a2r_std::value_len(&s)) as usize];
 }
 
 fn main() {

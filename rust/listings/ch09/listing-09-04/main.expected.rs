@@ -2,14 +2,16 @@
 
 // a2r Standard Library (from crate)
 #[allow(unused_imports)]
-use auto_lang::a2r_std::*;
+use a2r_std;
+use a2r_std::*;
 
-fn read_number(text: String) -> Result<i32, String> {
-    let value = text.to_int().collect();
+fn read_number(text: String) -> Result<i64, Box<dyn std::error::Error>> {
+    let value = a2r_std::value_to_int(&text).collect();
     value
 }
 
-fn main() -> Result<(), String> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let n = read_number("42");
-    println!("Number: {}", n);
+    println!("Number: {:?}", n);
+    Ok(())
 }

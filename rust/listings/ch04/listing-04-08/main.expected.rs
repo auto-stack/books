@@ -2,10 +2,11 @@
 
 // a2r Standard Library (from crate)
 #[allow(unused_imports)]
-use auto_lang::a2r_std::*;
+use a2r_std;
+use a2r_std::*;
 
-fn calculate_length(s: String) -> i32 {
-    s.len()
+fn calculate_length(s: String) -> i64 {
+    a2r_std::value_len(&s)
 }
 
 fn main() {

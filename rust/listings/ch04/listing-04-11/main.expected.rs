@@ -2,18 +2,19 @@
 
 // a2r Standard Library (from crate)
 #[allow(unused_imports)]
-use auto_lang::a2r_std::*;
+use a2r_std;
+use a2r_std::*;
 
-fn first_word(s: String) -> i32 {
+fn first_word(mut s: String) -> i64 {
     let bytes = s.bytes();
-    let mut i: i32 = 0;
-    for b in bytes {
+    let mut i: i64 = 0;
+    for b in &bytes {
         if b == 32 {
             return i;
         }
         i = i + 1;
     }
-    return s.len();
+    return a2r_std::value_len(&s);
 }
 
 fn main() {
